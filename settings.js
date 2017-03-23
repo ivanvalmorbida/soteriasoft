@@ -1,10 +1,10 @@
-exports.dbConfig = {
-    user: "sa",
-    password: "xxx",
-    server: "localhost", 
-    database: "",
-    port: 1111
+exports.dbConect = {
+    host     : 'localhost',
+    user     : 'root',
+    password : 'ivanluis',
+    database : 'soteriasoft'
 };
+
 var url = "http://localhost";
 var webPort = 3000;
 exports.webPort = webPort;
