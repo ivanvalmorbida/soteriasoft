@@ -10,7 +10,7 @@ exports.AllRecords = function (req, res) {
 
     connection.query('SELECT * from tbuf', function(err, rows, fields) {
         if (!err) {
-            res.json({imovel_favo: rows});
+            res.json({AllRecords: rows});
             //console.log('The solution is: ', rows);
         }
         else
