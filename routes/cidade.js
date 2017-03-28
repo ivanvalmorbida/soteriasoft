@@ -8,7 +8,7 @@ exports.AllRecords = function (req, res) {
 
     connection.connect();
 
-    connection.query('SELECT * from tbcidade', function(err, rows, fields) {
+    connection.query('select codigo,nome from tbcidade order by nome', function(err, rows) {
         if (!err) {
             res.json({AllRecords: rows});
             //console.log('The solution is: ', rows);
@@ -24,9 +24,12 @@ exports.RecordsOfState = function (req, res) {
 
     connection.connect();
 
-    connection.query('SELECT * from tbcidade where uf=?', [data.uf], function(err, rows, fields) {
+    connection.query('select ci.codigo, ci.nome from tbcep as ce'+
+    ' inner join tbcidade as ci on ce.cidade=ci.codigo'+
+    ' where ce.uf=? group by ci.codigo, ci.Nome'+
+    ' order by ci.Nome;', [data.uf], function(err, rows) {
         if (!err) {
-            res.json({AllRecords: rows});
+            res.json({RecordsOfState: rows});
             //console.log('The solution is: ', rows);
         }
         else
