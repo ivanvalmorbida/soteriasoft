@@ -27,7 +27,7 @@ exports.RecordsOfCity = function (req, res) {
     connection.query('Select ba.codigo, ba.nome from tbcep as ce'+
     ' inner join tbbairro as ba on ce.bairro=ba.codigo'+
     ' where ce.uf=? And ce.cidade=? group by ba.codigo, ba.Nome'+
-    ' order by ba.Nome;', [data.uf, ata.ci], function(err, rows) {
+    ' order by ba.Nome;', [data.uf, data.ci], function(err, rows) {
         if (!err) {
             res.json({RecordsOfCity: rows})
             //console.log('The solution is: ', rows);
