@@ -3,6 +3,10 @@ var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 
+exports.index = function (req, res) {
+    res.render('ceps');
+};
+
 exports.RecordsOfCep = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;

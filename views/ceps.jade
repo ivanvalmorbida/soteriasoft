@@ -1,0 +1,106 @@
+html(lang='pt-br')
+  head
+    link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
+
+    //meus estilos
+    link(rel='stylesheet', href='css/performace_ci.css')
+
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')
+    //script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.5/angular-locale_pt-br.min.js')
+
+    script(type='text/javascript').
+      angular.module('BlankApp', ['ngMaterial'])
+      .controller('AppCtrl', function($http,$scope) {
+        $scope.DateFir = null;
+        $scope.DateLas = null;
+        $scope.CIsel = null;            
+        $http({
+          method: 'GET',
+          url: '/dados/uf/AllRecords'
+        }).
+        success(function (data) {
+          $scope.ufs = data.AllRecords;
+        });      
+      })
+      .config(function($mdDateLocaleProvider) {
+        $mdDateLocaleProvider.formatDate = function(date) {
+          return date ? moment(date).format('DD/MM/YYYY') : '';
+        };
+
+        $mdDateLocaleProvider.parseDate = function(dateString) {
+          var m = moment(dateString, 'DD/MM/YYYY', true);
+          return m.isValid() ? m.toDate() : new Date(NaN);
+        };
+      })
+      .directive('uiTelefone', function(){
+        return {
+          require: 'ngModel',
+          link: function(scope, element, attr, ctrl){
+            var _formatTelefone = function(telefone){
+              //(99)9999-9999 - 13dig
+              //(99)99999-9999 - 14dig
+              telefone = telefone.replace(/[^0-9]+/g, "");                
+              if(telefone.length > 0){
+                  telefone = telefone.substring(-1,0) + "(" + telefone.substring(0);
+              }
+              if(telefone.length > 3){
+                  telefone = telefone.substring(0,3) + ")" + telefone.substring(3);
+              }
+              if(telefone.length == 12){
+                  telefone = telefone.substring(0,8) + "-" + telefone.substring(8);
+              }else if(telefone.length >= 13){
+                  telefone = telefone.substring(0,9) + "-" + telefone.substring(9,13);
+              }
+              return telefone;
+            }
+            element.bind('keyup', function(){
+              ctrl.$setViewValue(_formatTelefone(ctrl.$viewValue));
+              ctrl.$render();
+            });
+          }
+        }
+      })
+      .directive('uiCep', function(){
+        return {
+          require: 'ngModel',
+          link: function(scope, element, attr, ctrl){
+            var _formatCep = function(cep){
+              cep = cep.replace(/[^0-9]+/g, "");                
+              if(cep.length > 5){
+                  cep = cep.substring(0,5) + "-" + cep.substring(5,8);
+              }
+              return cep;
+            }
+            element.bind('keyup', function(){
+              ctrl.$setViewValue(_formatCep(ctrl.$viewValue));
+              ctrl.$render();
+            });
+          }
+        }
+      });
+  body
+    md-content.datepickerdemoBasicUsage(ng-controller='AppCtrl as ctrl', ng-app='BlankApp')
+      md-card
+        md-card-title
+          md-card-title-text
+            span.md-headline Cadastro de Endereços
+            span.md-subhead ...... .... ....
+        md-card-content
+          div(layout='row')
+            md-input-container
+              label CEP
+              input(ng-model='DateFir', ui-cep)
+
+            md-input-container
+              label UF 
+              md-select(ng-model='CIsel', ng-change='DateLas=null; DateFir=null')
+                md-option(value=null)
+                md-option(ng-repeat="uf in ufs" value="{{uf.Codigo}}") {{uf.Sigla}}
+          div(layout='row', layout-align='start', flex='')
+            md-button.md-raised.md-primary(ng-click='processar()') Processar
+      
