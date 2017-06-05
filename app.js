@@ -18,6 +18,7 @@ var express = require('express'),
   users = require('./routes/users'),
   cep = require('./routes/cep'),
   uf = require('./routes/uf'),
+  teste = require('./routes/teste'),
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -114,6 +115,7 @@ app.get('/google/auth/callback',
 app.use('/', routes);
 app.use('/users', users);
 app.get('/cep', cep.index);
+app.get('/teste', teste.index);
 
 app.get('/dados/uf/AllRecords', uf.AllRecords);
 //app.get('/err404', err404.index);
