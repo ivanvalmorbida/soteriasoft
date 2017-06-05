@@ -19,6 +19,7 @@ var express = require('express'),
   cep = require('./routes/cep'),
   uf = require('./routes/uf'),
   teste = require('./routes/teste'),
+  cidade = require('./routes/cidade'),
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -118,8 +119,11 @@ app.get('/cep', cep.index);
 app.get('/teste', teste.index);
 
 app.get('/dados/uf/AllRecords', uf.AllRecords);
+
+app.post('/dados/cidade/search_nome', cidade.search_nome);
 //app.get('/err404', err404.index);
 app.get('*', routes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

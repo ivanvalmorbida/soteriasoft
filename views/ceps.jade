@@ -2,9 +2,6 @@ html(lang='pt-br')
   head
     link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
 
-    //meus estilos
-    link(rel='stylesheet', href='css/performace_ci.css')
-
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js')
@@ -25,7 +22,22 @@ html(lang='pt-br')
         }).
         success(function (data) {
           $scope.ufs = data.AllRecords;
-        });      
+        }); 
+
+        $scope.query = function(searchText) {
+          return $http.post('/dados/cidade/search_nome', {no: searchText}).
+          success(function (data, status, headers, config) {
+            /*var log = [];
+            angular.forEach(data.search_nome, function(cid) {
+              this.push(cid.nome);
+            }, log);
+            console.dir(log);
+            return log;*/
+            var cida = angular.toJson(data.search_nome);
+            console.dir(cida);
+            return cida;
+          }); 
+        };     
       })
       .config(function($mdDateLocaleProvider) {
         $mdDateLocaleProvider.formatDate = function(date) {
@@ -101,6 +113,22 @@ html(lang='pt-br')
               md-select(ng-model='CIsel', ng-change='DateLas=null; DateFir=null')
                 md-option(value=null)
                 md-option(ng-repeat="uf in ufs" value="{{uf.Codigo}}") {{uf.Sigla}}
+
+            md-input-container
+              md-autocomplete(flex='2', md-min-length='5', md-items='race in query(searchText)', 
+              md-search-text='searchText', md-item-text='race.nome', md-floating-label='Cidade')
+                md-item-template
+                  span(md-highlight-text='searchText') {{ item.nome }}
+
+
+              md-autocomplete(
+              md-selected-item='selectedItem', 
+              md-search-text='searchText', 
+              md-min-length='5', 
+              md-items='item in query(searchText)')
+                md-item-template
+                  span(md-highlight-text='searchText') {{item.nome}}
+                
           div(layout='row', layout-align='start', flex='')
             md-button.md-raised.md-primary(ng-click='processar()') Processar
       

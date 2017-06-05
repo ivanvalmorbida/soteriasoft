@@ -36,3 +36,20 @@ exports.RecordsOfState = function (req, res) {
             console.log('Error while performing Query.');
     });
 }
+
+exports.search_nome = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var data = req.body;
+
+    connection.connect();
+
+    connection.query("select nome as name from tbcidade "+
+    " where Nome like '"+data.no+"%' LIMIT 20", function(err, rows) {
+        if (!err) {
+            res.json({search_nome: rows});
+            //console.log('The solution is: ', rows);
+        }
+        else
+            console.log('Error while performing Query.');
+    });
+}

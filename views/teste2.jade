@@ -1,0 +1,136 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title Basic Usage
+    link(rel='stylesheet prefetch', href='https://gitcdn.xyz/repo/angular/bower-material/v0.11.0/angular-material.css')
+  body
+    .autocompletedemoBasicUsage(ng-controller='DemoCtrl as ctrl', layout='column', ng-app='MyApp')
+      md-content.md-padding
+        //form(ng-submit='$event.preventDefault()')
+          md-content(layout='row')
+            md-autocomplete(flex='2', md-items='race in queryRaces(raceSearchText)', md-search-text='raceSearchText', md-item-text='race.name', md-floating-label='Race')
+              md-item-template
+                span(md-highlight-text='raceSearchText') {{ item.name }}
+              md-not-found
+                | No matches found for "{{ raceSearchText }}".
+            md-input-container
+              label Profession
+              input(data-ng-model='model.profession', required='')
+
+        md-content(layout='row')
+          md-autocomplete(md-autoselect='true', 
+          placeholder='What is your favorite place?', 
+          md-item-text='item.display', 
+          md-items='item in ctrl.items', 
+          md-min-length='2', 
+          md-delay='ctrl.throttle', 
+          md-search-text='ctrl.searchText', 
+          md-search-text-change='ctrl.searchTextChange(ctrl.searchText)', 
+          md-select-on-match='true', 
+          md-match-case-insensitive='true', 
+          md-selected-item-change='ctrl.selectedItemChange(item)', 
+          md-selected-item='ctrl.selectedItem')
+            md-item-template
+              span.item-title
+                span(md-highlight-flags='^i', md-highlight-text='ctrl.searchText')
+                  | {{item.display}}
+            md-not-found
+              | No match found.
+              
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-messages.min.js')
+    script(src='https://gitcdn.xyz/repo/angular/bower-material/v0.11.0/angular-material.js')
+    script(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/assets-cache.js')
+    script.
+      /*(function() {
+        'use strict';
+        angular
+          .module('MyApp')
+          .controller('DemoCtrl', DemoCtrl);
+
+        function DemoCtrl($scope) {
+          var races = [{
+            name: "Human"
+          }, {
+            name: "Elf"
+          }, {
+            name: "Indir"
+          }, {
+            name: "Indirina"
+          }];
+
+          $scope.title = 'Add character';
+          $scope.alignments = ['Good', 'Neutral', 'Evil'];
+          $scope.queryRaces = function(raceSearchText) {
+            return races.filter(function(race) {
+              return race.name.toLowerCase().indexOf(raceSearchText.toLowerCase()) > -1;
+            });
+          };
+        }
+      })();    */
+
+
+
+      (function () {
+        'use strict';
+        angular
+          .module('myApp', ['ngMaterial')
+          .controller('DemoCtrl', DemoCtrl);
+          
+        function DemoCtrl($http) {
+          var vm = this;
+          vm.selectedItemChange = selectedItemChange;
+          vm.searchTextChange   = searchTextChange;
+          vm.throttle = 300;
+          vm.center = {
+              lat : 0,
+              lng : 0,
+              zoom: 2
+            };
+
+          function selectedItemChange(item) {
+            vm.result = JSON.stringify(item, null, 2);
+            vm.center = {
+              lat : item.lat,
+              lng : item.lng,
+              zoom: 15
+            };
+          }
+
+          function searchTextChange(query) {
+            vm.items = $http
+              .get('//maps.googleapis.com/maps/api/geocode/json', {
+                params: {
+                  address: query
+                }
+              })
+              .then(function (response) {
+                return response
+                  .data
+                  .results
+                  .map(function (item) {
+                    console.log(item);
+                    return {
+                      display: item.formatted_address,
+                      lat: item.geometry.location.lat,
+                      lng: item.geometry.location.lng,
+                      value: item.formatted_address
+                    };
+                  }) || [];
+              }, function () {
+                return [
+                  {
+                    display: 'error',
+                    lat: 0,
+                    lng: 0,
+                    value: ''
+                  }
+                ];
+              });
+          }
+        }
+      })();      
