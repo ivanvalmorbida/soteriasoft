@@ -1,7 +1,8 @@
 html(lang='pt-br')
   head
     link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
-
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css')
+    
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js')
@@ -9,6 +10,39 @@ html(lang='pt-br')
     script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')
     //script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.5/angular-locale_pt-br.min.js')
+
+  body
+    md-content(ng-controller='AppCtrl as ctrl', ng-app='BlankApp')
+      md-card
+        md-card-title
+          md-card-title-text
+            span.md-headline Cadastro de Endereços
+            span.md-subhead ...... .... ....
+        md-card-content
+
+          div(layout-gt-sm='row')
+
+            md-autocomplete(
+              md-selected-item='selectedItem',
+              md-min-length='4', 
+              md-search-text='searchText', 
+              md-items='item in query(searchText)',
+              md-floating-label='Cidade',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='searchText') {{item.nome}}
+            md-input-container
+              label State
+              md-select(ng-model='CIsel', ng-change='DateLas=null; DateFir=null')
+                md-option(value=null)
+                md-option(ng-repeat="uf in ufs" value="{{uf.Codigo}}") {{uf.Sigla}}
+            md-input-container
+              label Postal Code
+              input(ng-model='DateFir', ui-cep)
+
+          div(layout='row', layout-align='start', flex='')
+            md-button.md-raised.md-primary(ng-click='processar()') Processar
+
 
     script(type='text/javascript').
       angular.module('BlankApp', ['ngMaterial'])
@@ -25,19 +59,16 @@ html(lang='pt-br')
         }); 
 
         $scope.query = function(searchText) {
-          return $http.post('/dados/cidade/search_nome', {no: searchText}).
-          success(function (data, status, headers, config) {
-            /*var log = [];
-            angular.forEach(data.search_nome, function(cid) {
-              this.push(cid.nome);
-            }, log);
-            console.dir(log);
-            return log;*/
-            var cida = angular.toJson(data.search_nome);
-            console.dir(cida);
-            return cida;
-          }); 
-        };     
+          return $http.get('/cidade/busca/inicio/nome', {
+            params: {
+              txt: searchText
+            }
+          }).then(function(data) {
+              console.dir(data.data);
+              return data.data;
+            });
+        };
+
       })
       .config(function($mdDateLocaleProvider) {
         $mdDateLocaleProvider.formatDate = function(date) {
@@ -95,40 +126,4 @@ html(lang='pt-br')
           }
         }
       });
-  body
-    md-content.datepickerdemoBasicUsage(ng-controller='AppCtrl as ctrl', ng-app='BlankApp')
-      md-card
-        md-card-title
-          md-card-title-text
-            span.md-headline Cadastro de Endereços
-            span.md-subhead ...... .... ....
-        md-card-content
-          div(layout='row')
-            md-input-container
-              label CEP
-              input(ng-model='DateFir', ui-cep)
-
-            md-input-container
-              label UF 
-              md-select(ng-model='CIsel', ng-change='DateLas=null; DateFir=null')
-                md-option(value=null)
-                md-option(ng-repeat="uf in ufs" value="{{uf.Codigo}}") {{uf.Sigla}}
-
-            md-input-container
-              md-autocomplete(flex='2', md-min-length='5', md-items='race in query(searchText)', 
-              md-search-text='searchText', md-item-text='race.nome', md-floating-label='Cidade')
-                md-item-template
-                  span(md-highlight-text='searchText') {{ item.nome }}
-
-
-              md-autocomplete(
-              md-selected-item='selectedItem', 
-              md-search-text='searchText', 
-              md-min-length='5', 
-              md-items='item in query(searchText)')
-                md-item-template
-                  span(md-highlight-text='searchText') {{item.nome}}
-                
-          div(layout='row', layout-align='start', flex='')
-            md-button.md-raised.md-primary(ng-click='processar()') Processar
       

@@ -117,10 +117,11 @@ app.use('/', routes);
 app.use('/users', users);
 app.get('/cep', cep.index);
 app.get('/teste', teste.index);
+app.get('/cidade/busca/inicio/nome', teste.RecordsOfCityInitial);
 
 app.get('/dados/uf/AllRecords', uf.AllRecords);
 
-app.post('/dados/cidade/search_nome', cidade.search_nome);
+//app.post('/dados/cidade/search_nome', cidade.search_nome);
 //app.get('/err404', err404.index);
 app.get('*', routes);
 
