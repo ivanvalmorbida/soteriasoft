@@ -10,120 +10,62 @@ html(lang='pt-br')
     script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')
     //script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.5/angular-locale_pt-br.min.js')
+    script(src='js/cep.js')
 
   body
     md-content(ng-controller='AppCtrl as ctrl', ng-app='BlankApp')
       md-card
         md-card-title
           md-card-title-text
-            span.md-headline Cadastro de Endereços
-            span.md-subhead ...... .... ....
+            span.md-headline Cadastro de Código Postal
+            //span.md-subhead ...... .... ....
         md-card-content
 
           div(layout-gt-sm='row')
-
+            md-input-container
+              label CEP
+              input(ng-model='cep', ui-cep)
             md-autocomplete(
-              md-selected-item='selectedItem',
-              md-min-length='4', 
-              md-search-text='searchText', 
-              md-items='item in query(searchText)',
+              md-selected-item='SelEst',
+              md-min-length='1', 
+              md-search-text='SearchEst', 
+              md-items='item in QueryEst(SearchEst)',
+              md-floating-label='Estado',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchEst') {{item.nome}}
+            md-autocomplete(
+              md-selected-item='SelCid',
+              md-min-length='3', 
+              md-search-text='SearchCid', 
+              md-items='item in QueryCid(SearchCid)',
               md-floating-label='Cidade',
               md-item-text='item.nome')
               md-item-template
-                span(md-highlight-text='searchText') {{item.nome}}
+                span(md-highlight-text='SearchCid') {{item.nome}}
+          
+          div(layout-gt-sm='row')
+            md-autocomplete(
+              md-selected-item='SelBai',
+              md-min-length='4', 
+              md-search-text='SearchBai', 
+              md-items='item in QueryBai(SearchBai)',
+              md-floating-label='Bairro',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchBai') {{item.nome}}
+            md-autocomplete(
+              md-selected-item='SelEnd',
+              md-min-length='4', 
+              md-search-text='SearchEnd', 
+              md-items='item in QueryEnd(SearchEnd)',
+              md-floating-label='Endereço',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchEnd') {{item.nome}}
             md-input-container
-              label State
-              md-select(ng-model='CIsel', ng-change='DateLas=null; DateFir=null')
-                md-option(value=null)
-                md-option(ng-repeat="uf in ufs" value="{{uf.Codigo}}") {{uf.Sigla}}
-            md-input-container
-              label Postal Code
-              input(ng-model='DateFir', ui-cep)
+              label Complemento
+              input(type='text')
 
           div(layout='row', layout-align='start', flex='')
             md-button.md-raised.md-primary(ng-click='processar()') Processar
-
-
-    script(type='text/javascript').
-      angular.module('BlankApp', ['ngMaterial'])
-      .controller('AppCtrl', function($http,$scope) {
-        $scope.DateFir = null;
-        $scope.DateLas = null;
-        $scope.CIsel = null;            
-        $http({
-          method: 'GET',
-          url: '/dados/uf/AllRecords'
-        }).
-        success(function (data) {
-          $scope.ufs = data.AllRecords;
-        }); 
-
-        $scope.query = function(searchText) {
-          return $http.get('/cidade/busca/inicio/nome', {
-            params: {
-              txt: searchText
-            }
-          }).then(function(data) {
-              console.dir(data.data);
-              return data.data;
-            });
-        };
-
-      })
-      .config(function($mdDateLocaleProvider) {
-        $mdDateLocaleProvider.formatDate = function(date) {
-          return date ? moment(date).format('DD/MM/YYYY') : '';
-        };
-
-        $mdDateLocaleProvider.parseDate = function(dateString) {
-          var m = moment(dateString, 'DD/MM/YYYY', true);
-          return m.isValid() ? m.toDate() : new Date(NaN);
-        };
-      })
-      .directive('uiTelefone', function(){
-        return {
-          require: 'ngModel',
-          link: function(scope, element, attr, ctrl){
-            var _formatTelefone = function(telefone){
-              //(99)9999-9999 - 13dig
-              //(99)99999-9999 - 14dig
-              telefone = telefone.replace(/[^0-9]+/g, "");                
-              if(telefone.length > 0){
-                  telefone = telefone.substring(-1,0) + "(" + telefone.substring(0);
-              }
-              if(telefone.length > 3){
-                  telefone = telefone.substring(0,3) + ")" + telefone.substring(3);
-              }
-              if(telefone.length == 12){
-                  telefone = telefone.substring(0,8) + "-" + telefone.substring(8);
-              }else if(telefone.length >= 13){
-                  telefone = telefone.substring(0,9) + "-" + telefone.substring(9,13);
-              }
-              return telefone;
-            }
-            element.bind('keyup', function(){
-              ctrl.$setViewValue(_formatTelefone(ctrl.$viewValue));
-              ctrl.$render();
-            });
-          }
-        }
-      })
-      .directive('uiCep', function(){
-        return {
-          require: 'ngModel',
-          link: function(scope, element, attr, ctrl){
-            var _formatCep = function(cep){
-              cep = cep.replace(/[^0-9]+/g, "");                
-              if(cep.length > 5){
-                  cep = cep.substring(0,5) + "-" + cep.substring(5,8);
-              }
-              return cep;
-            }
-            element.bind('keyup', function(){
-              ctrl.$setViewValue(_formatCep(ctrl.$viewValue));
-              ctrl.$render();
-            });
-          }
-        }
-      });
-      

@@ -118,6 +118,7 @@ app.use('/users', users);
 app.get('/cep', cep.index);
 app.get('/teste', teste.index);
 app.get('/cidade/busca/inicio/nome', teste.RecordsOfCityInitial);
+app.get('/uf/busca/inicio/nome', uf.search_nome);
 
 app.get('/dados/uf/AllRecords', uf.AllRecords);
 
