@@ -1,32 +1,3 @@
-
--- phpMyAdmin SQL Dump
--- version 3.5.2.2
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tempo de Geração: 20/03/2017 às 18:14:13
--- Versão do Servidor: 10.0.28-MariaDB
--- Versão do PHP: 5.2.17
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Banco de Dados: `u671429522_oa`
---
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `tbbairro`
---
-
 CREATE TABLE IF NOT EXISTS `tbbairro` (
   `Codigo` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(200) DEFAULT NULL,
@@ -21754,7 +21725,3 @@ INSERT INTO `tbbairro` (`Codigo`, `Nome`) VALUES
 (21701, 'Zumbi'),
 (21702, 'Zumbi do Pacheco'),
 (21703, 'Zumbi dos Palmares');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
