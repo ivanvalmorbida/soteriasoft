@@ -16,10 +16,12 @@ var express = require('express'),
   settings = require("./settings"),
   routes = require('./routes/index'),
   users = require('./routes/users'),
-  cep = require('./routes/cep'),
-  uf = require('./routes/uf'),
   teste = require('./routes/teste'),
+  cep = require('./routes/cep'),
+  estado = require('./routes/estado'),
   cidade = require('./routes/cidade'),
+  bairro = require('./routes/bairro'),
+  endereco = require('./routes/endereco'),
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -117,10 +119,12 @@ app.use('/', routes);
 app.use('/users', users);
 app.get('/cep', cep.index);
 app.get('/teste', teste.index);
-app.get('/cidade/busca/inicio/nome', teste.RecordsOfCityInitial);
-app.get('/uf/busca/inicio/nome', uf.search_nome);
+app.get('/estado/inicio/nome', estado.EstadosInicioNome);
+app.get('/cidade/inicio/nome', cidade.CidadesInicioNome);
+app.get('/bairro/inicio/nome', bairro.BairrosInicioNome);
+app.get('/endereco/inicio/nome', endereco.EnderecosInicioNome);
 
-app.get('/dados/uf/AllRecords', uf.AllRecords);
+app.get('/estado/Estados', estado.Estados);
 
 //app.post('/dados/cidade/search_nome', cidade.search_nome);
 //app.get('/err404', err404.index);

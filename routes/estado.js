@@ -3,19 +3,19 @@ var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 
-exports.AllRecords = function (req, res) {
+exports.Estados = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
     connection.query('SELECT * from tbuf', function(err, rows, fields) {
         if (!err)
-            res.json({AllRecords: rows})
+            res.json({Estados: rows})
         else
             console.log('Error while performing Query.')
     });
 }
 
-exports.search_nome = function (req, res) {
+exports.EstadosInicioNome = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var txt = req.query.txt;
 

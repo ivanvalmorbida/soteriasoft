@@ -3,7 +3,7 @@ var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 
-exports.AllRecords = function (req, res) {
+exports.Cidades = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
@@ -15,7 +15,7 @@ exports.AllRecords = function (req, res) {
     });
 }
 
-exports.RecordsOfState = function (req, res) {
+exports.CidadesEstado = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
 
@@ -31,18 +31,33 @@ exports.RecordsOfState = function (req, res) {
     });
 }
 
-exports.search_nome = function (req, res) {
+exports.CidadesInicioNome = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
-    var data = req.body;
+    var txt = req.query.txt;
+
+    connection.connect();
+    connection.query("select codigo,nome from tbcidade where nome like '"+
+    txt+"%' order by nome LIMIT 20", function(err, rows) {
+        if (!err)
+            return res.json(rows)
+        else
+            console.log('Error while performing Query.')
+    });
+}
+
+exports.CidadeEstadoInicioNome = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var txt = req.query.txt;
+    var est = req.query.est;
 
     connection.connect();
     connection.query('select ci.codigo, ci.nome from tbcep as ce'+
     ' inner join tbcidade as ci on ce.cidade=ci.codigo'+
-    " where ce.uf=? and ci.nome like '"+data.no+"%'"+
+    " where ce.uf=? and ci.nome like '"+txt+"%'"+
     " group by ci.codigo, ci.Nome order by ci.nome LIMIT 20", 
-    [data.uf], function(err, rows) {
+    [est], function(err, rows) {
         if (!err)
-            res.json({search_nome: rows})
+            return res.json(rows)
         else
             console.log('Error while performing Query.')
     });

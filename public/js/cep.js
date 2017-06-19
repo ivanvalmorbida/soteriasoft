@@ -1,22 +1,20 @@
 angular.module('BlankApp', ['ngMaterial'])
 .controller('AppCtrl', function($http,$scope) {
     $scope.cep = null;
-    $scope.cid = null;
-    $scope.est = null;
+    $scope.com = null;
 
     $scope.QueryEst = function(StrSearch) {
-        return $http.get('/uf/busca/inicio/nome', {
+        return $http.get('/estado/inicio/nome', {
         params: {
             txt: StrSearch
         }
         }).then(function(data) {
-            //console.dir(data.data);
-            return data.data;
+            return data.data
         });
     };
 
     $scope.QueryCid = function(StrSearch) {
-        return $http.get('/cidade/busca/inicio/nome', {
+        return $http.get('/cidade/inicio/nome', {
         params: {
             txt: StrSearch
         }
@@ -27,7 +25,7 @@ angular.module('BlankApp', ['ngMaterial'])
     };
 
     $scope.QueryBai = function(StrSearch) {
-        return $http.get('/bairro/busca/inicio/nome', {
+        return $http.get('/bairro/inicio/nome', {
         params: {
             txt: StrSearch
         }
@@ -38,7 +36,7 @@ angular.module('BlankApp', ['ngMaterial'])
     };
 
     $scope.QueryEnd = function(StrSearch) {
-        return $http.get('/endereco/busca/inicio/nome', {
+        return $http.get('/endereco/inicio/nome', {
         params: {
             txt: StrSearch
         }
