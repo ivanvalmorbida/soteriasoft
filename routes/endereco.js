@@ -36,7 +36,7 @@ exports.EnderecosInicioNome = function (req, res) {
     var txt = req.query.txt;
 
     connection.connect();
-    connection.query("select codigo,nome from tbendereco Where nome like '"+
+    connection.query("select codigo,nome from tbendereco Where nome like '%"+
     txt+"%' order by Nome LIMIT 20;", function(err, rows) {
         if (!err)
             return res.json(rows)

@@ -25,7 +25,7 @@ html(lang='pt-br')
             md-input-container
               label CEP
               input(ng-model='cep', ui-cep)
-            md-autocomplete(
+            md-autocomplete(flex='',
               md-selected-item='SelEst',
               md-min-length='1', 
               md-search-text='SearchEst', 
@@ -34,7 +34,7 @@ html(lang='pt-br')
               md-item-text='item.nome')
               md-item-template
                 span(md-highlight-text='SearchEst') {{item.nome}}
-            md-autocomplete(
+            md-autocomplete(flex='',
               md-selected-item='SelCid',
               md-min-length='3', 
               md-search-text='SearchCid', 
@@ -45,25 +45,25 @@ html(lang='pt-br')
                 span(md-highlight-text='SearchCid') {{item.nome}}
           
           div(layout-gt-sm='row')
-            md-autocomplete(
+            md-autocomplete(flex='',
               md-selected-item='SelBai',
-              md-min-length='4', 
+              md-min-length='3', 
               md-search-text='SearchBai', 
               md-items='item in QueryBai(SearchBai)',
               md-floating-label='Bairro',
               md-item-text='item.nome')
               md-item-template
                 span(md-highlight-text='SearchBai') {{item.nome}}
-            md-autocomplete(
+            md-autocomplete(flex='',
               md-selected-item='SelEnd',
-              md-min-length='4', 
+              md-min-length='3', 
               md-search-text='SearchEnd', 
               md-items='item in QueryEnd(SearchEnd)',
               md-floating-label='Endereço',
               md-item-text='item.nome')
               md-item-template
                 span(md-highlight-text='SearchEnd') {{item.nome}}
-            md-input-container
+            md-input-container(flex='')
               label Complemento
               input(type='text')
 
