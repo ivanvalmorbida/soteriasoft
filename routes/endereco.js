@@ -7,7 +7,7 @@ exports.Enderecos = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
-    connection.query('select codigo,nome from tbendereco order by nome', function(err, rows) {
+    connection.query('select codigo,nome from tb_endereco order by nome', function(err, rows) {
         if (!err) 
             res.json({AllRecords: rows})
         else
@@ -21,7 +21,7 @@ exports.EnderecosCidade = function (req, res) {
 
     connection.connect();
     connection.query('Select en.codigo, en.nome from tbcep as ce'+
-    ' inner join tbendereco as en on ce.endereco=en.codigo'+
+    ' inner join tb_endereco as en on ce.endereco=en.codigo'+
     ' where ce.uf=? And ce.cidade=? group by en.codigo, en.Nome'+
     ' order by en.Nome;', [data.uf, data.ci], function(err, rows) {
         if (!err) 
@@ -36,7 +36,7 @@ exports.EnderecosInicioNome = function (req, res) {
     var txt = req.query.txt;
 
     connection.connect();
-    connection.query("select codigo,nome from tbendereco Where nome like '%"+
+    connection.query("select codigo,nome from tb_endereco Where nome like '%"+
     txt+"%' order by Nome LIMIT 20;", function(err, rows) {
         if (!err)
             return res.json(rows)
@@ -53,7 +53,7 @@ exports.EnderecosCidadeInicioNome = function (req, res) {
 
     connection.connect();
     connection.query('Select en.codigo, en.nome from tbcep as ce'+
-    ' inner join tbendereco as en on ce.endereco=en.codigo'+
+    ' inner join tb_endereco as en on ce.endereco=en.codigo'+
     " where ce.uf=? And ce.cidade=? and en.nome like '"+txt+"%'"+
     ' group by en.codigo, en.Nome order by en.Nome LIMIT 20;', 
     [est, cid], function(err, rows) {

@@ -7,7 +7,7 @@ exports.Estados = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
-    connection.query('SELECT * from tbuf', function(err, rows, fields) {
+    connection.query('SELECT * from tb_uf', function(err, rows, fields) {
         if (!err)
             res.json({Estados: rows})
         else
@@ -20,7 +20,7 @@ exports.EstadosInicioNome = function (req, res) {
     var txt = req.query.txt;
 
     connection.connect();
-    connection.query("select codigo, sigla, nome from tbuf"+
+    connection.query("select codigo, sigla, nome from tb_uf"+
     " where nome like '"+txt+"%' order by nome LIMIT 20", function(err, rows) {
         if (!err)
             return res.json(rows)

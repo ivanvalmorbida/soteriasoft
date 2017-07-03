@@ -11,7 +11,7 @@ exports.RecordsOfCityInitial = function (req, res) {
     var txt = req.query.txt;
     var connection = mysql.createConnection(settings.dbConect);
     connection.connect();
-    connection.query("select codigo, nome from tbcidade "+
+    connection.query("select codigo, nome from tb_cidade "+
     " where Nome like '"+txt+"%' LIMIT 30", function(err, rows) {
         if (!err)
             return res.json(rows);

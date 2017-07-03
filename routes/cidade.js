@@ -7,7 +7,7 @@ exports.Cidades = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
-    connection.query('select codigo,nome from tbcidade order by nome', function(err, rows) {
+    connection.query('select codigo,nome from tb_cidade order by nome', function(err, rows) {
         if (!err)
             res.json({AllRecords: rows})
         else
@@ -21,7 +21,7 @@ exports.CidadesEstado = function (req, res) {
 
     connection.connect();
     connection.query('select ci.codigo, ci.nome from tbcep as ce'+
-    ' inner join tbcidade as ci on ce.cidade=ci.codigo'+
+    ' inner join tb_cidade as ci on ce.cidade=ci.codigo'+
     ' where ce.uf=? group by ci.codigo, ci.Nome'+
     ' order by ci.Nome;', [data.uf], function(err, rows) {
         if (!err)
@@ -36,7 +36,7 @@ exports.CidadesInicioNome = function (req, res) {
     var txt = req.query.txt;
 
     connection.connect();
-    connection.query("select codigo,nome from tbcidade where nome like '"+
+    connection.query("select codigo,nome from tb_cidade where nome like '"+
     txt+"%' order by nome LIMIT 20", function(err, rows) {
         if (!err)
             return res.json(rows)
@@ -52,7 +52,7 @@ exports.CidadeEstadoInicioNome = function (req, res) {
 
     connection.connect();
     connection.query('select ci.codigo, ci.nome from tbcep as ce'+
-    ' inner join tbcidade as ci on ce.cidade=ci.codigo'+
+    ' inner join tb_cidade as ci on ce.cidade=ci.codigo'+
     " where ce.uf=? and ci.nome like '"+txt+"%'"+
     " group by ci.codigo, ci.Nome order by ci.nome LIMIT 20", 
     [est], function(err, rows) {

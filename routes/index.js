@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
 
   connection.connect();
 
-  connection.query('SELECT * from tbuf', function(err, rows, fields) {
+  connection.query('SELECT * from tb_uf', function(err, rows, fields) {
     if (!err)
       console.log('The solution is: ', rows);
     else

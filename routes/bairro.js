@@ -7,7 +7,7 @@ exports.Bairros = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
-    connection.query('select codigo,nome from tbbairro order by nome', function(err, rows) {
+    connection.query('select codigo,nome from tb_bairro order by nome', function(err, rows) {
         if (!err)
             res.json({AllRecords: rows})
         else
@@ -21,7 +21,7 @@ exports.BairrosCidade = function (req, res) {
 
     connection.connect();
     connection.query('Select ba.codigo, ba.nome from tbcep as ce'+
-    ' inner join tbbairro as ba on ce.bairro=ba.codigo'+
+    ' inner join tb_bairro as ba on ce.bairro=ba.codigo'+
     ' where ce.uf=? And ce.cidade=? group by ba.codigo, ba.Nome'+
     ' order by ba.Nome;', [data.uf, data.ci], function(err, rows) {
         if (!err)
@@ -36,7 +36,7 @@ exports.BairrosInicioNome = function (req, res) {
     var txt = req.query.txt;
 
     connection.connect();
-    connection.query("select codigo,nome from tbbairro Where nome like '"+
+    connection.query("select codigo,nome from tb_bairro Where nome like '"+
     txt+"%' order by Nome LIMIT 20;", function(err, rows) {
         if (!err)
             return res.json(rows)
@@ -53,7 +53,7 @@ exports.BairrosCidadeInicioNome = function (req, res) {
 
     connection.connect();
     connection.query('Select ba.codigo, ba.nome from tbcep as ce'+
-    ' inner join tbbairro as ba on ce.bairro=ba.codigo'+
+    ' inner join tb_bairro as ba on ce.bairro=ba.codigo'+
     " where ce.uf=? And ce.cidade=? and ba.nome like '"+txt+"%'"+
     ' group by ba.codigo, ba.Nome order by ba.Nome LIMIT 20;', 
     [est, cid], function(err, rows) {
