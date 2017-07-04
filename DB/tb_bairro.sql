@@ -1,3 +1,4 @@
+<<<<<<< HEAD:DB/tb_bairro.sql
 
 -- phpMyAdmin SQL Dump
 -- version 3.5.2.2
@@ -28,6 +29,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `tb_bairro` (
+=======
+CREATE TABLE IF NOT EXISTS `tbbairro` (
+>>>>>>> 5dc97c4965ec59d63c068470d852b44b18c8900f:DB/tbbairro.sql
   `Codigo` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`Codigo`),
@@ -21754,7 +21758,3 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (21701, 'Zumbi'),
 (21702, 'Zumbi do Pacheco'),
 (21703, 'Zumbi dos Palmares');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

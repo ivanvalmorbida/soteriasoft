@@ -22,10 +22,10 @@ exports.httpMsgsFormat = "HTML";
 exports.webservice = function (modulo) {
     return "http://172.16.171.251/webservice/" + modulo + ".asmx?wsdl"
 };
-//
-// https://git-scm.com/download
-// git remote add origin https://github.com/ivanvalmorbida/site636.git
 // git config --global credential.helper wincred
 // git config --global user.email "ivanvalmorbida@gmail.com"
 // git config --global user.name "ivanvalmorbida"
-// git clone https://github.com/ivanvalmorbida/site636.git
+// git clone https://github.com/ivanvalmorbida/soteriasoft.git
+
+// https://git-scm.com/download
+// git remote add origin https://github.com/ivanvalmorbida/soteriasoft.git

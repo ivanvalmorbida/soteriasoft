@@ -1,3 +1,4 @@
+<<<<<<< HEAD:DB/tb_cidade.sql
 
 -- phpMyAdmin SQL Dump
 -- version 3.5.2.2
@@ -28,6 +29,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `tb_cidade` (
+=======
+CREATE TABLE IF NOT EXISTS `tbcidade` (
+>>>>>>> 5dc97c4965ec59d63c068470d852b44b18c8900f:DB/tbcidade.sql
   `Codigo` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`Codigo`),
@@ -8882,7 +8886,3 @@ INSERT INTO `tb_cidade` (`Codigo`, `Nome`) VALUES
 (8838, 'Zelândia'),
 (8839, 'Zito Soares'),
 (8840, 'Zortéa');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
