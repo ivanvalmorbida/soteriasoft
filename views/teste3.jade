@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title Basic Usage
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic')
+    link(rel='stylesheet prefetch', href='https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.4/angular-material.css')
+    link(rel='stylesheet prefetch', href='https://material.angularjs.org/1.1.4/docs.css')
+  body
+    div(ng-controller='DemoCtrl', layout='column', ng-cloak='', ng-app='MyApp')
+      p
+        | {{selectedItem}}
+      md-content.md-padding
+        md-autocomplete(
+          md-selected-item='selectedItem',
+          md-min-length='4', 
+          md-search-text='searchText', 
+          md-items='item in query(searchText)',
+          md-item-text='item.nome')
+          md-item-template
+            span(md-highlight-text='searchText') {{item.nome}}
+
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js')
+    script(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js')
+    script(src='https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.4/angular-material.js')
+    script.
+      var app = angular.module('MyApp', ["ngMaterial"]);
+      app.controller('DemoCtrl', function($http,$scope) {
+        $scope.query = function(searchText) {
+          return $http.get('/cidade/busca/inicio/nome', {
+            params: {
+              txt: searchText
+            }
+          }).then(function(data) {
+              console.dir(data.data);
+              return data.data;
+            });
+        };
+      });

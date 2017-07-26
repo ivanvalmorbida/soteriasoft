@@ -7,7 +7,7 @@ exports.index = function (req, res) {
     res.render('teste');
 };
 
-exports.RecordsOfCityInitial = function (req, res) {
+/*exports.RecordsOfCityInitial = function (req, res) {
     var txt = req.query.txt;
     var connection = mysql.createConnection(settings.dbConect);
     connection.connect();
@@ -18,4 +18,4 @@ exports.RecordsOfCityInitial = function (req, res) {
         else
             console.log('Error while performing Query.');
     });   
-};
+};*/
