@@ -4,18 +4,27 @@ var settings = require("../settings");
 var mysql   = require('mysql');
 
 exports.index = function (req, res) {
-    res.render('teste');
+    res.render('testex');
 };
 
-/*exports.RecordsOfCityInitial = function (req, res) {
+exports.AjustarTabela = function (req, res) {
     var txt = req.query.txt;
+    var strsql = '', strset = '', strsub = '';
     var connection = mysql.createConnection(settings.dbConect);
     connection.connect();
-    connection.query("select codigo, nome from tb_cidade "+
-    " where Nome like '"+txt+"%' LIMIT 30", function(err, rows) {
-        if (!err)
-            return res.json(rows);
-        else
-            console.log('Error while performing Query.');
+    connection.query("SELECT codigo,setor,subsetor FROM tb_atividade_economica", function(err, rows) {
+        if (!err){
+            for (i = 0; i < rows.length; i++) {
+                if (rows[i].setor.trim()!=''){strset=rows[i].setor}
+                if (rows[i].subsetor.trim()!=''){strsub=rows[i].subsetor}
+
+                strsql = "Update tb_atividade_economica set setor='"+strset+
+                "', subsetor='"+strsub+"' Where codigo="+rows[i].codigo;
+                connection.query(strsql, function(err2, rows2) {
+                    console.dir(err2);
+                });
+            }
+            res.json({data: rows});
+        }
     });   
-};*/
+};

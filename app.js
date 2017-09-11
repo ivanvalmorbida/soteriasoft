@@ -119,6 +119,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.get('/cep', cep.index);
 app.get('/teste', teste.index);
+app.get('/teste/x', teste.AjustarTabela);
 app.get('/estado/inicio/nome', estado.EstadosInicioNome);
 app.get('/cidade/inicio/nome', cidade.CidadesInicioNome);
 app.get('/bairro/inicio/nome', bairro.BairrosInicioNome);
