@@ -7,15 +7,44 @@ exports.index = function (req, res) {
     res.render('ceps');
 };
 
-exports.RecordsOfCep = function (req, res) {
+exports.cep_gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
 
+    data.cep = data.cep.replace("-", "");
+
     connection.connect();
 
-    connection.query('Select * from tbcep where cep=?;', [data.cep], function(err, rows) {
+    connection.query('insert into tb_cep (cep, estado, cidade, bairro, endereco, complemento)'+
+        ' values (?, ?, ?, ?, ?, ?)', 
+        [data.cep, data.estado, data.cidade, data.bairro, data.endereco, data.complemeto], 
+    function(err, rows) {
         if (!err) {
-            res.json({RecordsOfCep: rows})
+            res.json({dados: rows})            
+        }
+        else
+            console.log('Error while performing Query.')
+    })
+}
+
+exports.cep_cep = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var data = req.body;
+    var cep = data.cep;
+
+    cep = cep.replace("-", "");
+
+    connection.connect();
+
+    connection.query('SELECT c.*, u.nome as estado_, m.nome as cidade_,'+
+        ' b.nome as bairro_, e.nome as endereco_'+
+        ' FROM tb_cep c inner join tb_uf u on u.codigo=c.estado'+
+        ' inner join tb_cidade m on m.codigo=c.cidade'+
+        ' inner join tb_bairro b on b.codigo=c.bairro'+
+        ' inner join tb_endereco e on e.codigo=c.endereco where c.cep=?;', [cep], 
+    function(err, rows) {
+        if (!err) {
+            res.json({dados: []})            
         }
         else
             console.log('Error while performing Query.')
@@ -28,8 +57,8 @@ exports.RecordsOfCriteria = function (req, res) {
     var strSQL = '';
     var params = [];
 
-    if (data.uf!='0' && typeof data.uf!='undefined') {
-        strSQL += ' And uf=?';
+    if (data.estado!='0' && typeof data.estado!='undefined') {
+        strSQL += ' And estado=?';
         params.push(data.uf);
     }
 

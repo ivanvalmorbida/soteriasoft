@@ -124,8 +124,10 @@ app.get('/estado/inicio/nome', estado.EstadosInicioNome);
 app.get('/cidade/inicio/nome', cidade.CidadesInicioNome);
 app.get('/bairro/inicio/nome', bairro.BairrosInicioNome);
 app.get('/endereco/inicio/nome', endereco.EnderecosInicioNome);
-
 app.get('/estado/Estados', estado.Estados);
+
+app.post('/cep/cep_cep', cep.cep_cep);
+app.post('/cep/cep_gravar', cep.cep_gravar);
 
 //app.post('/dados/cidade/search_nome', cidade.search_nome);
 //app.get('/err404', err404.index);
