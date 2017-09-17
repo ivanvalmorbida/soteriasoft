@@ -14,6 +14,33 @@ exports.cep_gravar = function (req, res) {
     data.cep = data.cep.replace("-", "");
 
     connection.connect();
+    connection.query('select cep from tb_cep where cep=?', [data.cep], 
+    function(err, rows) {
+        if (!err) {
+            if (rows.length == 0) {
+                connection.query('insert into tb_cep (cep, estado, cidade, bairro, endereco, complemento)'+
+                ' values (?, ?, ?, ?, ?, ?)', [data.cep, data.estado, data.cidade, data.bairro, 
+                data.endereco, data.complemento], function(err, rows) {
+                    if (!err)
+                        res.json({dados: rows})            
+                    else
+                        console.log('Error while performing Query.')
+                })
+            }   
+            else {
+                connection.query('update tb_cep set estado=?, cidade=?, bairro=?, endereco=?,'+
+                'complemento=? where cep=?', [data.estado, data.cidade, data.bairro, data.endereco, 
+                data.complemento, data.cep], function(err, rows) {
+                    if (!err)
+                        res.json({dados: rows})            
+                    else
+                        console.log('Error while performing Query.')
+                })
+            }         
+        }
+        else
+            console.log('Error while performing Query.')
+    })
 
     connection.query('insert into tb_cep (cep, estado, cidade, bairro, endereco, complemento)'+
         ' values (?, ?, ?, ?, ?, ?)', 
@@ -38,14 +65,13 @@ exports.cep_cep = function (req, res) {
 
     connection.query('SELECT c.*, u.nome as estado_, m.nome as cidade_,'+
         ' b.nome as bairro_, e.nome as endereco_'+
-        ' FROM tb_cep c inner join tb_uf u on u.codigo=c.estado'+
+        ' FROM tb_cep c inner join tb_estado u on u.codigo=c.estado'+
         ' inner join tb_cidade m on m.codigo=c.cidade'+
         ' inner join tb_bairro b on b.codigo=c.bairro'+
         ' inner join tb_endereco e on e.codigo=c.endereco where c.cep=?;', [cep], 
     function(err, rows) {
-        if (!err) {
-            res.json({dados: []})            
-        }
+        if (!err)
+            res.json({dados: rows})            
         else
             console.log('Error while performing Query.')
     })

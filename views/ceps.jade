@@ -2,6 +2,7 @@ html(lang='pt-br')
   head
     link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css')
+    link(rel='stylesheet', href='css/cep.css')
     
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
@@ -9,7 +10,8 @@ html(lang='pt-br')
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')
-    //script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.5/angular-locale_pt-br.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
     script(src='js/cep.js')
 
   body
@@ -29,7 +31,7 @@ html(lang='pt-br')
               md-selected-item='estado',
               md-min-length='1', 
               md-search-text='SearchEst', 
-              md-items='item in QueryEst(SearchEst)',
+              md-items='item in EstadoNome(SearchEst)',
               md-floating-label='Estado',
               md-item-text='item.nome')
               md-item-template
@@ -39,7 +41,7 @@ html(lang='pt-br')
               md-selected-item='cidade',
               md-min-length='3', 
               md-search-text='SearchCid', 
-              md-items='item in QueryCid(SearchCid)',
+              md-items='item in CidadeNome(SearchCid)',
               md-floating-label='Cidade',
               md-item-text='item.nome')
               md-item-template
@@ -50,7 +52,7 @@ html(lang='pt-br')
               md-selected-item='bairro',
               md-min-length='3', 
               md-search-text='SearchBai', 
-              md-items='item in QueryBai(SearchBai)',
+              md-items='item in BairroNome(SearchBai)',
               md-floating-label='Bairro',
               md-item-text='item.nome')
               md-item-template
@@ -60,7 +62,7 @@ html(lang='pt-br')
               md-selected-item='endereco',
               md-min-length='3', 
               md-search-text='SearchEnd', 
-              md-items='item in QueryEnd(SearchEnd)',
+              md-items='item in EnderecoNome(SearchEnd)',
               md-floating-label='Endereço',
               md-item-text='item.nome')
               md-item-template
@@ -70,8 +72,72 @@ html(lang='pt-br')
               label Complemento
               input(ng-model='complemento', type='text')
 
+
           div(layout='row', layout-align='start', flex='')
             md-button.md-raised(ng-click='Limpar(true)') Adicionar
             md-button.md-raised.md-primary(ng-click='Gravar()') Gravar
-            md-button.md-raised.md-warn.md-hue-1(ng-click='apagar()') Apagar
-            md-button.md-raised.md-primary.md-hue-3(ng-click='localizar()') Localizar                        
+            md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()') Apagar
+            md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar
+
+        #myModalLocalizar.modal.fade(role='dialog')
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button.close(type='button', data-dismiss='modal') ×
+                h4.modal-title Localizar CEPs
+              .modal-body
+                div(layout-gt-sm='row')
+                  md-autocomplete(flex='',
+                    md-selected-item='l_estado',
+                    md-min-length='1', 
+                    md-search-text='l_SearchEst', 
+                    md-items='item in EstadoSigla(l_SearchEst)',
+                    md-floating-label='Estado',
+                    md-item-text='item.sigla')
+                    md-item-template
+                      span(md-highlight-text='l_SearchEst') {{item.sigla}}
+
+                  md-autocomplete(flex='',
+                    ng-disabled='l_estado==undefined',
+                    md-selected-item='l_cidade',
+                    md-min-length='2', 
+                    md-search-text='l_SearchCid', 
+                    md-items='item in CidadeEstadoNome(l_SearchCid)',
+                    md-floating-label='Cidade',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='l_SearchCid') {{item.nome}}
+
+                  md-autocomplete(flex='',
+                    ng-disabled='l_cidade==undefined',
+                    md-selected-item='l_endereco',
+                    md-min-length='3', 
+                    md-search-text='l_SearchEnd', 
+                    md-items='item in EnderecoCidadeNome(l_SearchEnd)',
+                    md-floating-label='Endereço',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='l_SearchEnd') {{item.nome}}
+
+                  #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
+                    ng-click='LocalizarExe()',
+                    ng-disabled='l_endereco==undefined') Executar
+
+                div(layout-gt-sm='row')
+                  table
+                    tr
+                      td
+                        | CEP
+                      td
+                        | UF
+                      td
+                        | Cidade
+                      td
+                        | Bairro
+                      td
+                        | Endereço
+                      td
+                        | Complemento
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Fechar
+                        

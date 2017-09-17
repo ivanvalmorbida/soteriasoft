@@ -31,7 +31,7 @@ exports.BairrosCidade = function (req, res) {
     })
 }
 
-exports.BairrosInicioNome = function (req, res) {
+exports.bairro_nome = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var txt = req.query.txt;
 
