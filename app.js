@@ -132,6 +132,7 @@ app.get('/estado/estado_todos', estado.estado_todos);
 app.post('/cep/cep_cep', cep.cep_cep);
 app.post('/cep/cep_endereco', cep.cep_endereco);
 app.post('/cep/cep_gravar', cep.cep_gravar);
+app.post('/cep/cep_apagar', cep.cep_apagar);
 //app.get('/err404', err404.index);
 app.get('*', routes);
 

@@ -7,6 +7,23 @@ exports.index = function (req, res) {
     res.render('ceps');
 };
 
+exports.cep_apagar = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var data = req.body;
+
+    data.cep = data.cep.replace("-", "");
+
+    connection.connect();
+    connection.query('delete from tb_cep where cep=?', [data.cep], 
+    function(err, rows) {
+        if (!err) {
+            res.json({dados: rows})  
+        }
+        else
+            console.log('Error while performing Query.')
+    })
+}
+
 exports.cep_gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;

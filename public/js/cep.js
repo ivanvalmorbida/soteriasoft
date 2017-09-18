@@ -9,7 +9,13 @@ angular.module('BlankApp', ['ngMaterial'])
     }  
 
     $scope.ApagarEfetivar = function(cep) {
-        $('#myModalApagar').modal('show');
+        $http.post('/cep/cep_apagar', {cep: $scope.cep}).
+        success(function (data, status, headers, config) {
+            $scope.Limpar(true);
+            $('#myModalApagar').modal('hide');
+        }).error(function (data, status, headers, config) {
+            //
+        });  
     }
     
     $scope.Apagar = function(cep) {
