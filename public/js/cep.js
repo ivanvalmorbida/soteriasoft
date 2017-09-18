@@ -1,5 +1,27 @@
 angular.module('BlankApp', ['ngMaterial'])
 .controller('AppCtrl', function($http,$scope) {
+    function format(mask, number) {
+        var s = ''+number, r = '';
+        for (var im=0, is = 0; im<mask.length && is<s.length; im++) {
+          r += mask.charAt(im)=='#' ? s.charAt(is++) : mask.charAt(im);
+        }
+        return r;
+    }  
+
+    $scope.ApagarEfetivar = function(cep) {
+        $('#myModalApagar').modal('show');
+    }
+    
+    $scope.Apagar = function(cep) {
+        $('#myModalApagar').modal('show');
+    }
+    
+    $scope.ExibirCEP = function(cep) {
+        $scope.cep = format('#####-###', cep);
+        $scope.BuscarCEP();
+        $('#myModalLocalizar').modal('hide');
+    }
+
     $scope.Limpar = function(booCep) {
         if(booCep==true){$scope.cep = null};
         $scope.complemento  = null;
@@ -115,6 +137,16 @@ angular.module('BlankApp', ['ngMaterial'])
         }).then(function(data) {
             return data.data;
         });
+    };    
+
+    $scope.LocalizarExe = function() {
+        $http.post('/cep/cep_endereco', { estado: $scope.l_estado.codigo,
+        cidade: $scope.l_cidade.codigo, endereco: $scope.l_endereco.codigo}).
+        success(function (data, status, headers, config) {
+            $scope.l_dados = data.dados;
+        }).error(function (data, status, headers, config) {
+            //
+        }); 
     };
     
     $scope.Limpar(); 

@@ -3,19 +3,19 @@ var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 
-exports.CBOTodos = function (req, res) {
+exports.cbo_todos = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
     connection.query('SELECT * from tb_cbo order by descricao', function(err, rows, fields) {
         if (!err)
-            res.json({CBOTodos: rows})
+            res.json({cbo_todos: rows})
         else
             console.log('Error while performing Query.')
     });
 }
 
-exports.CBODescricao = function (req, res) {
+exports.cbo_descricao = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var txt = req.query.txt;
 

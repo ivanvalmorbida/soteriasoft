@@ -75,14 +75,28 @@ html(lang='pt-br')
 
           div(layout='row', layout-align='start', flex='')
             md-button.md-raised(ng-click='Limpar(true)') Adicionar
-            md-button.md-raised.md-primary(ng-click='Gravar()') Gravar
-            md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()') Apagar
+            md-button.md-raised.md-primary(ng-click='Gravar()',
+            ng-disabled='cep.length<9 || cep==undefined || estado==undefined || cidade==undefined || bairro==undefined || endereco==undefined',) Gravar
+            md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()',
+            ng-disabled='cep.length<9 || cep==undefined || estado==undefined || cidade==undefined || bairro==undefined || endereco==undefined') Apagar
             md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar
 
+        #myModalApagar.modal.fade(role='dialog')
+          .modal-dialog
+            .modal-content
+              .modal-header(style='background-color: #ff6666;')
+                button.close(type='button', data-dismiss='modal') ×
+                h4.modal-title Apagar registro de Código de Endereço Postal
+              .modal-body
+                | Confirma a remoção deste registro, CEP: {{cep}}?
+              .modal-footer
+                md-button.md-raised.md-warn.md-hue-1(ng-click='ApagarEfetivar()') Efetivar
+                md-button.md-raised(type='button', data-dismiss='modal') Cancelar              
+              
         #myModalLocalizar.modal.fade(role='dialog')
           .modal-dialog
             .modal-content
-              .modal-header
+              .modal-header(style='background-color: #99ccff;')
                 button.close(type='button', data-dismiss='modal') ×
                 h4.modal-title Localizar CEPs
               .modal-body
@@ -124,20 +138,32 @@ html(lang='pt-br')
                     ng-disabled='l_endereco==undefined') Executar
 
                 div(layout-gt-sm='row')
-                  table
+                  table(style='width: 100%')
                     tr
-                      td
+                      td(style='width: 10%')
                         | CEP
-                      td
+                      td(style='width: 15%')
                         | UF
-                      td
+                      td(style='width: 15%')
                         | Cidade
-                      td
+                      td(style='width: 20%')
                         | Bairro
-                      td
+                      td(style='width: 20%')
                         | Endereço
-                      td
+                      td(style='width: 20%')
                         | Complemento
+                    tr(ng-repeat="d in l_dados")
+                      td
+                        a(ng-click='ExibirCEP(d.cep)') {{d.cep}}
+                      td
+                        | {{d.estado_}}
+                      td
+                        | {{d.cidade_}}
+                      td
+                        | {{d.bairro_}}
+                      td
+                        | {{d.endereco_}}
+                      td
+                        | {{d.complemento}}
               .modal-footer
                 button.btn.btn-default(type='button', data-dismiss='modal') Fechar
-                        

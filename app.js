@@ -130,9 +130,8 @@ app.get('/endereco/endereco_cidade_nome', endereco.endereco_cidade_nome);
 app.get('/estado/estado_todos', estado.estado_todos);
 
 app.post('/cep/cep_cep', cep.cep_cep);
+app.post('/cep/cep_endereco', cep.cep_endereco);
 app.post('/cep/cep_gravar', cep.cep_gravar);
-
-//app.post('/dados/cidade/search_nome', cidade.search_nome);
 //app.get('/err404', err404.index);
 app.get('*', routes);
 

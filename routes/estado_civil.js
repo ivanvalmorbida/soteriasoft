@@ -3,19 +3,19 @@ var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 
-exports.EstadoCivilTodos = function (req, res) {
+exports.estado_civil_todos = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
     connection.query('SELECT * from tb_estado_civil order by descricao', function(err, rows, fields) {
         if (!err)
-            res.json({EstadoCivilTodos: rows})
+            res.json({estado_civil_todos: rows})
         else
             console.log('Error while performing Query.')
     });
 }
 
-exports.EstadoCivilDescricao = function (req, res) {
+exports.estado_civil_descricao = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var txt = req.query.txt;
 

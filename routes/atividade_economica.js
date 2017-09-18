@@ -3,19 +3,19 @@ var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 
-exports.AtividadeEconomicaTodas = function (req, res) {
+exports.atividade_economica_todas = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
 
     connection.connect();
     connection.query('SELECT * from tb_atividade_economica order by descricao', function(err, rows, fields) {
         if (!err)
-            res.json({AtividadeEconomicaTodas: rows})
+            res.json({atividade_economica_todas: rows})
         else
             console.log('Error while performing Query.')
     });
 }
 
-exports.AtividadeEconomicaDescricao = function (req, res) {
+exports.atividade_economica_descricao = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var txt = req.query.txt;
 
