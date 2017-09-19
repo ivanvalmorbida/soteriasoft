@@ -22,6 +22,7 @@ var express = require('express'),
   cidade = require('./routes/cidade'),
   bairro = require('./routes/bairro'),
   endereco = require('./routes/endereco'),
+  pessoa = require('./routes/pessoa'),
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -128,6 +129,7 @@ app.get('/bairro/bairro_nome', bairro.bairro_nome);
 app.get('/endereco/endereco_nome', endereco.endereco_nome);
 app.get('/endereco/endereco_cidade_nome', endereco.endereco_cidade_nome);
 app.get('/estado/estado_todos', estado.estado_todos);
+app.get('/pessoa', pessoa.index);
 
 app.post('/cep/cep_cep', cep.cep_cep);
 app.post('/cep/cep_endereco', cep.cep_endereco);

@@ -1,4 +1,4 @@
-angular.module('MyApp', ['ngMaterial'])
+angular.module('MyApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
 .controller('AppCtrl', function($http,$scope) {
     function format(mask, number) {
         var s = ''+number, r = '';
