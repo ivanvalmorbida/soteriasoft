@@ -1,5 +1,20 @@
-angular.module('MyApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+angular.module('MyApp', ['ngMaterial'])
 .controller('AppCtrl', function($http,$scope) {
+
+    $scope.emails = [];
+    $scope.fones = [];
+    $scope.tipo = 0;
+
+    $scope.addEmail = function() {
+        $scope.emails.push($scope.email);
+        $scope.email = '';
+    }
+
+    $scope.addFone = function() {
+        $scope.fones.push($scope.fone);
+        $scope.fone = '';
+    }
+    
     function format(mask, number) {
         var s = ''+number, r = '';
         for (var im=0, is = 0; im<mask.length && is<s.length; im++) {
