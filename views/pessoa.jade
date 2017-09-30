@@ -36,7 +36,7 @@ html(lang='pt-br')
                     
                   md-input-container.md-block(flex-gt-sm='')
                     label Nome
-                    input(ng-model='Nome')
+                    input(ng-model='nome')
 
                 div(layout-gt-sm='row')
                   md-input-container
@@ -83,6 +83,10 @@ html(lang='pt-br')
                     md-item-template
                       span(md-highlight-text='SearchEnd') {{item.nome}}
 
+                  md-input-container
+                    label Número
+                    input(ng-model='numero', type='text')
+
                   md-input-container(flex='')
                     label Complemento
                     input(ng-model='complemento', type='text')
@@ -109,6 +113,12 @@ html(lang='pt-br')
             md-tab(label='Dados pessoa física', data-ng-if='tipo==1')
               md-content
                 div(layout-gt-sm='row')
+                  md-input-container
+                    md-radio-group(layout='row', ng-model='sexo')
+                      md-radio-button.md-primary(value='0') Masculino
+                      md-radio-button.md-primary(value='1') Feminino 
+
+                  md-input-container
                     label Data Nasc.
                     md-datepicker(md-hide-icons="calendar", ng-model='Nascimento')
                     
@@ -142,11 +152,6 @@ html(lang='pt-br')
                     md-item-text='item.pais')
                     md-item-template
                       span(md-highlight-text='SearchNac') {{item.pais}}
-
-                  md-input-container
-                    md-radio-group(layout='row', ng-model='sexo')
-                      md-radio-button.md-primary(value='0') Masculino
-                      md-radio-button.md-primary(value='1') Feminino 
                     
                   md-input-container.md-block(flex-gt-sm='')
                     label CPF
@@ -194,7 +199,7 @@ html(lang='pt-br')
 
                 div(layout-gt-sm='row')
                   md-autocomplete(flex='',
-                    md-selected-item='progissao',
+                    md-selected-item='profissao',
                     md-min-length='2', 
                     md-search-text='SearchPro', 
                     md-items='item in ProfDesc(SearchPro)',
@@ -249,9 +254,9 @@ html(lang='pt-br')
                       span(md-highlight-text='SearcrRep') {{item.nome}}
 
           div(layout='row', layout-align='start', flex='')
-            md-button.md-raised(ng-click='Limpar(true)') Adicionar
+            md-button.md-raised(ng-click='Limpar()') Adicionar
             md-button.md-raised.md-primary(ng-click='Gravar()',
-            ng-disabled='cep.length<9 || cep==undefined || estado==undefined || cidade==undefined || bairro==undefined || endereco==undefined',) Gravar
+            ng-disabled='nome==undefined || tipo==undefined') Gravar
             md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()',
             ng-disabled='cep.length<9 || cep==undefined || estado==undefined || cidade==undefined || bairro==undefined || endereco==undefined') Apagar
             md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar

@@ -1,9 +1,41 @@
 angular.module('MyApp', ['ngMaterial'])
 .controller('AppCtrl', function($http,$scope) {
 
-    $scope.emails = [];
-    $scope.fones = [];
-    $scope.tipo = 0;
+    $scope.Limpar = function() {
+        $scope.tipo         = null;
+        $scope.nome         = null;
+        $scope.cep          = null;
+        $scope.estado       = null;
+        $scope.cidade       = null;                
+        $scope.bairro       = null;
+        $scope.endereco     = null;                
+        $scope.numero       = null;
+        $scope.complemento  = null;
+        $scope.emails       = [];
+        $scope.email        = null;
+        $scope.fones        = [];
+        $scope.fone         = null;
+
+        $scope.estadonasc       = null;
+        $scope.cidadenasc       = null;
+        $scope.nacionalidade    = null;
+        $scope.sexo             = null;
+        $scope.cpf              = null;
+        $scope.identidade       = null;
+        $scope.orgaoidentidade  = null;
+        $scope.ufidentidade     = null;
+        $scope.estadocivil      = null;
+        $scope.conjuge          = null;
+        $scope.profissao        = null;
+        $scope.ctps             = null;
+        $scope.pis              = null;
+        
+        $scope.razao            = null;
+        $scope.cnpj             = null;
+        $scope.inscricao        = null;
+        $scope.atividade        = null;
+        $scope.representante    = null;
+    }
 
     $scope.addEmail = function() {
         $scope.emails.push($scope.email);
@@ -43,15 +75,6 @@ angular.module('MyApp', ['ngMaterial'])
         $('#myModalLocalizar').modal('hide');
     }
 
-    $scope.Limpar = function(booCep) {
-        if(booCep==true){$scope.cep = null};
-        $scope.complemento  = null;
-        $scope.estado       = null;
-        $scope.cidade       = null;                
-        $scope.bairro       = null;
-        $scope.endereco     = null;                
-    }
-    
     $scope.BuscarCEP = function() {
         if ($scope.cep.length==9){
             $http.post('/cep/cep_cep', {cep: $scope.cep}).
@@ -171,6 +194,7 @@ angular.module('MyApp', ['ngMaterial'])
     };
     
     $scope.Limpar(); 
+    
 }).config(function($mdDateLocaleProvider) {
     $mdDateLocaleProvider.formatDate = function(date) {
         return date ? moment(date).format('DD/MM/YYYY') : '';
