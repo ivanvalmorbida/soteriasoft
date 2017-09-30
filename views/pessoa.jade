@@ -126,7 +126,7 @@ html(lang='pt-br')
                     md-selected-item='estadonasc',
                     md-min-length='1', 
                     md-search-text='SearchUFN', 
-                    md-items='item in EstadoNasc(SearchUFN)',
+                    md-items='item in EstadoNome(SearchUFN)',
                     md-floating-label='Estado de Nascimento',
                     md-item-text='item.nome')
                     md-item-template
@@ -147,7 +147,7 @@ html(lang='pt-br')
                     md-selected-item='nacionalidade',
                     md-min-length='1', 
                     md-search-text='SearchNac', 
-                    md-items='item in CidadeNac(SearchNac)',
+                    md-items='item in NacionalidadePais(SearchNac)',
                     md-floating-label='Nacionalidade',
                     md-item-text='item.pais')
                     md-item-template
@@ -181,7 +181,7 @@ html(lang='pt-br')
                     md-selected-item='estadocivil',
                     md-min-length='1', 
                     md-search-text='SearchCiv', 
-                    md-items='item in EstadoNome(SearchCiv)',
+                    md-items='item in EstadoCivilDescricao(SearchCiv)',
                     md-floating-label='Estado Civil',
                     md-item-text='item.descricao')
                     md-item-template
@@ -202,7 +202,7 @@ html(lang='pt-br')
                     md-selected-item='profissao',
                     md-min-length='2', 
                     md-search-text='SearchPro', 
-                    md-items='item in ProfDesc(SearchPro)',
+                    md-items='item in CBODescricao(SearchPro)',
                     md-floating-label='Profissão',
                     md-item-text='item.descricao')
                     md-item-template

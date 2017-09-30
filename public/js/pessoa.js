@@ -110,6 +110,36 @@ angular.module('MyApp', ['ngMaterial'])
         $('#myModalLocalizar').modal('show'); 
     }
 
+    $scope.CBODescricao = function(StrSearch) {
+        return $http.get('/cbo/cbo_descricao', {
+        params: {
+            txt: StrSearch
+        }
+        }).then(function(data) {
+            return data.data
+        });
+    };
+    
+    $scope.EstadoCivilDescricao = function(StrSearch) {
+        return $http.get('/estado_civil/estado_civil_descricao', {
+        params: {
+            txt: StrSearch
+        }
+        }).then(function(data) {
+            return data.data
+        });
+    };
+
+    $scope.NacionalidadePais = function(StrSearch) {
+        return $http.get('/nacionalidade/nacionalidade_pais', {
+        params: {
+            txt: StrSearch
+        }
+        }).then(function(data) {
+            return data.data
+        });
+    };
+
     $scope.EstadoNome = function(StrSearch) {
         return $http.get('/estado/estado_nome', {
         params: {

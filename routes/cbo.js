@@ -20,7 +20,7 @@ exports.cbo_descricao = function (req, res) {
     var txt = req.query.txt;
 
     connection.connect();
-    connection.query("select codigo, descricao from tb_cbo"+
+    connection.query("select cbo, descricao from tb_cbo"+
     " where descricao like '"+txt+"%' order by descricao LIMIT 20", function(err, rows) {
         if (!err)
             return res.json(rows)
