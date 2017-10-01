@@ -58,17 +58,6 @@ exports.cep_gravar = function (req, res) {
         else
             console.log('Error while performing Query.')
     })
-
-    connection.query('insert into tb_cep (cep, estado, cidade, bairro, endereco, complemento)'+
-        ' values (?, ?, ?, ?, ?, ?)', 
-        [data.cep, data.estado, data.cidade, data.bairro, data.endereco, data.complemeto], 
-    function(err, rows) {
-        if (!err) {
-            res.json({dados: rows})            
-        }
-        else
-            console.log('Error while performing Query.')
-    })
 }
 
 exports.cep_cep = function (req, res) {

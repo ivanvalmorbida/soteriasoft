@@ -7,6 +7,38 @@ exports.index = function (req, res) {
     res.render('pessoa');
 };
 
+exports.gravar = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var data = req.body;
+
+    data.cep = data.cep.replace("-", "");
+
+    connection.connect();
+    if (data.codigo==0) {
+        connection.query('insert into tb_pessoa (tipo, nome, cep, estado, cidade,'+
+        ' bairro, endereco, numero, complemento, obs, cadastro)'+
+        ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now());', 
+        [data.tipo, data.nome, data.cep, data.estado, data.cidade, data.bairro, 
+        data.endereco, data.numero, data.complemento, data.obs], function(err, rows) {
+            if (!err)
+                res.json({dados: rows})            
+            else
+                console.log('Error while performing Query: '+err)
+        })
+    }   
+    else {
+        connection.query('update tb_pessoa set tipo=?, nome=?, cep=?, estado=?, cidade=?,'+
+        'bairro=?, endereco=?, numero=?, complemento=? obs=? where codigo=?',
+        [data.tipo, data.nome, data.cep, data.estado, data.cidade, data.bairro, 
+        data.endereco, data.numero, data.complemento, data.obs, data.codigo], function(err, rows) {
+            if (!err)
+                res.json({dados: rows})            
+            else
+                console.log('Error while performing Query.')
+        })
+    }         
+}
+
 exports.pessoa_uma = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var cod = req.query.cod;

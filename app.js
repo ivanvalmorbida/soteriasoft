@@ -26,6 +26,8 @@ var express = require('express'),
   nacionalidade = require('./routes/nacionalidade'),
   estado_civil = require('./routes/estado_civil'),
   cbo = require('./routes/cbo'),
+  atividade_economica = require('./routes/atividade_economica'),
+  pessoa_email = require('./routes/pessoa_email'),
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -136,11 +138,17 @@ app.get('/pessoa', pessoa.index);
 app.get('/nacionalidade/nacionalidade_pais', nacionalidade.nacionalidade_pais);
 app.get('/estado_civil/estado_civil_descricao', estado_civil.estado_civil_descricao);
 app.get('/cbo/cbo_descricao', cbo.cbo_descricao);
+app.get('/atividade_economica/atividade_economica_descricao', atividade_economica.atividade_economica_descricao);
+app.get('/pessoa/pessoa_nome', pessoa.pessoa_nome);
 
 app.post('/cep/cep_cep', cep.cep_cep);
 app.post('/cep/cep_endereco', cep.cep_endereco);
 app.post('/cep/cep_gravar', cep.cep_gravar);
 app.post('/cep/cep_apagar', cep.cep_apagar);
+
+app.post('/pessoa/gravar', pessoa.gravar);
+app.post('/pessoa_email/gravar', pessoa_email.gravar);
+
 //app.get('/err404', err404.index);
 app.get('*', routes);
 

@@ -1,40 +1,61 @@
 angular.module('MyApp', ['ngMaterial'])
 .controller('AppCtrl', function($http,$scope) {
-
     $scope.Limpar = function() {
-        $scope.tipo         = null;
-        $scope.nome         = null;
-        $scope.cep          = null;
-        $scope.estado       = null;
-        $scope.cidade       = null;                
-        $scope.bairro       = null;
-        $scope.endereco     = null;                
-        $scope.numero       = null;
-        $scope.complemento  = null;
+        $scope.codigo       = 0;
+        $scope.tipo         = 0;
+        $scope.nome         = '';
+        $scope.cep          = '';
+        $scope.estado       = 0;
+        $scope.cidade       = 0;                
+        $scope.bairro       = 0;
+        $scope.endereco     = 0;                
+        $scope.numero       = '';
+        $scope.complemento  = '';
         $scope.emails       = [];
-        $scope.email        = null;
+        $scope.email        = '';
         $scope.fones        = [];
-        $scope.fone         = null;
+        $scope.fone         = '';
 
-        $scope.estadonasc       = null;
-        $scope.cidadenasc       = null;
-        $scope.nacionalidade    = null;
-        $scope.sexo             = null;
-        $scope.cpf              = null;
-        $scope.identidade       = null;
-        $scope.orgaoidentidade  = null;
-        $scope.ufidentidade     = null;
-        $scope.estadocivil      = null;
-        $scope.conjuge          = null;
-        $scope.profissao        = null;
-        $scope.ctps             = null;
-        $scope.pis              = null;
+        $scope.estadonasc       = 0;
+        $scope.cidadenasc       = 0;
+        $scope.nacionalidade    = 0;
+        $scope.sexo             = 0;
+        $scope.cpf              = '';
+        $scope.identidade       = '';
+        $scope.orgaoidentidade  = '';
+        $scope.ufidentidade     = 0;
+        $scope.estadocivil      = 0;
+        $scope.conjuge          = 0;
+        $scope.profissao        = 0;
+        $scope.ctps             = '';
+        $scope.pis              = '';
         
-        $scope.razao            = null;
-        $scope.cnpj             = null;
-        $scope.inscricao        = null;
-        $scope.atividade        = null;
-        $scope.representante    = null;
+        $scope.razao            = '';
+        $scope.cnpj             = '';
+        $scope.inscricao        = '';
+        $scope.atividade        = 0;
+        $scope.representante    = 0;
+    }
+
+    $scope.Gravar = function() {
+        $http.post('/pessoa/gravar', {codigo: $scope.codigo, tipo: $scope.tipo, 
+            nome: $scope.nome, cep: $scope.cep, estado: $scope.estado.codigo, 
+            cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
+            endereco: $scope.endereco.codigo, numero: $scope.numero, 
+            complemento: $scope.complemento, obs: $scope.obs}).
+        success(function (data, status, headers, config) {
+            console.dir(data.dados);
+            $scope.codigo = data.dados.insertId;
+            /*$scope.emails       = [];
+            $scope.email        = null;
+            $scope.fones        = [];
+            $scope.fone         = null;
+
+            if (data.dados.length>0){
+            }*/
+        }).error(function (data, status, headers, config) {
+            //
+        });  
     }
 
     $scope.addEmail = function() {
@@ -56,7 +77,7 @@ angular.module('MyApp', ['ngMaterial'])
     }  
 
     $scope.ApagarEfetivar = function(cep) {
-        $http.post('/cep/cep_apagar', {cep: $scope.cep}).
+        $http.post('/pessoa/pessoa_apagar', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
             $scope.Limpar(true);
             $('#myModalApagar').modal('hide');
@@ -94,21 +115,39 @@ angular.module('MyApp', ['ngMaterial'])
         }              
     }
 
-    $scope.Gravar = function() {
-        $http.post('/cep/cep_gravar', {cep: $scope.cep, estado: $scope.estado.codigo, 
-            cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
-            endereco: $scope.endereco.codigo, complemento: $scope.complemento}).
-        success(function (data, status, headers, config) {
-            if (data.dados.length>0){
-            }
-        }).error(function (data, status, headers, config) {
-            //
-        });  
-    }
-
     $scope.Localizar = function() {
         $('#myModalLocalizar').modal('show'); 
     }
+
+    $scope.LocalizarExe = function() {
+        $http.post('/pessoa/pessoa', { estado: $scope.l_estado.codigo,
+        cidade: $scope.l_cidade.codigo, endereco: $scope.l_endereco.codigo}).
+        success(function (data, status, headers, config) {
+            $scope.l_dados = data.dados;
+        }).error(function (data, status, headers, config) {
+            //
+        }); 
+    };
+    
+    $scope.PessoaNome = function(StrSearch) {
+        return $http.get('/pessoa/pessoa_nome', {
+        params: {
+            txt: StrSearch
+        }
+        }).then(function(data) {
+            return data.data
+        });
+    };
+
+    $scope.AtividadeEconomicaDescricao = function(StrSearch) {
+        return $http.get('/atividade_economica/atividade_economica_descricao', {
+        params: {
+            txt: StrSearch
+        }
+        }).then(function(data) {
+            return data.data
+        });
+    };
 
     $scope.CBODescricao = function(StrSearch) {
         return $http.get('/cbo/cbo_descricao', {
@@ -150,16 +189,6 @@ angular.module('MyApp', ['ngMaterial'])
         });
     };
 
-    $scope.EstadoSigla = function(StrSearch) {
-        return $http.get('/estado/estado_sigla', {
-        params: {
-            txt: StrSearch
-        }
-        }).then(function(data) {
-            return data.data
-        });
-    };
-    
     $scope.CidadeNome = function(StrSearch) {
         return $http.get('/cidade/cidade_nome', {
         params: {
@@ -212,16 +241,6 @@ angular.module('MyApp', ['ngMaterial'])
             return data.data;
         });
     };    
-
-    $scope.LocalizarExe = function() {
-        $http.post('/cep/cep_endereco', { estado: $scope.l_estado.codigo,
-        cidade: $scope.l_cidade.codigo, endereco: $scope.l_endereco.codigo}).
-        success(function (data, status, headers, config) {
-            $scope.l_dados = data.dados;
-        }).error(function (data, status, headers, config) {
-            //
-        }); 
-    };
     
     $scope.Limpar(); 
     
