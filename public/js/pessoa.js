@@ -1,5 +1,6 @@
 angular.module('MyApp', ['ngMaterial'])
 .controller('AppCtrl', function($http,$scope) {
+   
     $scope.Limpar = function() {
         $scope.codigo       = 0;
         $scope.tipo         = 0;
@@ -11,6 +12,7 @@ angular.module('MyApp', ['ngMaterial'])
         $scope.endereco     = 0;                
         $scope.numero       = '';
         $scope.complemento  = '';
+        $scope.obs          = '';
         $scope.emails       = [];
         $scope.email        = '';
         $scope.fones        = [];
@@ -44,15 +46,23 @@ angular.module('MyApp', ['ngMaterial'])
             endereco: $scope.endereco.codigo, numero: $scope.numero, 
             complemento: $scope.complemento, obs: $scope.obs}).
         success(function (data, status, headers, config) {
-            console.dir(data.dados);
-            $scope.codigo = data.dados.insertId;
-            /*$scope.emails       = [];
-            $scope.email        = null;
-            $scope.fones        = [];
-            $scope.fone         = null;
+            $scope.codigo = data.codigo;
 
-            if (data.dados.length>0){
-            }*/
+            $http.post('/pessoa_email/gravar', {pessoa: $scope.codigo, emails: $scope.emails}).
+            success(function (data, status, headers, config) {
+    
+            }).error(function (data, status, headers, config) {
+                //
+            }); 
+
+            $http.post('/pessoa_fone/gravar', {pessoa: $scope.codigo, fones: $scope.fones}).
+            success(function (data, status, headers, config) {
+    
+            }).error(function (data, status, headers, config) {
+                //
+            }); 
+            
+            //$scope.fones        = [];
         }).error(function (data, status, headers, config) {
             //
         });  
@@ -96,23 +106,44 @@ angular.module('MyApp', ['ngMaterial'])
         $('#myModalLocalizar').modal('hide');
     }
 
-    $scope.BuscarCEP = function() {
-        if ($scope.cep.length==9){
-            $http.post('/cep/cep_cep', {cep: $scope.cep}).
-            success(function (data, status, headers, config) {
-                if (data.dados.length>0){
-                    $scope.complemento  = data.dados[0].complemento;
-                    $scope.estado       = {codigo: data.dados[0].estado, nome: data.dados[0].estado_};
-                    $scope.cidade       = {codigo: data.dados[0].cidade, nome: data.dados[0].cidade_};                
-                    $scope.bairro       = {codigo: data.dados[0].bairro, nome: data.dados[0].bairro_};
-                    $scope.endereco     = {codigo: data.dados[0].endereco, nome: data.dados[0].endereco_};
-                }else{
-                    $scope.Limpar(false);
-                }
-            }).error(function (data, status, headers, config) {
-                //
-            }); 
-        }              
+    $scope.BuscarCodigo = function() {
+        $http.post('/pessoa/codigo', {cod: $scope.codigo}).
+        success(function (data, status, headers, config) {
+            $scope.Limpar();
+            if (data.dados.length>0){
+                $scope.codigo = data.dados[0].codigo;
+                $scope.tipo = data.dados[0].tipo;
+                $scope.nome = data.dados[0].nome;
+                $scope.cep = data.dados[0].cep;
+                if(data.dados[0].estado>0){$scope.estado = {codigo: data.dados[0].estado, nome: data.dados[0].estado_}};
+                if(data.dados[0].cidade>0){$scope.cidade = {codigo: data.dados[0].cidade, nome: data.dados[0].cidade_}};
+                if(data.dados[0].bairro>0){$scope.bairro = {codigo: data.dados[0].bairro, nome: data.dados[0].bairro_}};
+                if(data.dados[0].endereco>0){$scope.endereco = {codigo: data.dados[0].endereco, nome: data.dados[0].endereco_}};
+                $scope.numero = data.dados[0].numero;
+                $scope.complemento = data.dados[0].complemento;
+                $scope.obs = data.dados[0].obs;
+
+                $http.post('/pessoa_email/pessoa', {cod: $scope.codigo}).
+                success(function (data, status, headers, config) {
+                    for (i = 0; i < data.dados.length; i++) {
+                        $scope.emails.push(data.dados[i].email);
+                    }
+                }).error(function (data, status, headers, config) {
+
+                }); 
+
+                $http.post('/pessoa_fone/pessoa', {cod: $scope.codigo}).
+                success(function (data, status, headers, config) {
+                    for (i = 0; i < data.dados.length; i++) {
+                        $scope.fones.push(data.dados[i].fone);
+                    }
+                }).error(function (data, status, headers, config) {
+
+                });
+        }
+        }).error(function (data, status, headers, config) {
+            $scope.Limpar();
+        });         
     }
 
     $scope.Localizar = function() {
@@ -242,8 +273,15 @@ angular.module('MyApp', ['ngMaterial'])
         });
     };    
     
-    $scope.Limpar(); 
-    
+    var url = new URL(location.href);
+    var cod = url.searchParams.get("codigo");    
+    if (cod!=undefined){
+        $scope.codigo = cod;
+        $scope.BuscarCodigo();
+    }
+    else{
+        $scope.Limpar();         
+    }
 }).config(function($mdDateLocaleProvider) {
     $mdDateLocaleProvider.formatDate = function(date) {
         return date ? moment(date).format('DD/MM/YYYY') : '';

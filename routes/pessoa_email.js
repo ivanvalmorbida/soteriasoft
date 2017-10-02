@@ -14,7 +14,7 @@ exports.gravar = function (req, res) {
             for (i = 0; i < data.emails.length; i++) {
                 connection.query('insert into tb_pessoa_email (pessoa, email) values (?, ?)',
                 [data.pessoa, data.emails[i]], function(err, rows) {
-                    if (!err)
+                    if (err)
                         console.log('Error while performing Query.')
                 });                
             }    
@@ -23,14 +23,14 @@ exports.gravar = function (req, res) {
     })
 }
 
-exports.pessoa_email_todos = function (req, res) {
+exports.pessoa = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
-    var cod = req.query.cod;
+    var cod = req.body.cod;
 
     connection.connect();
     connection.query('SELECT * from tb_pessoa_email where pessoa='+cod, function(err, rows, fields) {
         if (!err)
-            res.json({pessoa_email_todos: rows})
+            res.json({dados: rows})
         else
             console.log('Error while performing Query.')
     });
