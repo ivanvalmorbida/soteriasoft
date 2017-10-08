@@ -42,52 +42,33 @@ angular.module('MyApp', ['ngMaterial'])
 
     $scope.Gravar = function() {
         $http.post('/pessoa/gravar', {codigo: $scope.codigo, tipo: $scope.tipo, 
-            nome: $scope.nome, cep: $scope.cep, estado: $scope.estado.codigo, 
-            cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
-            endereco: $scope.endereco.codigo, numero: $scope.numero, 
-            complemento: $scope.complemento, obs: $scope.obs}).
+        nome: $scope.nome, cep: $scope.cep, estado: $scope.estado.codigo, 
+        cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
+        endereco: $scope.endereco.codigo, numero: $scope.numero, 
+        complemento: $scope.complemento, obs: $scope.obs}).
         success(function (data, status, headers, config) {
             $scope.codigo = data.codigo;
 
-            $http.post('/pessoa_email/gravar', {pessoa: $scope.codigo, emails: $scope.emails}).
-            success(function (data, status, headers, config) {
-    
-            }).error(function (data, status, headers, config) {
-                //
-            }); 
+            $http.post('/pessoa_email/gravar', {pessoa: $scope.codigo, emails: $scope.emails}); 
 
-            $http.post('/pessoa_fone/gravar', {pessoa: $scope.codigo, fones: $scope.fones}).
-            success(function (data, status, headers, config) {
-    
-            }).error(function (data, status, headers, config) {
-                //
-            }); 
+            $http.post('/pessoa_fone/gravar', {pessoa: $scope.codigo, fones: $scope.fones}); 
             
             if ($scope.tipo==1){
-                $http.post('/pessoa_fisica/gravar', {pessoa: $scope.codigo, estadonasc: $scope.estadonasc, 
-                cidadenasc: $scope.cidadenasc, nacionalidade: $scope.nacionalidade, sexo: $scope.sexo, 
-                cpf: $scope.cpf, identidade: $scope.identidade, orgaoidentidade: $scope.orgaoidentidade,
-                ufidentidade: $scope.ufidentidade, estadocivil: $scope.estadocivil, conjuge: $scope.conjuge,
-                profissao: $scope.profissao, ctps: $scope.ctps, pis: $scope.pis}).
-                success(function (data, status, headers, config) {
-    
-                }).error(function (data, status, headers, config) {
-
-                });
+                $http.post('/pessoa_fisica/gravar', {pessoa: $scope.codigo, 
+                nascimento: $scope.nascimento, ufnasc: $scope.ufnasc.codigo, 
+                cidadenasc: $scope.cidadenasc.codigo, nacionalidade: $scope.nacionalidade.codigo, 
+                sexo: $scope.sexo, cpf: $scope.cpf, identidade: $scope.identidade, 
+                orgaoidentidade: $scope.orgaoidentidade, ufidentidade: $scope.ufidentidade.codigo, 
+                estadocivil: $scope.estadocivil.codigo, conjuge: $scope.conjuge.codigo,
+                profissao: $scope.profissao.cbo, ctps: $scope.ctps, pis: $scope.pis});
             } 
             
-            if ($scope.tipo==1){
+            if ($scope.tipo==2){
                 $http.post('/pessoa_juridica/gravar', {pessoa: $scope.codigo, razaosocial: $scope.razaosocial,
-                    cnpj: $scope.cnpj, incricaoestadual: $scope.incricaoestadual, atividade: $scope.atividade,
-                    homepage: $scope.homepage, representante: $scope.representante}).
-                success(function (data, status, headers, config) {
-        
-                }).error(function (data, status, headers, config) {
-                    //
-                });
+                cnpj: $scope.cnpj, incricaoestadual: $scope.incricaoestadual, 
+                atividade: $scope.atividade.codigo, homepage: $scope.homepage, 
+                representante: $scope.representante.codigo});
             } 
-        }).error(function (data, status, headers, config) {
-            //
         });  
     }
 
@@ -167,19 +148,22 @@ angular.module('MyApp', ['ngMaterial'])
                 $http.post('/pessoa_fisica/pessoa', {cod: $scope.codigo}).
                 success(function (data, status, headers, config) {
                     if (data.dados.length>0){
-                        if(data.dados[0].estadonasc>0){$scope.estadonasc = {codigo: data.dados[0].estadonasc, nome: data.dados[0].estadonasc_}};
+                        $scope.nascimento = new Date(data.dados[0].nascimento);
+                        if(data.dados[0].ufnasc>0){$scope.ufnasc = {codigo: data.dados[0].ufnasc, nome: data.dados[0].ufnasc_}};
                         if(data.dados[0].cidadenasc>0){$scope.cidadenasc = {codigo: data.dados[0].cidadenasc, nome: data.dados[0].cidadenasc_}};
-                        if(data.dados[0].nacionalidade>0){$scope.nacionalidade = {codigo: data.dados[0].nacionalidade, nome: data.dados[0].nacionalidade_}};                        
+                        if(data.dados[0].nacionalidade>0){$scope.nacionalidade = {codigo: data.dados[0].nacionalidade, pais: data.dados[0].nacionalidade_}};                        
                         $scope.sexo = data.dados[0].sexo;
                         $scope.cpf = data.dados[0].cpf;
                         $scope.identidade = data.dados[0].identidade;
                         $scope.orgaoidentidade = data.dados[0].orgaoidentidade;
                         if(data.dados[0].ufidentidade>0){$scope.ufidentidade = {codigo: data.dados[0].ufidentidade, nome: data.dados[0].ufidentidade_}};                        
-                        if(data.dados[0].estadocivil>0){$scope.estadocivil = {codigo: data.dados[0].estadocivil, nome: data.dados[0].estadocivil_}};                        
+                        if(data.dados[0].estadocivil>0){$scope.estadocivil = {codigo: data.dados[0].estadocivil, descricao: data.dados[0].estadocivil_}};                        
                         if(data.dados[0].conjuge>0){$scope.conjuge = {codigo: data.dados[0].conjuge, nome: data.dados[0].conjuge_}};                        
-                        if(data.dados[0].profissao>0){$scope.profissao = {codigo: data.dados[0].profissao, nome: data.dados[0].profissao_}};                        
+                        if(data.dados[0].profissao>0){$scope.profissao = {cbo: data.dados[0].profissao, nome: data.dados[0].profissao_}};                        
                         $scope.ctps = data.dados[0].ctps;
                         $scope.pis = data.dados[0].pis;
+
+                        alert($scope.nascimento);
                     }
                 }).error(function (data, status, headers, config) {
                     
@@ -191,7 +175,7 @@ angular.module('MyApp', ['ngMaterial'])
                         $scope.razaosocial = data.dados[0].razaosocial;
                         $scope.cnpj = data.dados[0].cnpj;
                         $scope.incricaoestadual = data.dados[0].incricaoestadual;
-                        if(data.dados[0].atividade>0){$scope.atividade = {codigo: data.dados[0].atividade, nome: data.dados[0].atividade_}};
+                        if(data.dados[0].atividade>0){$scope.atividade = {codigo: data.dados[0].atividade, descricao: data.dados[0].atividade_}};
                         $scope.homepage = data.dados[0].homepage;
                         if(data.dados[0].representante>0){$scope.representante = {codigo: data.dados[0].representante, nome: data.dados[0].representante_}};                        
                     }

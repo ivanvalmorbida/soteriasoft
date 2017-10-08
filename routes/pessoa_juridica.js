@@ -42,12 +42,16 @@ exports.gravar = function (req, res) {
 
 exports.pessoa = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
-    var cod = req.query.cod;
+    var cod = req.body.cod;
 
     connection.connect();
-    connection.query('SELECT * from tb_pessoa_juridica where pessoa='+cod, function(err, rows, fields) {
+    connection.query('select p.*, a.descricao as atividade_, r.nome as representante_'+
+    ' from tb_pessoa_juridica p'+
+    ' left join tb_atividade_economica a on a.codigo=p.atividade'+
+    ' left join tb_pessoa r on r.codigo=p.representante where p.pessoa='+cod, 
+    function(err, rows, fields) {
         if (!err)
-            res.json({pessoa_juridica_uma: rows})
+            res.json({dados: rows})
         else
             console.log('Error while performing Query.')
     });

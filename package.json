@@ -23,6 +23,7 @@
 		"passport-facebook": "latest",
 		"passport-google-oauth": "latest",
     "multer": "latest",
-    "mysql": "~2.13.0"    
+    "mysql": "~2.13.0",
+    "dateformat": "latest"    
   }
 }
