@@ -1,4 +1,4 @@
-angular.module('MyApp', ['ngMaterial'])
+angular.module('MyApp', ['ngMaterial','ui.mask'])
 .controller('AppCtrl', function($http,$scope) {
    
     $scope.Limpar = function() {
@@ -159,11 +159,9 @@ angular.module('MyApp', ['ngMaterial'])
                         if(data.dados[0].ufidentidade>0){$scope.ufidentidade = {codigo: data.dados[0].ufidentidade, nome: data.dados[0].ufidentidade_}};                        
                         if(data.dados[0].estadocivil>0){$scope.estadocivil = {codigo: data.dados[0].estadocivil, descricao: data.dados[0].estadocivil_}};                        
                         if(data.dados[0].conjuge>0){$scope.conjuge = {codigo: data.dados[0].conjuge, nome: data.dados[0].conjuge_}};                        
-                        if(data.dados[0].profissao>0){$scope.profissao = {cbo: data.dados[0].profissao, nome: data.dados[0].profissao_}};                        
+                        if(data.dados[0].profissao>0){$scope.profissao = {cbo: data.dados[0].profissao, descricao: data.dados[0].profissao_}};                        
                         $scope.ctps = data.dados[0].ctps;
                         $scope.pis = data.dados[0].pis;
-
-                        alert($scope.nascimento);
                     }
                 }).error(function (data, status, headers, config) {
                     
