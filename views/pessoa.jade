@@ -110,12 +110,12 @@ html(lang='pt-br')
                         md-button.md-raised.md-primary(ng-click='addFone()') Adicionar
                     md-chips(ng-model="fones", readonly='true', md-removable='true')
 
-            md-tab(label='Dados pessoa física', data-ng-if='tipo==1')
+            md-tab(label='Dados pessoa física', ng-disabled='tipo!=1')
               md-content
                 div(layout-gt-sm='row')
                   md-input-container
                     md-radio-group(layout='row', ng-model='sexo')
-                      md-radio-button.md-primary(value='0') Masculino
+                      md-radio-button.md-primary(value='2') Masculino
                       md-radio-button.md-primary(value='1') Feminino 
 
                   md-input-container
@@ -216,12 +216,12 @@ html(lang='pt-br')
                     label Nº Pis
                     input(ng-model='pis')
 
-            md-tab(label='Dados pessoa jurídica', data-ng-if='tipo==2')
+            md-tab(label='Dados pessoa jurídica', ng-disabled='tipo!=2')
               md-content
                 div(layout-gt-sm='row')                 
                   md-input-container.md-block(flex-gt-sm='')
                     label Razão Social
-                    input(ng-model='razao')
+                    input(ng-model='razaosocial')
 
                 div(layout-gt-sm='row')                 
                   md-input-container.md-block(flex-gt-sm='')
@@ -230,7 +230,7 @@ html(lang='pt-br')
                   
                   md-input-container.md-block(flex-gt-sm='')
                     label Inscrição Estadual
-                    input(ng-model='inscricao')
+                    input(ng-model='incricaoestadual')
 
                   md-autocomplete(flex='',
                     md-selected-item='atividade',
@@ -243,6 +243,10 @@ html(lang='pt-br')
                       span(md-highlight-text='SearchAti') {{item.descricao}}
 
                 div(layout-gt-sm='row')                 
+                  md-input-container.md-block(flex-gt-sm='')
+                    label Home Page
+                    input(ng-model='homepage')
+                    
                   md-autocomplete(flex='',
                     md-selected-item='representante',
                     md-min-length='3', 

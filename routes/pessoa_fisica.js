@@ -7,10 +7,8 @@ exports.gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
 
-    data.cep = data.cep.replace("-", "");
-
     connection.connect();
-    connection.query('select pessoa from tb_pessoa_fisica where pessoa=?', [data.cep], 
+    connection.query('select pessoa from tb_pessoa_fisica where pessoa=?', [data.pessoa], 
     function(err, rows) {
         if (!err) {
             if (rows.length == 0) {

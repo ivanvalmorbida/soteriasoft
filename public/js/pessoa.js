@@ -32,10 +32,11 @@ angular.module('MyApp', ['ngMaterial'])
         $scope.ctps             = '';
         $scope.pis              = '';
         
-        $scope.razao            = '';
+        $scope.razaosocial      = '';
         $scope.cnpj             = '';
-        $scope.inscricao        = '';
+        $scope.incricaoestadual = '';
         $scope.atividade        = 0;
+        $scope.homepage         = '';
         $scope.representante    = 0;
     }
 
@@ -75,6 +76,16 @@ angular.module('MyApp', ['ngMaterial'])
                 });
             } 
             
+            if ($scope.tipo==1){
+                $http.post('/pessoa_juridica/gravar', {pessoa: $scope.codigo, razaosocial: $scope.razaosocial,
+                    cnpj: $scope.cnpj, incricaoestadual: $scope.incricaoestadual, atividade: $scope.atividade,
+                    homepage: $scope.homepage, representante: $scope.representante}).
+                success(function (data, status, headers, config) {
+        
+                }).error(function (data, status, headers, config) {
+                    //
+                });
+            } 
         }).error(function (data, status, headers, config) {
             //
         });  
@@ -153,7 +164,7 @@ angular.module('MyApp', ['ngMaterial'])
 
                 });
 
-                $http.post('/pessoa_fone/pessoa', {cod: $scope.codigo}).
+                $http.post('/pessoa_fisica/pessoa', {cod: $scope.codigo}).
                 success(function (data, status, headers, config) {
                     if (data.dados.length>0){
                         if(data.dados[0].estadonasc>0){$scope.estadonasc = {codigo: data.dados[0].estadonasc, nome: data.dados[0].estadonasc_}};
@@ -161,14 +172,28 @@ angular.module('MyApp', ['ngMaterial'])
                         if(data.dados[0].nacionalidade>0){$scope.nacionalidade = {codigo: data.dados[0].nacionalidade, nome: data.dados[0].nacionalidade_}};                        
                         $scope.sexo = data.dados[0].sexo;
                         $scope.cpf = data.dados[0].cpf;
-                        $scope.identidade = data.dados[0].cpf;
-                        $scope.orgaoidentidade = data.dados[0].cpf;
+                        $scope.identidade = data.dados[0].identidade;
+                        $scope.orgaoidentidade = data.dados[0].orgaoidentidade;
                         if(data.dados[0].ufidentidade>0){$scope.ufidentidade = {codigo: data.dados[0].ufidentidade, nome: data.dados[0].ufidentidade_}};                        
                         if(data.dados[0].estadocivil>0){$scope.estadocivil = {codigo: data.dados[0].estadocivil, nome: data.dados[0].estadocivil_}};                        
                         if(data.dados[0].conjuge>0){$scope.conjuge = {codigo: data.dados[0].conjuge, nome: data.dados[0].conjuge_}};                        
                         if(data.dados[0].profissao>0){$scope.profissao = {codigo: data.dados[0].profissao, nome: data.dados[0].profissao_}};                        
-                        $scope.ctps = data.dados[0].cpf;
-                        $scope.pis = data.dados[0].cpf;
+                        $scope.ctps = data.dados[0].ctps;
+                        $scope.pis = data.dados[0].pis;
+                    }
+                }).error(function (data, status, headers, config) {
+                    
+                });
+                            
+                $http.post('/pessoa_juridica/pessoa', {cod: $scope.codigo}).
+                success(function (data, status, headers, config) {
+                    if (data.dados.length>0){                        
+                        $scope.razaosocial = data.dados[0].razaosocial;
+                        $scope.cnpj = data.dados[0].cnpj;
+                        $scope.incricaoestadual = data.dados[0].incricaoestadual;
+                        if(data.dados[0].atividade>0){$scope.atividade = {codigo: data.dados[0].atividade, nome: data.dados[0].atividade_}};
+                        $scope.homepage = data.dados[0].homepage;
+                        if(data.dados[0].representante>0){$scope.representante = {codigo: data.dados[0].representante, nome: data.dados[0].representante_}};                        
                     }
                 }).error(function (data, status, headers, config) {
                     

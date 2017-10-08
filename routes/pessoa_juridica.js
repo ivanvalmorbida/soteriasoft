@@ -3,7 +3,44 @@ var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 
-exports.pessoa_juridica_uma = function (req, res) {
+exports.gravar = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var data = req.body;
+
+    connection.connect();
+    connection.query('select pessoa from tb_pessoa_juridica where pessoa=?', [data.pessoa], 
+    function(err, rows) {
+        if (!err) {
+            if (rows.length == 0) {
+                connection.query('insert into tb_pessoa_juridica (pessoa, razaosocial,'+
+                'cnpj, incricaoestadual, atividade, homepage, representante)'+
+                ' values (?, ?, ?, ?, ?, ?, ?)', [data.pessoa, data.razaosocial,
+                data.cnpj, data.incricaoestadual, data.atividade, data.homepage,
+                data.representante], function(err, rows) {
+                    if (!err)
+                        res.json({dados: rows})            
+                    else
+                        console.log('Error while performing Query.')
+                })
+            }   
+            else {
+                connection.query('update tb_pessoa_juridica set razaosocial=?, cnpj=?,'+
+                'incricaoestadual=?, atividade=?, homepage=?, representante=? where pessoa=?', 
+                [data.razaosocial, data.cnpj, data.incricaoestadual, data.atividade, 
+                data.homepage, data.representante, data.pessoa], function(err, rows) {
+                    if (!err)
+                        res.json({dados: rows})            
+                    else
+                        console.log('Error while performing Query.')
+                })
+            }         
+        }
+        else
+            console.log('Error while performing Query.')
+    })
+}
+
+exports.pessoa = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var cod = req.query.cod;
 

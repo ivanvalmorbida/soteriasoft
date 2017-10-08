@@ -30,6 +30,7 @@ var express = require('express'),
   pessoa_email = require('./routes/pessoa_email'),
   pessoa_fone = require('./routes/pessoa_fone'),  
   pessoa_fisica = require('./routes/pessoa_fisica'),  
+  pessoa_juridica = require('./routes/pessoa_juridica'),  
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -159,6 +160,9 @@ app.post('/pessoa_fone/pessoa', pessoa_fone.pessoa);
 
 app.post('/pessoa_fisica/gravar', pessoa_fisica.gravar);
 app.post('/pessoa_fisica/pessoa', pessoa_fisica.pessoa);
+
+app.post('/pessoa_juridica/gravar', pessoa_juridica.gravar);
+app.post('/pessoa_juridica/pessoa', pessoa_juridica.pessoa);
 
 //app.get('/err404', err404.index);
 app.get('*', routes);
