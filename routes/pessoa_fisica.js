@@ -13,12 +13,13 @@ exports.gravar = function (req, res) {
     function(err, rows) {
         if (!err) {
             if (rows.length == 0) {
+                data.nascimento = dateFormat(data.nascimento, "yyyy-mm-dd h:MM:ss");
                 connection.query('insert into tb_pessoa_fisica (pessoa, nascimento, cidadenasc,'+
-                'ufnasc, nacionalidade, sexo, cpf, identidade, orgaoidentidade, identidadeuf,'+
+                'ufnasc, nacionalidade, sexo, cpf, identidade, orgaoidentidade, ufidentidade,'+
                 'estadocivil, conjuge, profissao, ctps, pis)'+
                 ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [data.pessoa, data.nascimento,
                 data.cidadenasc, data.ufnasc, data.nacionalidade, data.sexo, data.cpf, data.identidade, 
-                data.orgaoidentidade, data.identidadeuf, data.estadocivil, data.conjuge, data.profissao,
+                data.orgaoidentidade, data.ufidentidade, data.estadocivil, data.conjuge, data.profissao,
                 data.ctps, data.pis], function(err, rows) {
                     if (!err)
                         res.json({dados: rows})            
