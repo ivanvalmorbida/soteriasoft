@@ -151,6 +151,7 @@ app.post('/cep/cep_apagar', cep.cep_apagar);
 
 app.post('/pessoa/gravar', pessoa.gravar);
 app.post('/pessoa/codigo', pessoa.codigo);
+app.post('/pessoa/localizar', pessoa.localizar);
 
 app.post('/pessoa_email/gravar', pessoa_email.gravar);
 app.post('/pessoa_email/pessoa', pessoa_email.pessoa);

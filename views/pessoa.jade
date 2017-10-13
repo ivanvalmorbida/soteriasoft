@@ -14,7 +14,7 @@ html(lang='pt-br')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
     script(src='js/pessoa.js')
     script(src='js/mask.js')
-    
+    script(src='js/funcoes.js')    
   body
     div(ng-controller='AppCtrl as ctrl', ng-app='MyApp')
 
@@ -266,3 +266,59 @@ html(lang='pt-br')
             md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()',
             ng-disabled='codigo==undefined || codigo==0') Apagar
             md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar
+        
+        #myModalApagar.modal.fade(role='dialog')
+          .modal-dialog
+            .modal-content
+              .modal-header(style='background-color: #ff6666;')
+                button.close(type='button', data-dismiss='modal') ×
+                h4.modal-title Apagar registro de Pessoa
+              .modal-body
+                | Confirma a remoção deste registro, Nome: {{nome}}?
+              .modal-footer
+                md-button.md-raised.md-warn.md-hue-1(ng-click='ApagarEfetivar()') Efetivar
+                md-button.md-raised(type='button', data-dismiss='modal') Cancelar              
+        
+        #myModalLocalizar.modal.fade(role='dialog')
+          .modal-dialog
+            .modal-content
+              .modal-header(style='background-color: #99ccff;')
+                button.close(type='button', data-dismiss='modal') ×
+                h4.modal-title Localizar Pessoas
+              .modal-body
+                div(layout='row')
+                  md-input-container.md-block(style='margin-top: 10px;')
+                    label campo
+                    md-select(ng-model='campopesq')
+                      md-option(value='nome') Nome
+                      md-option(value='cpf') CPF
+                      md-option(value='cnpj') CNPJ
+                    
+                  md-input-container.md-block(flex='',style='margin-top: 10px;')
+                    label pesquisar
+                    input(ng-model='txtpesquisa')
+
+                  #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
+                    ng-click='LocalizarExe()',
+                    ng-disabled='txtpesquisa==undefined') Executar
+
+                div(layout-gt-sm='row')
+                  table(style='width: 100%')
+                    tr
+                      td(style='width: 50%')
+                        | Nome
+                      td(style='width: 15%')
+                        | Tipo
+                      td(style='width: 35%')
+                        | CPF/CNPJ
+                      
+                    tr(ng-repeat="d in l_dados")
+                      td
+                        a(ng-click='ExibirPessoa(d.codigo)') {{d.nome}}
+                      td
+                        | {{d.tipo}}
+                      td
+                        | {{format('###.###.###-##',d.cpf_cnpj)}}
+                      
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Fechar

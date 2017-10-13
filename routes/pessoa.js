@@ -83,3 +83,27 @@ exports.pessoa_nome = function (req, res) {
             console.log('Error while performing Query.')
     });
 }
+
+exports.localizar = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var data = req.body;
+    var sql = '', par = [];
+
+    sql += "SELECT p.nome, case when p.tipo=1 then 'Fis' else 'Jur' end as tipo,";
+    sql += " case when p.tipo=1 then f.cpf else j.cnpj end as cpf_cnpj"; 
+    sql += " FROM tb_pessoa p left join tb_pessoa_fisica f on f.pessoa=p.codigo";
+    sql += " left join tb_pessoa_juridica j on j.pessoa=p.codigo Where";
+
+    if (data.nome!=undefined){
+        sql += " nome like '%"+data.nome+"%'"
+    }
+
+    connection.connect();
+    connection.query(sql, function(err, rows, fields) {
+        if (!err)
+            res.json({dados: rows})
+        else
+            console.log('Error while performing Query.')
+    });
+
+}

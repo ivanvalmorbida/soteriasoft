@@ -21,3 +21,17 @@ md-input-container {
 md-content {
   padding-top: 40px;
 }
+
+.md-select-menu-container {
+  z-index: 99999 !important;
+}
+
+#myModalLocalizar .modal-dialog{
+  width:80%;    
+}
+
+#btLocalizarExe {
+  height: 20px;
+}
+
+a { cursor: pointer; }

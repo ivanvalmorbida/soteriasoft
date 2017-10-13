@@ -1,6 +1,9 @@
 angular.module('MyApp', ['ngMaterial','ui.mask'])
 .controller('AppCtrl', function($http,$scope) {
-   
+    $scope.format = function(mask, number) {
+        return format(mask, number);
+    }  
+       
     $scope.Limpar = function() {
         $scope.codigo       = 0;
         $scope.tipo         = 0;
@@ -93,7 +96,7 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
     $scope.ApagarEfetivar = function(cep) {
         $http.post('/pessoa/pessoa_apagar', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
-            $scope.Limpar(true);
+            $scope.Limpar();
             $('#myModalApagar').modal('hide');
         }).error(function (data, status, headers, config) {
             //
@@ -104,9 +107,9 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
         $('#myModalApagar').modal('show');
     }
     
-    $scope.ExibirCEP = function(cep) {
-        $scope.cep = format('#####-###', cep);
-        $scope.BuscarCEP();
+    $scope.ExibirPessoa = function(codigo) {
+        $scope.codigo = codigo;
+        $scope.BuscarCodigo();
         $('#myModalLocalizar').modal('hide');
     }
 
@@ -192,8 +195,7 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
     }
 
     $scope.LocalizarExe = function() {
-        $http.post('/pessoa/pessoa', { estado: $scope.l_estado.codigo,
-        cidade: $scope.l_cidade.codigo, endereco: $scope.l_endereco.codigo}).
+        $http.post('/pessoa/localizar', {nome: $scope.txtpesquisa}).
         success(function (data, status, headers, config) {
             $scope.l_dados = data.dados;
         }).error(function (data, status, headers, config) {
