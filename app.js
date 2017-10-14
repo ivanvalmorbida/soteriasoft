@@ -16,7 +16,6 @@ var express = require('express'),
   settings = require("./settings"),
   routes = require('./routes/index'),
   users = require('./routes/users'),
-  teste = require('./routes/teste'),
   cep = require('./routes/cep'),
   estado = require('./routes/estado'),
   cidade = require('./routes/cidade'),
@@ -127,8 +126,6 @@ app.get('/google/auth/callback',
 app.use('/', routes);
 app.use('/users', users);
 app.get('/cep', cep.index);
-app.get('/teste', teste.index);
-app.get('/teste/x', teste.AjustarTabela);
 app.get('/estado/estado_nome', estado.estado_nome);
 app.get('/estado/estado_sigla', estado.estado_sigla);
 app.get('/cidade/cidade_nome', cidade.cidade_nome);
