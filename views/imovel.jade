@@ -1,0 +1,323 @@
+html(lang='pt-br')
+  head
+    link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css')
+    link(rel='stylesheet', href='css/imovel.css')
+    
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='js/imovel.js')
+    script(src='js/comuns/mask.js')
+    script(src='js/comuns/functions.js')    
+  body
+    div(ng-controller='AppCtrl as ctrl', ng-app='MyApp')
+
+      md-card
+        md-card-title
+          md-card-title-text
+            span.md-headline Cadastro de Imóvel
+            //span.md-subhead ...... .... ....
+        md-card-content
+
+          md-tabs(md-dynamic-height='', md-border-bottom='')
+            md-tab(label='Terreno')
+              md-content
+
+                div(layout-gt-sm='row')
+                  md-input-container 
+
+                    md-radio-group(layout='row', ng-model='tipo')
+                      md-radio-button.md-primary(value=4) Geminado 
+                      md-radio-button.md-primary(value=3) Apartamento
+                      md-radio-button.md-primary(value=2) Casa padrão
+                      md-radio-button.md-primary(value=1) Terreno
+                      md-radio-button.md-primary(value=5) Chacara
+
+                div(layout-gt-sm='row')
+                  md-input-container
+                    label CEP
+                    input(ng-model='cep', ui-cep, ng-change='BuscarCEP()')
+                  md-autocomplete(flex='',
+                    md-selected-item='estado',
+                    md-min-length='1', 
+                    md-search-text='SearchEst', 
+                    md-items='item in EstadoNome(SearchEst)',
+                    md-floating-label='Estado',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchEst') {{item.nome}}
+                      
+                  md-autocomplete(flex='',
+                    md-selected-item='cidade',
+                    md-min-length='3', 
+                    md-search-text='SearchCid', 
+                    md-items='item in CidadeNome(SearchCid)',
+                    md-floating-label='Cidade',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchCid') {{item.nome}}
+                
+                div(layout-gt-sm='row')
+                  md-autocomplete(flex='',
+                    md-selected-item='bairro',
+                    md-min-length='3', 
+                    md-search-text='SearchBai', 
+                    md-items='item in BairroNome(SearchBai)',
+                    md-floating-label='Bairro',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchBai') {{item.nome}}
+
+                  md-autocomplete(flex='',
+                    md-selected-item='endereco',
+                    md-min-length='3', 
+                    md-search-text='SearchEnd', 
+                    md-items='item in EnderecoNome(SearchEnd)',
+                    md-floating-label='Endereço',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchEnd') {{item.nome}}
+
+                  md-input-container
+                    label Número
+                    input(ng-model='numero', type='text')
+
+                  md-input-container(flex='')
+                    label Complemento
+                    input(ng-model='complemento', type='text')
+
+                div(layout-gt-sm='row')
+                  md-input-container(flex='')
+                    label E-mails
+                    div(layout='row')
+                      div
+                        input(ng-model='email', type='email')
+                      div
+                        md-button.md-raised.md-primary(ng-click='addEmail()') Adicionar
+                    md-chips(ng-model="emails", readonly='true', md-removable='true')
+                  
+                  md-input-container(flex='')
+                    label Telefones
+                    div(layout='row')
+                      div
+                        input(ng-model='fone', ui-telefone)
+                      div
+                        md-button.md-raised.md-primary(ng-click='addFone()') Adicionar
+                    md-chips(ng-model="fones", readonly='true', md-removable='true')
+
+            md-tab(label='Construção')
+              md-content
+                div(layout-gt-sm='row')
+                  md-input-container
+                    md-radio-group(layout='row', ng-model='sexo')
+                      md-radio-button.md-primary(value='2') Masculino
+                      md-radio-button.md-primary(value='1') Feminino 
+
+                  md-input-container
+                    label Data Nasc.
+                    md-datepicker(md-hide-icons="calendar", ng-model='nascimento')
+                    
+                  md-autocomplete(flex='',
+                    md-selected-item='ufnasc',
+                    md-min-length='1', 
+                    md-search-text='SearchUFN', 
+                    md-items='item in EstadoNome(SearchUFN)',
+                    md-floating-label='Estado de Nascimento',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchUFN') {{item.nome}}
+                      
+                  md-autocomplete(flex='',
+                    md-selected-item='cidadenasc',
+                    md-min-length='3', 
+                    md-search-text='SearchCNa', 
+                    md-items='item in CidadeNome(SearchCNa)',
+                    md-floating-label='Cidade de Nascimento',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchCNa') {{item.nome}}
+
+                div(layout-gt-sm='row')
+                  md-autocomplete(flex='',
+                    md-selected-item='nacionalidade',
+                    md-min-length='1', 
+                    md-search-text='SearchNac', 
+                    md-items='item in NacionalidadePais(SearchNac)',
+                    md-floating-label='Nacionalidade',
+                    md-item-text='item.pais')
+                    md-item-template
+                      span(md-highlight-text='SearchNac') {{item.pais}}
+                    
+                  md-input-container.md-block(flex-gt-sm='')
+                    label CPF
+                    input(ng-model='cpf', ui-mask="999.999.999-99")
+
+                div(layout-gt-sm='row')
+                  md-input-container.md-block(flex-gt-sm='')
+                    label Identidade
+                    input(ng-model='identidade')
+
+                  md-input-container.md-block(flex-gt-sm='')
+                    label Orgão emissor Identidade
+                    input(ng-model='orgaoidentidade')
+                  
+                  md-autocomplete(flex='',
+                    md-selected-item='ufidentidade',
+                    md-min-length='1', 
+                    md-search-text='SearchUFI', 
+                    md-items='item in EstadoNome(SearchUFI)',
+                    md-floating-label='Estado de Identidade',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchUFI') {{item.nome}}
+
+                div(layout-gt-sm='row')
+                  md-autocomplete(flex='',
+                    md-selected-item='estadocivil',
+                    md-min-length='1', 
+                    md-search-text='SearchCiv', 
+                    md-items='item in EstadoCivilDescricao(SearchCiv)',
+                    md-floating-label='Estado Civil',
+                    md-item-text='item.descricao')
+                    md-item-template
+                      span(md-highlight-text='SearchCiv') {{item.descricao}}
+
+                  md-autocomplete(flex='',
+                    md-selected-item='conjuge',
+                    md-min-length='3', 
+                    md-search-text='SearchCon', 
+                    md-items='item in PessoaNome(SearchCon)',
+                    md-floating-label='Conjuge',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchCon') {{item.nome}}
+
+                div(layout-gt-sm='row')
+                  md-autocomplete(flex='',
+                    md-selected-item='profissao',
+                    md-min-length='2', 
+                    md-search-text='SearchPro', 
+                    md-items='item in CBODescricao(SearchPro)',
+                    md-floating-label='Profissão',
+                    md-item-text='item.descricao')
+                    md-item-template
+                      span(md-highlight-text='SearchPro') {{item.descricao}}
+                  
+                  md-input-container.md-block(flex-gt-sm='')
+                    label Nº Carteira trabalho
+                    input(ng-model='ctps')
+
+                  md-input-container.md-block(flex-gt-sm='')
+                    label Nº Pis
+                    input(ng-model='pis')
+
+            md-tab(label='Financeiro')
+              md-content
+                div(layout-gt-sm='row')                 
+                  md-input-container.md-block(flex-gt-sm='')
+                    label Razão Social
+                    input(ng-model='razaosocial')
+
+                div(layout-gt-sm='row')                 
+                  md-input-container.md-block(flex-gt-sm='')
+                    label CNPJ
+                    input(ng-model='cnpj', ui-mask="99.999.999/9999-99")
+                  
+                  md-input-container.md-block(flex-gt-sm='')
+                    label Inscrição Estadual
+                    input(ng-model='incricaoestadual')
+
+                  md-autocomplete(flex='',
+                    md-selected-item='atividade',
+                    md-min-length='2', 
+                    md-search-text='SearchAti', 
+                    md-items='item in AtividadeEconomicaDescricao(SearchAti)',
+                    md-floating-label='Atividade Economica',
+                    md-item-text='item.descricao')
+                    md-item-template
+                      span(md-highlight-text='SearchAti') {{item.descricao}}
+
+                div(layout-gt-sm='row')                 
+                  md-input-container.md-block(flex-gt-sm='')
+                    label Home Page
+                    input(ng-model='homepage')
+                    
+                  md-autocomplete(flex='',
+                    md-selected-item='representante',
+                    md-min-length='3', 
+                    md-search-text='SearcrRep', 
+                    md-items='item in PessoaNome(SearcrRep)',
+                    md-floating-label='Representante Legal',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearcrRep') {{item.nome}}
+
+          div(layout='row', layout-align='start', flex='')
+            md-button.md-raised(ng-click='Limpar()') Adicionar
+            md-button.md-raised.md-primary(ng-click='Gravar()',
+            ng-disabled='nome==undefined || tipo==undefined') Gravar
+            md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()',
+            ng-disabled='codigo==undefined || codigo==0') Apagar
+            md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar
+        
+        #myModalApagar.modal.fade(role='dialog')
+          .modal-dialog
+            .modal-content
+              .modal-header(style='background-color: #ff6666;')
+                button.close(type='button', data-dismiss='modal') ×
+                h4.modal-title Apagar registro de Pessoa
+              .modal-body
+                | Confirma a remoção deste registro, Nome: {{nome}}?
+              .modal-footer
+                md-button.md-raised.md-warn.md-hue-1(ng-click='ApagarEfetivar()') Efetivar
+                md-button.md-raised(type='button', data-dismiss='modal') Cancelar              
+        
+        #myModalLocalizar.modal.fade(role='dialog')
+          .modal-dialog
+            .modal-content
+              .modal-header(style='background-color: #99ccff;')
+                button.close(type='button', data-dismiss='modal') ×
+                h4.modal-title Localizar Pessoas
+              .modal-body
+                div(layout='row')
+                  md-input-container.md-block(style='margin-top: 10px;')
+                    label campo
+                    md-select(ng-model='campopesq')
+                      md-option(value='nome') Nome
+                      md-option(value='cpf') CPF
+                      md-option(value='cnpj') CNPJ
+                    
+                  md-input-container.md-block(flex='',style='margin-top: 10px;')
+                    label pesquisar
+                    input(ng-model='txtpesquisa')
+
+                  #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
+                    ng-click='LocalizarExe()',
+                    ng-disabled='txtpesquisa==undefined') Executar
+
+                div(layout-gt-sm='row')
+                  table(style='width: 100%')
+                    tr
+                      td(style='width: 50%')
+                        | Nome
+                      td(style='width: 15%')
+                        | Tipo
+                      td(style='width: 35%')
+                        | CPF/CNPJ
+                      
+                    tr(ng-repeat="d in l_dados")
+                      td
+                        a(ng-click='ExibirPessoa(d.codigo)') {{d.nome}}
+                      td
+                        | {{d.tipo}}
+                      td
+                        | {{format('###.###.###-##',d.cpf_cnpj)}}
+                      
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Fechar

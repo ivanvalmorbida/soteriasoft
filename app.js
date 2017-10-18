@@ -30,6 +30,7 @@ var express = require('express'),
   pessoa_fone = require('./routes/pessoa_fone'),  
   pessoa_fisica = require('./routes/pessoa_fisica'),  
   pessoa_juridica = require('./routes/pessoa_juridica'),  
+  imovel = require('./routes/imovel'),  
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -140,6 +141,7 @@ app.get('/estado_civil/estado_civil_descricao', estado_civil.estado_civil_descri
 app.get('/cbo/cbo_descricao', cbo.cbo_descricao);
 app.get('/atividade_economica/atividade_economica_descricao', atividade_economica.atividade_economica_descricao);
 app.get('/pessoa/pessoa_nome', pessoa.pessoa_nome);
+app.get('/imovel', imovel.index);
 
 app.post('/cep/cep_cep', cep.cep_cep);
 app.post('/cep/cep_endereco', cep.cep_endereco);
