@@ -24,20 +24,48 @@ html(lang='pt-br')
             span.md-headline Cadastro de Imóvel
             //span.md-subhead ...... .... ....
         md-card-content
+          div(layout-gt-sm='row')
+            md-input-container 
+              md-radio-group(layout='row', ng-model='tipo')
+                md-radio-button.md-primary(value=4) Geminado 
+                md-radio-button.md-primary(value=3) Apartamento
+                md-radio-button.md-primary(value=2) Casa padrão
+                md-radio-button.md-primary(value=1) Terreno
+                md-radio-button.md-primary(value=5) Chacara
+
+            md-autocomplete(flex='',
+              md-selected-item='proprietario',
+              md-min-length='3', 
+              md-search-text='SearchCon', 
+              md-items='item in PessoaNome(SearchCon)',
+              md-floating-label='Proprietario',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchCon') {{item.nome}}
+
+          div(layout-gt-sm='row')
+            md-input-container.md-block(style='margin-top: 10px;')
+              label documentação
+              md-select(ng-model='documentacao')
+                md-option(value=1) Escritura
+                md-option(value=4) Contrato
+                md-option(value=6) Posse
+
+            md-input-container(flex='')
+              label Inscrição Imobiliaria
+              input(ng-model='Inscricao_incra', type='text')
+                              
+            md-input-container(flex='')
+              label Lote / Unidade
+              input(ng-model='lote_unidade', type='text')
+              
+            md-input-container(flex='')
+              label Quadra / Bloco
+              input(ng-model='quadra_bloco', type='text')
 
           md-tabs(md-dynamic-height='', md-border-bottom='')
             md-tab(label='Terreno')
               md-content
-
-                div(layout-gt-sm='row')
-                  md-input-container 
-
-                    md-radio-group(layout='row', ng-model='tipo')
-                      md-radio-button.md-primary(value=4) Geminado 
-                      md-radio-button.md-primary(value=3) Apartamento
-                      md-radio-button.md-primary(value=2) Casa padrão
-                      md-radio-button.md-primary(value=1) Terreno
-                      md-radio-button.md-primary(value=5) Chacara
 
                 div(layout-gt-sm='row')
                   md-input-container
@@ -93,24 +121,33 @@ html(lang='pt-br')
                     input(ng-model='complemento', type='text')
 
                 div(layout-gt-sm='row')
-                  md-input-container(flex='')
-                    label E-mails
-                    div(layout='row')
-                      div
-                        input(ng-model='email', type='email')
-                      div
-                        md-button.md-raised.md-primary(ng-click='addEmail()') Adicionar
-                    md-chips(ng-model="emails", readonly='true', md-removable='true')
-                  
-                  md-input-container(flex='')
-                    label Telefones
-                    div(layout='row')
-                      div
-                        input(ng-model='fone', ui-telefone)
-                      div
-                        md-button.md-raised.md-primary(ng-click='addFone()') Adicionar
-                    md-chips(ng-model="fones", readonly='true', md-removable='true')
+                  md-input-container
+                    label Area m²
+                    input(ng-model='area', type='text')
 
+                  md-input-container
+                    label Frente
+                    input(ng-model='numero', type='text')                    
+
+                  md-input-container
+                    label Fundo
+                    input(ng-model='numero', type='text')                    
+
+                  md-input-container
+                    label Lateral 1
+                    input(ng-model='numero', type='text')                    
+
+                  md-input-container
+                    label Lateral 2
+                    input(ng-model='numero', type='text')                    
+
+                  md-input-container
+                    label Gabarito
+                    input(ng-model='numero', type='text')     
+
+                  md-checkbox.md-primary(ng-model="esquina")
+                    | Esquina
+                    
             md-tab(label='Construção')
               md-content
                 div(layout-gt-sm='row')
@@ -187,16 +224,6 @@ html(lang='pt-br')
                     md-item-text='item.descricao')
                     md-item-template
                       span(md-highlight-text='SearchCiv') {{item.descricao}}
-
-                  md-autocomplete(flex='',
-                    md-selected-item='conjuge',
-                    md-min-length='3', 
-                    md-search-text='SearchCon', 
-                    md-items='item in PessoaNome(SearchCon)',
-                    md-floating-label='Conjuge',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchCon') {{item.nome}}
 
                 div(layout-gt-sm='row')
                   md-autocomplete(flex='',
