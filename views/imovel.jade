@@ -25,265 +25,309 @@ html(lang='pt-br')
             //span.md-subhead ...... .... ....
         md-card-content
           div(layout-gt-sm='row')
-            md-input-container 
-              md-radio-group(layout='row', ng-model='tipo')
-                md-radio-button.md-primary(value=4) Geminado 
-                md-radio-button.md-primary(value=3) Apartamento
-                md-radio-button.md-primary(value=2) Casa padrão
-                md-radio-button.md-primary(value=1) Terreno
-                md-radio-button.md-primary(value=5) Chacara
+            div(flex="")
+              md-input-container 
+                md-radio-group(layout='row', ng-model='tipo')
+                  md-radio-button.md-primary(value=4) Geminado 
+                  md-radio-button.md-primary(value=3) Apartamento
+                  md-radio-button.md-primary(value=2) Casa padrão
+                  md-radio-button.md-primary(value=1) Terreno
+                  md-radio-button.md-primary(value=5) Chacara
 
-            md-autocomplete(flex='',
-              md-selected-item='proprietario',
-              md-min-length='3', 
-              md-search-text='SearchCon', 
-              md-items='item in PessoaNome(SearchCon)',
-              md-floating-label='Proprietario',
-              md-item-text='item.nome')
-              md-item-template
-                span(md-highlight-text='SearchCon') {{item.nome}}
+            div(flex="")
+              md-autocomplete(flex='',
+                md-selected-item='proprietario',
+                md-min-length='3', 
+                md-search-text='SearchPro', 
+                md-items='item in PessoaNome(SearchPro)',
+                md-floating-label='Proprietário',
+                md-item-text='item.nome')
+                md-item-template
+                  span(md-highlight-text='SearchPro') {{item.nome}}
 
-          div(layout-gt-sm='row')
-            md-input-container.md-block(style='margin-top: 10px;')
-              label documentação
-              md-select(ng-model='documentacao')
-                md-option(value=1) Escritura
-                md-option(value=4) Contrato
-                md-option(value=6) Posse
+          div(layout-gt-sm='row', style='margin-top: -30px')
+            div(flex="")
+              md-input-container(style='margin-top: 10px;')
+                label documentação
+                md-select(ng-model='documentacao')
+                  md-option(value=1) Escritura
+                  md-option(value=4) Contrato
+                  md-option(value=6) Posse
 
-            md-input-container(flex='')
-              label Inscrição Imobiliaria
-              input(ng-model='Inscricao_incra', type='text')
-                              
-            md-input-container(flex='')
-              label Lote / Unidade
-              input(ng-model='lote_unidade', type='text')
-              
-            md-input-container(flex='')
-              label Quadra / Bloco
-              input(ng-model='quadra_bloco', type='text')
+            div(flex="")
+              md-input-container(flex='')
+                label Inscrição Imobiliaria
+                input(ng-model='Inscricao_incra', type='text')
+                                
+            div(flex="")
+              md-input-container(flex='')
+                label Lote / Unidade
+                input(ng-model='lote_unidade', type='text')
+                
+            div(flex="")
+              md-input-container(flex='')
+                label Quadra / Bloco
+                input(ng-model='quadra_bloco', type='text')
 
-          md-tabs(md-dynamic-height='', md-border-bottom='')
+          md-tabs(md-dynamic-height='', md-border-bottom='', style='margin-top: -40px')
             md-tab(label='Terreno')
               md-content
-
                 div(layout-gt-sm='row')
-                  md-input-container
-                    label CEP
-                    input(ng-model='cep', ui-cep, ng-change='BuscarCEP()')
-                  md-autocomplete(flex='',
-                    md-selected-item='estado',
-                    md-min-length='1', 
-                    md-search-text='SearchEst', 
-                    md-items='item in EstadoNome(SearchEst)',
-                    md-floating-label='Estado',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchEst') {{item.nome}}
-                      
-                  md-autocomplete(flex='',
-                    md-selected-item='cidade',
-                    md-min-length='3', 
-                    md-search-text='SearchCid', 
-                    md-items='item in CidadeNome(SearchCid)',
-                    md-floating-label='Cidade',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchCid') {{item.nome}}
+                  div(flex="")
+                    md-input-container
+                      label CEP
+                      input(ng-model='cep', ui-cep, ng-change='BuscarCEP()')
+
+                  div(flex="")
+                    md-autocomplete(flex='',
+                      md-selected-item='estado',
+                      md-min-length='1', 
+                      md-search-text='SearchEst', 
+                      md-items='item in EstadoNome(SearchEst)',
+                      md-floating-label='Estado',
+                      md-item-text='item.nome')
+                      md-item-template
+                        span(md-highlight-text='SearchEst') {{item.nome}}
+                        
+                  div(flex="")
+                    md-autocomplete(flex='',
+                      md-selected-item='cidade',
+                      md-min-length='3', 
+                      md-search-text='SearchCid', 
+                      md-items='item in CidadeNome(SearchCid)',
+                      md-floating-label='Cidade',
+                      md-item-text='item.nome')
+                      md-item-template
+                        span(md-highlight-text='SearchCid') {{item.nome}}
                 
-                div(layout-gt-sm='row')
-                  md-autocomplete(flex='',
-                    md-selected-item='bairro',
-                    md-min-length='3', 
-                    md-search-text='SearchBai', 
-                    md-items='item in BairroNome(SearchBai)',
-                    md-floating-label='Bairro',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchBai') {{item.nome}}
+                div(layout-gt-sm='row', style='margin-top: -30px')
+                  div(flex="")
+                    md-autocomplete(flex='',
+                      md-selected-item='bairro',
+                      md-min-length='3', 
+                      md-search-text='SearchBai', 
+                      md-items='item in BairroNome(SearchBai)',
+                      md-floating-label='Bairro',
+                      md-item-text='item.nome')
+                      md-item-template
+                        span(md-highlight-text='SearchBai') {{item.nome}}
 
-                  md-autocomplete(flex='',
-                    md-selected-item='endereco',
-                    md-min-length='3', 
-                    md-search-text='SearchEnd', 
-                    md-items='item in EnderecoNome(SearchEnd)',
-                    md-floating-label='Endereço',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchEnd') {{item.nome}}
+                  div(flex="")
+                    md-autocomplete(flex='',
+                      md-selected-item='endereco',
+                      md-min-length='3', 
+                      md-search-text='SearchEnd', 
+                      md-items='item in EnderecoNome(SearchEnd)',
+                      md-floating-label='Endereço',
+                      md-item-text='item.nome')
+                      md-item-template
+                        span(md-highlight-text='SearchEnd') {{item.nome}}
 
-                  md-input-container
-                    label Número
-                    input(ng-model='numero', type='text')
+                  div(flex="")
+                    md-input-container
+                      label Número
+                      input(ng-model='numero', type='text')
 
-                  md-input-container(flex='')
-                    label Complemento
-                    input(ng-model='complemento', type='text')
+                  div(flex="")
+                    md-input-container(flex='')
+                      label Complemento
+                      input(ng-model='complemento', type='text')
 
-                div(layout-gt-sm='row')
-                  md-input-container
-                    label Area m²
-                    input(ng-model='area', type='text')
+                div(layout-gt-sm='row', style='margin-top: -30px')
+                  div(flex="")
+                    md-input-container
+                      label Area m²
+                      input(ng-model='area', type='number')
 
-                  md-input-container
-                    label Frente
-                    input(ng-model='numero', type='text')                    
+                  div(flex="")
+                    md-input-container
+                      label Frente
+                      input(ng-model='frente', type='number')                    
 
-                  md-input-container
-                    label Fundo
-                    input(ng-model='numero', type='text')                    
+                  div(flex="")
+                    md-input-container
+                      label Fundo
+                      input(ng-model='fundo', type='number')                    
 
-                  md-input-container
-                    label Lateral 1
-                    input(ng-model='numero', type='text')                    
+                  div(flex="")
+                    md-input-container
+                      label Lateral 1
+                      input(ng-model='lateral1', type='number')                    
 
-                  md-input-container
-                    label Lateral 2
-                    input(ng-model='numero', type='text')                    
+                  div(flex="")
+                    md-input-container
+                      label Lateral 2
+                      input(ng-model='lateral2', type='number')                    
 
-                  md-input-container
-                    label Gabarito
-                    input(ng-model='numero', type='text')     
+                  div(flex="")
+                    md-input-container
+                      label Gabarito
+                      input(ng-model='gabarito', type='number')     
 
-                  md-checkbox.md-primary(ng-model="esquina")
-                    | Esquina
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="esquina")
+                        | Esquina
                     
             md-tab(label='Construção')
               md-content
                 div(layout-gt-sm='row')
-                  md-input-container
-                    md-radio-group(layout='row', ng-model='sexo')
-                      md-radio-button.md-primary(value='2') Masculino
-                      md-radio-button.md-primary(value='1') Feminino 
+                  div(flex="")
+                    md-input-container
+                      label Entrega
+                      md-datepicker(md-hide-icons="calendar", ng-model='entrega')
 
-                  md-input-container
-                    label Data Nasc.
-                    md-datepicker(md-hide-icons="calendar", ng-model='nascimento')
-                    
-                  md-autocomplete(flex='',
-                    md-selected-item='ufnasc',
-                    md-min-length='1', 
-                    md-search-text='SearchUFN', 
-                    md-items='item in EstadoNome(SearchUFN)',
-                    md-floating-label='Estado de Nascimento',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchUFN') {{item.nome}}
+                  div(flex="")
+                    md-input-container
+                      label Ano de Construção
+                      input(ng-model='ano_construcao', type='number')    
+
+                  div(flex="")
+                    md-input-container
+                      label Área total
+                      input(ng-model='area_total', type='number')    
+
+                  div(flex="")
+                    md-input-container
+                      label Área privativa
+                      input(ng-model='area_privativa', type='number')    
+
+                  div(flex="")
+                    md-input-container
+                      label Quartos
+                      input(ng-model='quartos', type='number')    
                       
-                  md-autocomplete(flex='',
-                    md-selected-item='cidadenasc',
-                    md-min-length='3', 
-                    md-search-text='SearchCNa', 
-                    md-items='item in CidadeNome(SearchCNa)',
-                    md-floating-label='Cidade de Nascimento',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchCNa') {{item.nome}}
+                  div(flex="")
+                    md-input-container
+                      label Suítes
+                      input(ng-model='suites', type='number')    
 
-                div(layout-gt-sm='row')
-                  md-autocomplete(flex='',
-                    md-selected-item='nacionalidade',
-                    md-min-length='1', 
-                    md-search-text='SearchNac', 
-                    md-items='item in NacionalidadePais(SearchNac)',
-                    md-floating-label='Nacionalidade',
-                    md-item-text='item.pais')
-                    md-item-template
-                      span(md-highlight-text='SearchNac') {{item.pais}}
-                    
-                  md-input-container.md-block(flex-gt-sm='')
-                    label CPF
-                    input(ng-model='cpf', ui-mask="999.999.999-99")
+                  div(flex="")
+                    md-input-container
+                      label Garagens
+                      input(ng-model='garagens', type='number')    
 
-                div(layout-gt-sm='row')
-                  md-input-container.md-block(flex-gt-sm='')
-                    label Identidade
-                    input(ng-model='identidade')
+                div(layout-gt-sm='row', style='margin-top: -30px')
 
-                  md-input-container.md-block(flex-gt-sm='')
-                    label Orgão emissor Identidade
-                    input(ng-model='orgaoidentidade')
-                  
-                  md-autocomplete(flex='',
-                    md-selected-item='ufidentidade',
-                    md-min-length='1', 
-                    md-search-text='SearchUFI', 
-                    md-items='item in EstadoNome(SearchUFI)',
-                    md-floating-label='Estado de Identidade',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchUFI') {{item.nome}}
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="mobiliada")
+                        | Mobiliada
 
-                div(layout-gt-sm='row')
-                  md-autocomplete(flex='',
-                    md-selected-item='estadocivil',
-                    md-min-length='1', 
-                    md-search-text='SearchCiv', 
-                    md-items='item in EstadoCivilDescricao(SearchCiv)',
-                    md-floating-label='Estado Civil',
-                    md-item-text='item.descricao')
-                    md-item-template
-                      span(md-highlight-text='SearchCiv') {{item.descricao}}
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="churasqueira")
+                        | Churasqueira
 
-                div(layout-gt-sm='row')
-                  md-autocomplete(flex='',
-                    md-selected-item='profissao',
-                    md-min-length='2', 
-                    md-search-text='SearchPro', 
-                    md-items='item in CBODescricao(SearchPro)',
-                    md-floating-label='Profissão',
-                    md-item-text='item.descricao')
-                    md-item-template
-                      span(md-highlight-text='SearchPro') {{item.descricao}}
-                  
-                  md-input-container.md-block(flex-gt-sm='')
-                    label Nº Carteira trabalho
-                    input(ng-model='ctps')
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="infra_ar_cond")
+                        | Infra ar condicionado
+                        
+                  div(flex="")
+                    md-input-container
+                      label Piso
+                      md-select(ng-model='piso')
+                        md-option(value=1) Ceramico
+                        md-option(value=2) Porcelanato
+                        md-option(value=3) Madeira
+                
+                  div(flex="")
+                    md-input-container
+                      label Teto
+                      md-select(ng-model='teto')
+                        md-option(value=1) Ceramico
+                        md-option(value=2) Porcelanato
+                        md-option(value=3) Madeira
 
-                  md-input-container.md-block(flex-gt-sm='')
-                    label Nº Pis
-                    input(ng-model='pis')
+                  div(flex="")
+                    md-input-container
+                      label Reboco
+                      md-select(ng-model='reboco')
+                        md-option(value=1) Ceramico
+                        md-option(value=2) Porcelanato
+                        md-option(value=3) Madeira
+
+                div(layout-gt-sm='row', style='margin-top: -10px')
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="murro")
+                        | Murro
+
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="portao")
+                        | Portão
+
+                  div(flex="")
+                    md-input-container
+                      label Quintal Largura
+                      input(ng-model='quintal_larg', type='number')    
+
+                  div(flex="")
+                    md-input-container
+                      label Quintal Comprimento
+                      input(ng-model='quintal_comp', type='number')    
+
+                  div(flex="")
+                    md-input-container
+                      label Andar
+                      input(ng-model='andar', type='number')    
 
             md-tab(label='Financeiro')
               md-content
-                div(layout-gt-sm='row')                 
-                  md-input-container.md-block(flex-gt-sm='')
-                    label Razão Social
-                    input(ng-model='razaosocial')
+                div(layout-gt-sm='row')
+                  div(flex="")
+                    md-input-container
+                      label Valor
+                      input(ng-model='valor', type='number')    
 
-                div(layout-gt-sm='row')                 
-                  md-input-container.md-block(flex-gt-sm='')
-                    label CNPJ
-                    input(ng-model='cnpj', ui-mask="99.999.999/9999-99")
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="mcmv")
+                        | MCMV
+
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="financia")
+                        | Financiavel
+                 
+                  div(flex="")
+                    md-input-container
+                      label Entrada
+                      input(ng-model='entrada', type='number')    
+
+                div(layout-gt-sm='row', style='margin-top: -30px')
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="permuta")
+                        | Permuta
+
+                  div(flex="")
+                    md-input-container
+                      md-checkbox.md-primary(ng-model="carro")
+                        | Carro                  
+              
+                  div(flex="")
+                    md-input-container    
+                      md-checkbox.md-primary(ng-model="fgts")
+                        | FGTS                        
                   
-                  md-input-container.md-block(flex-gt-sm='')
-                    label Inscrição Estadual
-                    input(ng-model='incricaoestadual')
-
-                  md-autocomplete(flex='',
-                    md-selected-item='atividade',
-                    md-min-length='2', 
-                    md-search-text='SearchAti', 
-                    md-items='item in AtividadeEconomicaDescricao(SearchAti)',
-                    md-floating-label='Atividade Economica',
-                    md-item-text='item.descricao')
-                    md-item-template
-                      span(md-highlight-text='SearchAti') {{item.descricao}}
-
-                div(layout-gt-sm='row')                 
-                  md-input-container.md-block(flex-gt-sm='')
-                    label Home Page
-                    input(ng-model='homepage')
-                    
-                  md-autocomplete(flex='',
-                    md-selected-item='representante',
-                    md-min-length='3', 
-                    md-search-text='SearcrRep', 
-                    md-items='item in PessoaNome(SearcrRep)',
-                    md-floating-label='Representante Legal',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearcrRep') {{item.nome}}
+                  div(flex="")
+                    md-input-container
+                      label Condominio
+                      input(ng-model='condominio', type='number')
+    
+                  div(flex="")
+                    md-autocomplete(flex='',
+                      md-selected-item='captador',
+                      md-min-length='3', 
+                      md-search-text='SearcrRep', 
+                      md-items='item in PessoaNome(SearcrRep)',
+                      md-floating-label='Captador',
+                      md-item-text='item.nome')
+                      md-item-template
+                        span(md-highlight-text='SearcrRep') {{item.nome}}
 
           div(layout='row', layout-align='start', flex='')
             md-button.md-raised(ng-click='Limpar()') Adicionar
