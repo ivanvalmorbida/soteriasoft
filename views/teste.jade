@@ -1,0 +1,112 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    |   
+    title Errors
+    |   
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic")
+    |   
+    |   
+    link(rel="stylesheet prefetch", href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.5/angular-material.css")
+    link(rel="stylesheet prefetch", href="https://material.angularjs.org/1.1.5/docs.css")
+    |       
+    link(rel="stylesheet", href="css/teste.css")
+  body
+    .inputdemoErrors(ng-controller="AppCtrl", layout="column", ng-cloak="", ng-app="MyApp")
+      md-content(layout-padding="")
+        form(name="projectForm")
+          md-input-container.md-block
+            label Description
+            |         
+            input(md-maxlength="30", required="", md-no-asterisk="", name="description", ng-model="project.description")
+            |         
+            div(ng-messages="projectForm.description.$error")
+              div(ng-message="required") This is required.
+              |           
+              div(ng-message="md-maxlength") The description must be less than 30 characters long.
+          |       
+          div(layout="row")
+            md-input-container(flex="50")
+              label Client Name
+              |           
+              input(required="", name="clientName", ng-model="project.clientName")
+              |           
+              div(ng-messages="projectForm.clientName.$error")
+                div(ng-message="required") This is required.
+            |         
+            md-input-container(flex="50")
+              label Project Type
+              |           
+              md-select(name="type", ng-model="project.type", required="")
+                md-option(value="app") Application
+                |             
+                md-option(value="web") Website
+          |       
+          md-input-container.md-block
+            label Client Email
+            |         
+            input(required="", type="email", name="clientEmail", ng-model="project.clientEmail", minlength="10", maxlength="100", ng-pattern="/^.+@.+\..+$/")
+            |         
+            div(ng-messages="projectForm.clientEmail.$error", role="alert")
+              div(ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']")
+                | Your email must be between 10 and 100 characters long and look like an e-mail address.
+          |       
+          md-input-container.md-block
+            label Hourly Rate (USD)
+            |         
+            input(required="", type="number", step="any", name="rate", ng-model="project.rate", min="800", max="4999", ng-pattern="/^1234$/")
+            |         
+            div(ng-messages="projectForm.rate.$error", multiple="", md-auto-hide="false")
+              div(ng-message="required")
+                | You've got to charge something! You can't just 
+                b give away
+                |  a Missile Defense
+                |             System.
+              |           
+              div(ng-message="min")
+                | You should charge at least $800 an hour. This job is a big deal... if you mess up,
+                | everyone dies!
+              |           
+              div(ng-message="pattern")
+                | You should charge exactly $1,234.
+              |           
+              div(ng-message="max")
+                | {{projectForm.rate.$viewValue | currency:"$":0}} an hour? That's a little ridiculous. I
+                | doubt even Bill Clinton could afford that.
+          |       
+          md-input-container.md-block
+            md-checkbox(name="tos", ng-model="project.tos", required="")
+              | I accept the terms of service.
+            |         
+            div(ng-messages="projectForm.tos.$error", multiple="", md-auto-hide="false")
+              div(ng-message="required")
+                | You must accept the terms of service before you can proceed.
+          |       
+          md-input-container.md-block
+            md-switch.md-primary(name="special", ng-model="project.special", required="")
+              | Enable special options.
+            |         
+            div(ng-messages="projectForm.special.$error", multiple="")
+              div(ng-message="required")
+                | You must enable all special options before you can proceed.
+          |       
+          div
+            md-button(type="submit") Submit
+          |       
+          p(style="font-size:.8em; width: 100%; text-align: center;")
+            | Make sure to include 
+            a(href="https://docs.angularjs.org/api/ngMessages", target="_blank") ngMessages
+            |  module when using ng-message markup.
+    //
+      Copyright 2016 Google Inc. All Rights Reserved.
+      Use of this source code is governed by an MIT-style license that can be foundin the LICENSE file at http://material.angularjs.org/HEAD/license.
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js")
+    script(src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js")
+    script(src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.5/angular-material.js")
+    |     
+    script(src="js/teste.js")
