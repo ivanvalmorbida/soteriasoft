@@ -144,6 +144,7 @@ app.get('/atividade_economica/atividade_economica_descricao', atividade_economic
 app.get('/pessoa/pessoa_nome', pessoa.pessoa_nome);
 app.get('/imovel', imovel.index);
 app.get('/teste', teste.index);
+app.get('/teste/dlg', teste.dialogo);
 
 app.post('/cep/cep_cep', cep.cep_cep);
 app.post('/cep/cep_endereco', cep.cep_endereco);

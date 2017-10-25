@@ -14,6 +14,7 @@ html
     .inputdemoErrors(ng-controller="AppCtrl", layout="column", ng-cloak="", ng-app="MyApp")
       md-content(layout-padding="")
         form(name="projectForm")
+          md-button(ng-click="showAdvanced($event)") Open Dialog
           md-input-container.md-block
             label Description
             |         
