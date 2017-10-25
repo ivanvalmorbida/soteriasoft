@@ -1,4 +1,8 @@
-  /*.closeButton {
+md-input-container label{
+  font-weight: normal;
+}
+
+/*.closeButton {
     position: relative;
     height: 24px;
     width: 24px;

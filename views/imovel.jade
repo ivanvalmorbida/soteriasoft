@@ -47,7 +47,7 @@ html(lang='pt-br')
 
           div(layout-gt-sm='row', style='margin-top: -30px')
             div(flex="")
-              md-input-container(style='margin-top: 10px;')
+              md-input-container(flex='')
                 label documentação
                 md-select(ng-model='documentacao')
                   md-option(value=1) Escritura
@@ -72,7 +72,7 @@ html(lang='pt-br')
           md-tabs(md-dynamic-height='', md-border-bottom='', style='margin-top: -40px')
             md-tab(label='Terreno')
               md-content
-                div(layout-gt-sm='row')
+                div(layout-gt-sm='row', style='margin-top: 10px')
                   div(flex="")
                     md-input-container
                       label CEP
@@ -171,7 +171,7 @@ html(lang='pt-br')
                     
             md-tab(label='Construção')
               md-content
-                div(layout-gt-sm='row')
+                div(layout-gt-sm='row', style='margin-top: 10px')
                   div(flex="")
                     md-input-container
                       label Entrega
@@ -276,7 +276,7 @@ html(lang='pt-br')
 
             md-tab(label='Financeiro')
               md-content
-                div(layout-gt-sm='row')
+                div(layout-gt-sm='row', style='margin-top: 10px')
                   div(flex="")
                     md-input-container
                       label Valor
