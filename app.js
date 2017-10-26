@@ -143,6 +143,8 @@ app.get('/cbo/cbo_descricao', cbo.cbo_descricao);
 app.get('/atividade_economica/atividade_economica_descricao', atividade_economica.atividade_economica_descricao);
 app.get('/pessoa/pessoa_nome', pessoa.pessoa_nome);
 app.get('/imovel', imovel.index);
+app.get('/imovel/apagar', imovel.dlg_apagar);
+
 app.get('/teste', teste.index);
 app.get('/teste/dlg', teste.dialogo);
 

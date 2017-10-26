@@ -7,6 +7,10 @@ exports.index = function (req, res) {
     res.render('imovel');
 };
 
+exports.dlg_apagar = function (req, res) {
+    res.render('imoveldlg_apagar');
+};
+
 exports.gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;

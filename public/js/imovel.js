@@ -1,9 +1,44 @@
 angular.module('MyApp', ['ngMaterial','ui.mask'])
-.controller('AppCtrl', function($http,$scope) {
+.controller('AppCtrl', function($http, $scope, $mdDialog) {
     $scope.format = function(mask, number) {
         return format(mask, number);
     }  
        
+    $scope.Apagar = function(ev) {
+        $mdDialog.show({
+          controller: DialogController,
+          templateUrl: './imovel/apagar',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true
+        })
+        .then(function(answer) {
+          console.dir('You said the information was "' + answer + '".');
+        }, function() {
+          console.dir('You cancelled the dialog.');
+        });
+    };
+    
+    function DialogController($scope, $mdDialog) {
+        $scope.Inscricao_incra=$scope.Inscricao_incra;
+        
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+    
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.ApagarEfetivar = function() {
+            $mdDialog.hide();
+        };
+        
+        $scope.answer = function(answer) {
+          $mdDialog.hide(answer);
+        };
+    }
+      
     $scope.Limpar = function() {
         $scope.codigo       = 0;
         $scope.tipo         = 0;
@@ -93,7 +128,7 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
         return r;
     }  
 
-    $scope.ApagarEfetivar = function(cep) {
+    /*$scope.ApagarEfetivar = function(cep) {
         $http.post('/pessoa/pessoa_apagar', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
             $scope.Limpar();
@@ -105,7 +140,7 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
     
     $scope.Apagar = function(cep) {
         $('#myModalApagar').modal('show');
-    }
+    }*/
     
     $scope.ExibirPessoa = function(codigo) {
         $scope.codigo = codigo;
