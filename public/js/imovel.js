@@ -4,13 +4,28 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
         return format(mask, number);
     }  
        
+    /*$scope.ApagarEfetivar = function(cep) {
+        $http.post('/pessoa/pessoa_apagar', {cod: $scope.codigo}).
+        success(function (data, status, headers, config) {
+            $scope.Limpar();
+            $('#myModalApagar').modal('hide');
+        }).error(function (data, status, headers, config) {
+            //
+        });  
+    }
+    
+    $scope.Apagar = function(cep) {
+        $('#myModalApagar').modal('show');
+    }*/
+    
     $scope.Apagar = function(ev) {
         $mdDialog.show({
-          controller: DialogController,
+          controller: ApagarController,
           templateUrl: './imovel/apagar',
           parent: angular.element(document.body),
           targetEvent: ev,
-          clickOutsideToClose:true
+          clickOutsideToClose: true,
+          locals: { inscricao_incra: $scope.inscricao_incra }
         })
         .then(function(answer) {
           console.dir('You said the information was "' + answer + '".');
@@ -19,23 +34,15 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
         });
     };
     
-    function DialogController($scope, $mdDialog) {
-        $scope.Inscricao_incra=$scope.Inscricao_incra;
-        
-        $scope.hide = function() {
-          $mdDialog.hide();
-        };
-    
-        $scope.cancel = function() {
+    function ApagarController($scope, $mdDialog, inscricao_incra) {
+        $scope.inscricao_incra = inscricao_incra;
+
+        $scope.Cancel = function() {
           $mdDialog.cancel();
         };
 
-        $scope.ApagarEfetivar = function() {
-            $mdDialog.hide();
-        };
-        
-        $scope.answer = function(answer) {
-          $mdDialog.hide(answer);
+        $scope.Efetivar = function(answer) {
+            $mdDialog.hide(answer);
         };
     }
       
@@ -127,20 +134,6 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
         }
         return r;
     }  
-
-    /*$scope.ApagarEfetivar = function(cep) {
-        $http.post('/pessoa/pessoa_apagar', {cod: $scope.codigo}).
-        success(function (data, status, headers, config) {
-            $scope.Limpar();
-            $('#myModalApagar').modal('hide');
-        }).error(function (data, status, headers, config) {
-            //
-        });  
-    }
-    
-    $scope.Apagar = function(cep) {
-        $('#myModalApagar').modal('show');
-    }*/
     
     $scope.ExibirPessoa = function(codigo) {
         $scope.codigo = codigo;
