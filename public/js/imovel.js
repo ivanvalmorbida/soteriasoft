@@ -3,31 +3,23 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
     $scope.format = function(mask, number) {
         return format(mask, number);
     }  
-       
-    /*$scope.ApagarEfetivar = function(cep) {
-        $http.post('/pessoa/pessoa_apagar', {cod: $scope.codigo}).
-        success(function (data, status, headers, config) {
-            $scope.Limpar();
-            $('#myModalApagar').modal('hide');
-        }).error(function (data, status, headers, config) {
-            //
-        });  
-    }
-    
-    $scope.Apagar = function(cep) {
-        $('#myModalApagar').modal('show');
-    }*/
-    
+
     $scope.Apagar = function(ev) {
         $mdDialog.show({
           controller: ApagarController,
-          templateUrl: './imovel/apagar',
+          templateUrl: './imovel/dlg/apagar',
           parent: angular.element(document.body),
           targetEvent: ev,
           clickOutsideToClose: true,
           locals: { inscricao_incra: $scope.inscricao_incra }
         })
         .then(function(answer) {
+            $http.post('/imovel/apagar', {cod: $scope.codigo}).
+            success(function (data, status, headers, config) {
+                $scope.Limpar();
+            }).error(function (data, status, headers, config) {
+                //
+            });              
           console.dir('You said the information was "' + answer + '".');
         }, function() {
           console.dir('You cancelled the dialog.');
@@ -47,9 +39,14 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
     }
       
     $scope.Limpar = function() {
-        $scope.codigo       = 0;
-        $scope.tipo         = 0;
-        $scope.nome         = '';
+        $scope.codigo           = 0;
+        $scope.tipo             = 0;
+        $scope.proprietario     = 0;
+        $scope.documentacao     = 0;
+        $scope.inscricao_incra  = '';
+        $scope.lote_unidade     = '';
+        $scope.quadra_bloco     = '';
+        
         $scope.cep          = '';
         $scope.estado       = 0;
         $scope.cidade       = 0;                
@@ -57,76 +54,78 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
         $scope.endereco     = 0;                
         $scope.numero       = '';
         $scope.complemento  = '';
-        $scope.obs          = '';
-        $scope.emails       = [];
-        $scope.email        = '';
-        $scope.fones        = [];
-        $scope.fone         = '';
-
-        $scope.estadonasc       = 0;
-        $scope.cidadenasc       = 0;
-        $scope.nacionalidade    = 0;
-        $scope.sexo             = 0;
-        $scope.cpf              = '';
-        $scope.identidade       = '';
-        $scope.orgaoidentidade  = '';
-        $scope.ufidentidade     = 0;
-        $scope.estadocivil      = 0;
-        $scope.conjuge          = 0;
-        $scope.profissao        = 0;
-        $scope.ctps             = '';
-        $scope.pis              = '';
+        $scope.area_terreno = 0;                
+        $scope.frente       = 0;                
+        $scope.fundo        = 0;                
+        $scope.lateral1     = 0;                
+        $scope.lateral2     = 0;                
+        $scope.gabarito     = 0;                
+        $scope.esquina      = 0;                
         
-        $scope.razaosocial      = '';
-        $scope.cnpj             = '';
-        $scope.incricaoestadual = '';
-        $scope.atividade        = 0;
-        $scope.homepage         = '';
-        $scope.representante    = 0;
+        $scope.entrega          = '';
+        $scope.ano_construcao   = 0;
+        $scope.area_total       = 0;
+        $scope.area_privativa   = 0;
+        $scope.quartos          = 0;
+        $scope.suites           = 0;
+        $scope.garagens         = 0;
+        $scope.mobiliada        = 0;
+        $scope.churasqueira     = 0;
+        $scope.infra_ar_cond    = 0;
+        $scope.piso             = 0;
+        $scope.teto             = 0;
+        $scope.reboco           = 0;
+        $scope.murro            = 0;
+        $scope.portao           = 0;
+        $scope.quintal_larg     = 0;
+        $scope.quintal_comp     = 0;
+        $scope.andar            = 0;
+
+        $scope.valor        = 0;
+        $scope.mcmv         = 0;
+        $scope.financia     = 0;
+        $scope.entrada      = 0;
+        $scope.permuta      = 0;
+        $scope.carro        = 0;
+        $scope.fgts         = 0;
+        $scope.condominio   = 0;
+        $scope.captador     = 0;
     }
 
     $scope.Gravar = function() {
-        $http.post('/pessoa/gravar', {codigo: $scope.codigo, tipo: $scope.tipo, 
-        nome: $scope.nome, cep: $scope.cep, estado: $scope.estado.codigo, 
-        cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
-        endereco: $scope.endereco.codigo, numero: $scope.numero, 
-        complemento: $scope.complemento, obs: $scope.obs}).
+        $http.post('/imovel/gravar', {codigo: $scope.codigo, tipo: $scope.tipo, 
+            proprietario: $scope.proprietario, documentacao: $scope.documentacao,
+            inscricao_incra: $scope.inscricao_incra, lote_unidade: $scope.lote_unidade,
+            quadra_bloco: $scope.quadra_bloco}).
         success(function (data, status, headers, config) {
             $scope.codigo = data.codigo;
 
-            $http.post('/pessoa_email/gravar', {pessoa: $scope.codigo, emails: $scope.emails}); 
+            $http.post('/imovel_terreno/gravar', {codigo: $scope.codigo, 
+                cep: $scope.cep, codigo: $scope.estado.codigo, 
+                cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
+                endereco: $scope.endereco.codigo, numero: $scope.numero, 
+                complemento: $scope.complemento, area_terreno: $scope.area_terreno,                
+                frente: $scope.frente, fundo: $scope.fundo, lateral1: $scope.lateral1,
+                lateral2: $scope.lateral2, gabarito: $scope.gabarito, esquina: $scope.esquina}); 
+    
+            $http.post('/imovel_construcao/gravar', {codigo: $scope.codigo, 
+                entrega: $scope.entrega, ano_construcao: $scope.ano_construcao,
+                area_total: $scope.area_total, area_privativa: $scope.area_privativa, 
+                quartos: $scope.quartos, suites: $scope.suites, garagens:$scope.garagens, 
+                mobiliada: $scope.mobiliada, churasqueira: $scope.churasqueira, 
+                infra_ar_cond: $scope.infra_ar_cond, piso: $scope.piso, teto: $scope.teto, 
+                reboco: $scope.reboco, murro: $scope.murro, portao: $scope.portao, 
+                quintal_larg: $scope.quintal_larg, quintal_comp: $scope.quintal_comp,
+                andar: $scope.andar}); 
 
-            $http.post('/pessoa_fone/gravar', {pessoa: $scope.codigo, fones: $scope.fones}); 
-            
-            if ($scope.tipo==1){
-                $http.post('/pessoa_fisica/gravar', {pessoa: $scope.codigo, 
-                nascimento: $scope.nascimento, ufnasc: $scope.ufnasc.codigo, 
-                cidadenasc: $scope.cidadenasc.codigo, nacionalidade: $scope.nacionalidade.codigo, 
-                sexo: $scope.sexo, cpf: $scope.cpf, identidade: $scope.identidade, 
-                orgaoidentidade: $scope.orgaoidentidade, ufidentidade: $scope.ufidentidade.codigo, 
-                estadocivil: $scope.estadocivil.codigo, conjuge: $scope.conjuge.codigo,
-                profissao: $scope.profissao.cbo, ctps: $scope.ctps, pis: $scope.pis});
-            } 
-            
-            if ($scope.tipo==2){
-                $http.post('/pessoa_juridica/gravar', {pessoa: $scope.codigo, razaosocial: $scope.razaosocial,
-                cnpj: $scope.cnpj, incricaoestadual: $scope.incricaoestadual, 
-                atividade: $scope.atividade.codigo, homepage: $scope.homepage, 
-                representante: $scope.representante.codigo});
-            } 
+            $http.post('/imovel_terreno/gravar', {codigo: $scope.codigo, 
+                valor: $scope.valor,mcmv: $scope.mcmv, financia: $scope.financia, 
+                entrada: $scope.entrada, permuta: $scope.permuta, carro: $scope.carro,
+                fgts: $scope.fgts, condominio: $scope.condominio, captador: $scope.captador}); 
+
         });  
     }
-
-    $scope.addEmail = function() {
-        $scope.emails.push($scope.email);
-        $scope.email = '';
-    }
-
-    $scope.addFone = function() {
-        $scope.fones.push($scope.fone);
-        $scope.fone = '';
-    }
-    
+  
     function format(mask, number) {
         var s = ''+number, r = '';
         for (var im=0, is = 0; im<mask.length && is<s.length; im++) {
