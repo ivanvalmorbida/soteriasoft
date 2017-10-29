@@ -144,6 +144,7 @@ app.get('/atividade_economica/atividade_economica_descricao', atividade_economic
 app.get('/pessoa/pessoa_nome', pessoa.pessoa_nome);
 app.get('/imovel', imovel.index);
 app.get('/imovel/dlg/apagar', imovel.dlg_apagar);
+app.get('/imovel/dlg/localizar', imovel.dlg_localizar);
 
 app.get('/teste', teste.index);
 app.get('/teste/dlg', teste.dialogo);

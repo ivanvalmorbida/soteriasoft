@@ -134,101 +134,127 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
         return r;
     }  
     
-    $scope.ExibirPessoa = function(codigo) {
+    $scope.ExibirImovel = function(codigo) {
         $scope.codigo = codigo;
         $scope.BuscarCodigo();
         $('#myModalLocalizar').modal('hide');
     }
 
     $scope.BuscarCodigo = function() {
-        $http.post('/pessoa/codigo', {cod: $scope.codigo}).
+        $http.post('/imovel/codigo', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
             $scope.Limpar();
             if (data.dados.length>0){
                 $scope.codigo = data.dados[0].codigo;
                 $scope.tipo = data.dados[0].tipo;
-                $scope.nome = data.dados[0].nome;
-                $scope.cep = data.dados[0].cep;
-                if(data.dados[0].estado>0){$scope.estado = {codigo: data.dados[0].estado, nome: data.dados[0].estado_}};
-                if(data.dados[0].cidade>0){$scope.cidade = {codigo: data.dados[0].cidade, nome: data.dados[0].cidade_}};
-                if(data.dados[0].bairro>0){$scope.bairro = {codigo: data.dados[0].bairro, nome: data.dados[0].bairro_}};
-                if(data.dados[0].endereco>0){$scope.endereco = {codigo: data.dados[0].endereco, nome: data.dados[0].endereco_}};
-                $scope.numero = data.dados[0].numero;
-                $scope.complemento = data.dados[0].complemento;
-                $scope.obs = data.dados[0].obs;
-
-                $http.post('/pessoa_email/pessoa', {cod: $scope.codigo}).
-                success(function (data, status, headers, config) {
-                    for (i = 0; i < data.dados.length; i++) {
-                        $scope.emails.push(data.dados[i].email);
-                    }
-                }).error(function (data, status, headers, config) {
-
-                }); 
-
-                $http.post('/pessoa_fone/pessoa', {cod: $scope.codigo}).
-                success(function (data, status, headers, config) {
-                    for (i = 0; i < data.dados.length; i++) {
-                        $scope.fones.push(data.dados[i].fone);
-                    }
-                }).error(function (data, status, headers, config) {
-
-                });
-
-                $http.post('/pessoa_fisica/pessoa', {cod: $scope.codigo}).
+                if(data.dados[0].proprietario>0){$scope.proprietario = {codigo: data.dados[0].proprietario, nome: data.dados[0].proprietario_}};
+                $scope.documentacao = data.dados[0].documentacao;
+                $scope.inscricao_incra = data.dados[0].inscricao_incra;
+                $scope.lote_unidade = data.dados[0].lote_unidade;
+                $scope.quadra_bloco = data.dados[0].quadra_bloco;
+                
+                $http.post('/imovel_terreno/imovel', {cod: $scope.codigo}).
                 success(function (data, status, headers, config) {
                     if (data.dados.length>0){
-                        $scope.nascimento = new Date(data.dados[0].nascimento);
-                        if(data.dados[0].ufnasc>0){$scope.ufnasc = {codigo: data.dados[0].ufnasc, nome: data.dados[0].ufnasc_}};
-                        if(data.dados[0].cidadenasc>0){$scope.cidadenasc = {codigo: data.dados[0].cidadenasc, nome: data.dados[0].cidadenasc_}};
-                        if(data.dados[0].nacionalidade>0){$scope.nacionalidade = {codigo: data.dados[0].nacionalidade, pais: data.dados[0].nacionalidade_}};                        
-                        $scope.sexo = data.dados[0].sexo;
-                        $scope.cpf = data.dados[0].cpf;
-                        $scope.identidade = data.dados[0].identidade;
-                        $scope.orgaoidentidade = data.dados[0].orgaoidentidade;
-                        if(data.dados[0].ufidentidade>0){$scope.ufidentidade = {codigo: data.dados[0].ufidentidade, nome: data.dados[0].ufidentidade_}};                        
-                        if(data.dados[0].estadocivil>0){$scope.estadocivil = {codigo: data.dados[0].estadocivil, descricao: data.dados[0].estadocivil_}};                        
-                        if(data.dados[0].conjuge>0){$scope.conjuge = {codigo: data.dados[0].conjuge, nome: data.dados[0].conjuge_}};                        
-                        if(data.dados[0].profissao>0){$scope.profissao = {cbo: data.dados[0].profissao, descricao: data.dados[0].profissao_}};                        
-                        $scope.ctps = data.dados[0].ctps;
-                        $scope.pis = data.dados[0].pis;
+                        $scope.cep = data.dados[0].cep;
+                        if(data.dados[0].estado>0){$scope.estado = {codigo: data.dados[0].estado, nome: data.dados[0].estado_}};
+                        if(data.dados[0].cidade>0){$scope.cidade = {codigo: data.dados[0].cidade, nome: data.dados[0].cidade_}};
+                        if(data.dados[0].bairro>0){$scope.bairro = {codigo: data.dados[0].bairro, nome: data.dados[0].bairro_}};
+                        if(data.dados[0].endereco>0){$scope.endereco = {codigo: data.dados[0].endereco, nome: data.dados[0].endereco_}};
+                        $scope.numero = data.dados[0].numero;
+                        $scope.complemento = data.dados[0].complemento;
+                        $scope.area_terreno = data.dados[0].area_terreno;
+                        $scope.frente = data.dados[0].frente;
+                        $scope.fundo = data.dados[0].fundo;
+                        $scope.lateral1 = data.dados[0].lateral1;
+                        $scope.lateral2 = data.dados[0].lateral2;
+                        $scope.gabarito = data.dados[0].gabarito;
+                        $scope.esquina = data.dados[0].esquina;        
                     }
-                }).error(function (data, status, headers, config) {
-                    
                 });
-                            
-                $http.post('/pessoa_juridica/pessoa', {cod: $scope.codigo}).
+
+                $http.post('/imovel_construcao/imovel', {cod: $scope.codigo}).
                 success(function (data, status, headers, config) {
-                    if (data.dados.length>0){                        
-                        $scope.razaosocial = data.dados[0].razaosocial;
-                        $scope.cnpj = data.dados[0].cnpj;
-                        $scope.incricaoestadual = data.dados[0].incricaoestadual;
-                        if(data.dados[0].atividade>0){$scope.atividade = {codigo: data.dados[0].atividade, descricao: data.dados[0].atividade_}};
-                        $scope.homepage = data.dados[0].homepage;
-                        if(data.dados[0].representante>0){$scope.representante = {codigo: data.dados[0].representante, nome: data.dados[0].representante_}};                        
+                    if (data.dados.length>0){
+                        $scope.entrega = data.dados[0].entrega;
+                        $scope.ano_construcao = data.dados[0].ano_construcao;
+                        $scope.area_total = data.dados[0].area_total;
+                        $scope.area_privativa = data.dados[0].area_privativa;
+                        $scope.quartos = data.dados[0].quartos;
+                        $scope.suites = data.dados[0].suites;
+                        $scope.garagens = data.dados[0].garagens;
+                        $scope.mobiliada = data.dados[0].mobiliada;
+                        $scope.churasqueira = data.dados[0].churasqueira;
+                        $scope.infra_ar_cond = data.dados[0].infra_ar_cond;
+                        $scope.piso = data.dados[0].piso;
+                        $scope.teto = data.dados[0].teto;
+                        $scope.reboco = data.dados[0].reboco;
+                        $scope.murro = data.dados[0].murro;
+                        $scope.portao = data.dados[0].portao;
+                        $scope.quintal_larg = data.dados[0].quintal_larg;
+                        $scope.quintal_comp = data.dados[0].quintal_comp;
+                        $scope.andar = data.dados[0].andar;
                     }
-                }).error(function (data, status, headers, config) {
-                    
                 });
-                            
+        
+                $http.post('/imovel_financeiro/imovel', {cod: $scope.codigo}).
+                success(function (data, status, headers, config) {
+                    if (data.dados.length>0){
+                        $scope.valor = data.dados[0].andar;
+                        $scope.mcmv = data.dados[0].andar;
+                        $scope.financia = data.dados[0].andar;
+                        $scope.entrada = data.dados[0].andar;
+                        $scope.permuta = data.dados[0].andar;
+                        $scope.carro = data.dados[0].andar;
+                        $scope.fgts = data.dados[0].andar;
+                        $scope.condominio = data.dados[0].andar;
+                        $scope.captador = data.dados[0].andar;
+                    }
+                });
             }
         }).error(function (data, status, headers, config) {
             $scope.Limpar();
         });         
     }
 
-    $scope.Localizar = function() {
-        $('#myModalLocalizar').modal('show'); 
-    }
+    $scope.Localizar = function(ev) {
+        $mdDialog.show({
+          controller: ApagarController,
+          templateUrl: './imovel/dlg/localizar',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose: true,
+          locals: { inscricao_incra: $scope.inscricao_incra }
+        })
+        .then(function(answer, param) {
+            if (answer=='loc'){
+                $http.post('/imovel/localizar', {nome: param}).
+                success(function (data, status, headers, config) {
+                    $scope.l_dados = data.dados;
+                }).error(function (data, status, headers, config) {
+                    //
+                });
+            }
+            else{
 
-    $scope.LocalizarExe = function() {
-        $http.post('/pessoa/localizar', {nome: $scope.txtpesquisa}).
-        success(function (data, status, headers, config) {
-            $scope.l_dados = data.dados;
-        }).error(function (data, status, headers, config) {
-            //
-        }); 
+            }            
+            console.dir('You said the information was "' + answer + '".');
+        }, function() {
+          console.dir('You cancelled the dialog.');
+        });
     };
+    
+    function LocalizarController($scope, $mdDialog, inscricao_incra) {
+        $scope.inscricao_incra = inscricao_incra;
+
+        $scope.Cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.Efetivar = function(answer, param) {
+            $mdDialog.hide(answer, param);
+        };
+    }
     
     $scope.PessoaNome = function(StrSearch) {
         return $http.get('/pessoa/pessoa_nome', {
@@ -239,47 +265,7 @@ angular.module('MyApp', ['ngMaterial','ui.mask'])
             return data.data
         });
     };
-
-    $scope.AtividadeEconomicaDescricao = function(StrSearch) {
-        return $http.get('/atividade_economica/atividade_economica_descricao', {
-        params: {
-            txt: StrSearch
-        }
-        }).then(function(data) {
-            return data.data
-        });
-    };
-
-    $scope.CBODescricao = function(StrSearch) {
-        return $http.get('/cbo/cbo_descricao', {
-        params: {
-            txt: StrSearch
-        }
-        }).then(function(data) {
-            return data.data
-        });
-    };
     
-    $scope.EstadoCivilDescricao = function(StrSearch) {
-        return $http.get('/estado_civil/estado_civil_descricao', {
-        params: {
-            txt: StrSearch
-        }
-        }).then(function(data) {
-            return data.data
-        });
-    };
-
-    $scope.NacionalidadePais = function(StrSearch) {
-        return $http.get('/nacionalidade/nacionalidade_pais', {
-        params: {
-            txt: StrSearch
-        }
-        }).then(function(data) {
-            return data.data
-        });
-    };
-
     $scope.EstadoNome = function(StrSearch) {
         return $http.get('/estado/estado_nome', {
         params: {

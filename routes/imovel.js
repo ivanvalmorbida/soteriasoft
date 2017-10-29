@@ -8,7 +8,11 @@ exports.index = function (req, res) {
 };
 
 exports.dlg_apagar = function (req, res) {
-    res.render('imoveldlg_apagar');
+    res.render('imovel_dlg_apagar');
+};
+
+exports.dlg_localizar = function (req, res) {
+    res.render('imovel_dlg_localizar');
 };
 
 exports.gravar = function (req, res) {
