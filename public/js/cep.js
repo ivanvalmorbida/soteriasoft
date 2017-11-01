@@ -1,5 +1,5 @@
-angular.module('MyApp', ['ngMaterial', 'MyApp.Comum'])
-.controller('AppCtrl', function($http,$scope) {
+angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
+.controller('Soteriasoft.Control', function($http,$scope) {
     function format(mask, number) {
         var s = ''+number, r = '';
         for (var im=0, is = 0; im<mask.length && is<s.length; im++) {

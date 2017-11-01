@@ -1,6 +1,6 @@
-angular.module('MyApp',['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+angular.module('Soteriasoft',['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
 
-.controller('AppCtrl', function($scope, $mdDialog) {
+.controller('Soteriasoft.Control', function($scope, $mdDialog) {
   $scope.project = {
     description: 'Nuclear Missile Defense System',
     rate: 500,
