@@ -1,4 +1,4 @@
-angular.module('MyApp.Comum', [])
+angular.module('Soteriasoft.Comum', [])
 .config(function($mdDateLocaleProvider) {
     $mdDateLocaleProvider.formatDate = function(date) {
         return date ? moment(date).format('DD/MM/YYYY') : '';
@@ -53,3 +53,11 @@ angular.module('MyApp.Comum', [])
         }
     }
 });
+
+function format(mask, number) {
+    var s = ''+number, r = '';
+    for (var im=0, is = 0; im<mask.length && is<s.length; im++) {
+      r += mask.charAt(im)=='#' ? s.charAt(is++) : mask.charAt(im);
+    }
+    return r;
+} 

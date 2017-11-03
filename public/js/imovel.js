@@ -1,5 +1,5 @@
-angular.module('MyApp', ['ngMaterial', 'ui.mask', 'MyApp.Comum'])
-.controller('AppCtrl', function($http, $scope, $mdDialog) {
+angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
+.controller('Soteriasoft.Control', function($http, $scope, $mdDialog) {
     $scope.format = function(mask, number) {
         return format(mask, number);
     }  

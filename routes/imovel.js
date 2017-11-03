@@ -19,26 +19,25 @@ exports.gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
 
-    data.cep = data.cep.replace("-", "");
-
     connection.connect();
     if (data.codigo==0) {
-        connection.query('insert into tb_imovel (tipo, nome, cep, estado, cidade,'+
-        ' bairro, endereco, numero, complemento, obs, cadastro)'+
-        ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now());', 
-        [data.tipo, data.nome, data.cep, data.estado, data.cidade, data.bairro, 
-        data.endereco, data.numero, data.complemento, data.obs], function(err, rows) {
+
+
+        connection.query('insert into tb_imovel (tipo, proprietario, documentacao, inscricao_incra,'+
+        'lote_unidade, quadra_bloco, cadastro) values (?, ?, ?, ?, ?, ?, now());', 
+        [data.tipo, data.proprietario, data.documentacao, data.inscricao_incra, 
+        data.lote_unidade, data.quadra_bloco], function(err, rows) {
             if (!err)
                 res.json({codigo: rows.insertId})            
             else
                 console.log('Error while performing Query: '+err)
-        })
+        });
     }   
     else {
-        connection.query('update tb_imovel set tipo=?, nome=?, cep=?, estado=?, cidade=?,'+
-        'bairro=?, endereco=?, numero=?, complemento=?, obs=? where codigo=?',
-        [data.tipo, data.nome, data.cep, data.estado, data.cidade, data.bairro, 
-        data.endereco, data.numero, data.complemento, data.obs, data.codigo], function(err, rows) {
+        connection.query('update tb_imovel set tipo=?, proprietario=?, documentacao=?,'+
+        'inscricao_incra=?, lote_unidade=?, quadra_bloco=? where codigo=?',
+        [data.tipo, data.proprietario, data.documentacao, data.inscricao_incra, 
+        data.lote_unidade, data.quadra_bloco, data.codigo], function(err, rows) {
             if (!err)
                 res.json({codigo: data.codigo})
             else
