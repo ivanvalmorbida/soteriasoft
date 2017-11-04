@@ -170,6 +170,11 @@ app.post('/pessoa_fisica/pessoa', pessoa_fisica.pessoa);
 app.post('/pessoa_juridica/gravar', pessoa_juridica.gravar);
 app.post('/pessoa_juridica/pessoa', pessoa_juridica.pessoa);
 
+app.post('/imovel/gravar', imovel.gravar);
+app.post('/imovel/codigo', imovel.codigo);
+
+app.post('/imovel/gravar', imovel.gravar);
+
 //app.get('/err404', err404.index);
 app.get('*', routes);
 

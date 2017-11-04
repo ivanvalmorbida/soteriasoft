@@ -51,13 +51,9 @@ exports.codigo = function (req, res) {
     var cod = req.body.cod;
 
     connection.connect();
-    connection.query("SELECT p.*, u.nome as estado_, m.nome as cidade_,"+
-    ' b.nome as bairro_, e.nome as endereco_ from tb_imovel p'+
-    ' left join tb_estado u on u.codigo=p.estado'+
-    ' left join tb_cidade m on m.codigo=p.cidade'+
-    ' left join tb_bairro b on b.codigo=p.bairro'+
-    ' left join tb_endereco e on e.codigo=p.endereco'+
-    ' where p.codigo='+cod, function(err, rows, fields) {
+    connection.query('SELECT i.*, p.nome as proprietario_ from tb_imovel i'+
+    ' left join tb_pessoa p on p.codigo=i.proprietario'+
+    ' where i.codigo='+cod, function(err, rows, fields) {
         if (!err)
             res.json({dados: rows})
         else
