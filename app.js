@@ -15,23 +15,31 @@ var express = require('express'),
 	io = require('socket.io').listen(server),
   settings = require("./settings"),
   routes = require('./routes/index'),
+  teste = require('./routes/teste'),
+  
   users = require('./routes/users'),
   cep = require('./routes/cep'),
   estado = require('./routes/estado'),
   cidade = require('./routes/cidade'),
   bairro = require('./routes/bairro'),
   endereco = require('./routes/endereco'),
-  pessoa = require('./routes/pessoa'),
+  
   nacionalidade = require('./routes/nacionalidade'),
   estado_civil = require('./routes/estado_civil'),
   cbo = require('./routes/cbo'),
   atividade_economica = require('./routes/atividade_economica'),
+
+  pessoa = require('./routes/pessoa'),
   pessoa_email = require('./routes/pessoa_email'),
   pessoa_fone = require('./routes/pessoa_fone'),  
   pessoa_fisica = require('./routes/pessoa_fisica'),  
-  pessoa_juridica = require('./routes/pessoa_juridica'),  
+  pessoa_juridica = require('./routes/pessoa_juridica'),
+  
   imovel = require('./routes/imovel'),  
-  teste = require('./routes/teste'),
+  imovel_construcao = require('./routes/imovel_construcao'),    
+  imovel_financeiro = require('./routes/imovel_financeiro'),    
+  imovel_terreno = require('./routes/imovel_terreno'),
+  
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -136,12 +144,14 @@ app.get('/bairro/bairro_nome', bairro.bairro_nome);
 app.get('/endereco/endereco_nome', endereco.endereco_nome);
 app.get('/endereco/endereco_cidade_nome', endereco.endereco_cidade_nome);
 app.get('/estado/estado_todos', estado.estado_todos);
-app.get('/pessoa', pessoa.index);
 app.get('/nacionalidade/nacionalidade_pais', nacionalidade.nacionalidade_pais);
 app.get('/estado_civil/estado_civil_descricao', estado_civil.estado_civil_descricao);
 app.get('/cbo/cbo_descricao', cbo.cbo_descricao);
 app.get('/atividade_economica/atividade_economica_descricao', atividade_economica.atividade_economica_descricao);
+
+app.get('/pessoa', pessoa.index);
 app.get('/pessoa/pessoa_nome', pessoa.pessoa_nome);
+
 app.get('/imovel', imovel.index);
 app.get('/imovel/dlg/apagar', imovel.dlg_apagar);
 app.get('/imovel/dlg/localizar', imovel.dlg_localizar);
@@ -173,7 +183,14 @@ app.post('/pessoa_juridica/pessoa', pessoa_juridica.pessoa);
 app.post('/imovel/gravar', imovel.gravar);
 app.post('/imovel/codigo', imovel.codigo);
 
-app.post('/imovel/gravar', imovel.gravar);
+app.post('/imovel_construcao/gravar', imovel_construcao.gravar);
+app.post('/imovel_construcao/imovel', imovel_construcao.imovel);
+
+app.post('/imovel_financeiro/gravar', imovel_financeiro.gravar);
+app.post('/imovel_financeiro/imovel', imovel_financeiro.imovel);
+
+app.post('/imovel_terreno/gravar', imovel_terreno.gravar);
+app.post('/imovel_terreno/imovel', imovel_terreno.imovel);
 
 //app.get('/err404', err404.index);
 app.get('*', routes);

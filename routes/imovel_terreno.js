@@ -34,7 +34,7 @@ exports.gravar = function (req, res) {
     }         
 }
 
-exports.codigo = function (req, res) {
+exports.imovel = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var cod = req.body.cod;
 
