@@ -33,7 +33,7 @@ html(lang='pt-br')
                   md-radio-button.md-primary(value=3) Apartamento
                   md-radio-button.md-primary(value=2) Casa padrão
                   md-radio-button.md-primary(value=1) Terreno
-                  md-radio-button.md-primary(value=5) Chacara
+                  md-radio-button.md-primary(value=5) Rural
 
             div(flex="")
               md-autocomplete(flex='',
@@ -333,6 +333,6 @@ html(lang='pt-br')
           div(layout='row', layout-align='start', flex='')
             md-button.md-raised(ng-click='Limpar()') Adicionar
             md-button.md-raised.md-primary(ng-click='Gravar()',
-            ng-disabled='proprietario==undefined || tipo==undefined') Gravar
+            ng-disabled='proprietario.codigo==undefined || tipo==0') Gravar
             md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar($event)') Apagar
             md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar

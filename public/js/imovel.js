@@ -44,7 +44,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         $scope.proprietario     = 0;
         $scope.documentacao     = 0;
         $scope.inscricao_incra  = '';
-        $scope.lote_unidade     = '';
+        $scope.lote_unidade     = 0;
         $scope.quadra_bloco     = '';
         
         $scope.cep          = '';
@@ -62,7 +62,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         $scope.gabarito     = 0;                
         $scope.esquina      = 0;                
         
-        $scope.entrega          = '';
+        //$scope.entrega          = '';
         $scope.ano_construcao   = 0;
         $scope.area_total       = 0;
         $scope.area_privativa   = 0;
@@ -94,13 +94,13 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 
     $scope.Gravar = function() {
         $http.post('/imovel/gravar', {codigo: $scope.codigo, tipo: $scope.tipo, 
-            proprietario: $scope.proprietario, documentacao: $scope.documentacao,
+            proprietario: $scope.proprietario.codigo, documentacao: $scope.documentacao,
             inscricao_incra: $scope.inscricao_incra, lote_unidade: $scope.lote_unidade,
             quadra_bloco: $scope.quadra_bloco}).
         success(function (data, status, headers, config) {
             $scope.codigo = data.codigo;
 
-            $http.post('/imovel_terreno/gravar', {codigo: $scope.codigo, 
+            $http.post('/imovel_terreno/gravar', {imovel: $scope.codigo, 
                 cep: $scope.cep, codigo: $scope.estado.codigo, 
                 cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
                 endereco: $scope.endereco.codigo, numero: $scope.numero, 
@@ -108,17 +108,17 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                 frente: $scope.frente, fundo: $scope.fundo, lateral1: $scope.lateral1,
                 lateral2: $scope.lateral2, gabarito: $scope.gabarito, esquina: $scope.esquina}); 
     
-            $http.post('/imovel_construcao/gravar', {codigo: $scope.codigo, 
+            $http.post('/imovel_construcao/gravar', {imovel: $scope.codigo, 
                 entrega: $scope.entrega, ano_construcao: $scope.ano_construcao,
                 area_total: $scope.area_total, area_privativa: $scope.area_privativa, 
                 quartos: $scope.quartos, suites: $scope.suites, garagens:$scope.garagens, 
-                mobiliada: $scope.mobiliada, churasqueira: $scope.churasqueira, 
+                mobiliada: $scope.mobiliada, churrasqueira: $scope.churrasqueira, 
                 infra_ar_cond: $scope.infra_ar_cond, piso: $scope.piso, teto: $scope.teto, 
                 reboco: $scope.reboco, murro: $scope.murro, portao: $scope.portao, 
                 quintal_larg: $scope.quintal_larg, quintal_comp: $scope.quintal_comp,
                 andar: $scope.andar}); 
 
-            $http.post('/imovel_terreno/gravar', {codigo: $scope.codigo, 
+            $http.post('/imovel_financeiro/gravar', {imovel: $scope.codigo, 
                 valor: $scope.valor,mcmv: $scope.mcmv, financia: $scope.financia, 
                 entrada: $scope.entrada, permuta: $scope.permuta, carro: $scope.carro,
                 fgts: $scope.fgts, condominio: $scope.condominio, captador: $scope.captador}); 

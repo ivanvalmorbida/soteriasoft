@@ -12,8 +12,8 @@ exports.gravar = function (req, res) {
     connection.query('select pessoa from tb_pessoa_fisica where pessoa=?', [data.pessoa], 
     function(err, rows) {
         if (!err) {
-            if (rows.length == 0) {
-                data.nascimento = dateFormat(data.nascimento, "yyyy-mm-dd h:MM:ss");
+            data.nascimento = dateFormat(data.nascimento, "yyyy-mm-dd h:MM:ss");
+            if (rows.length == 0) {                
                 connection.query('insert into tb_pessoa_fisica (pessoa, nascimento, cidadenasc,'+
                 'ufnasc, nacionalidade, sexo, cpf, identidade, orgaoidentidade, ufidentidade,'+
                 'estadocivil, conjuge, profissao, ctps, pis)'+
@@ -28,7 +28,6 @@ exports.gravar = function (req, res) {
                 })
             }   
             else {
-                data.nascimento = dateFormat(data.nascimento, "yyyy-mm-dd h:MM:ss");
                 connection.query('update tb_pessoa_fisica set nascimento=?, cidadenasc=?,'+
                 ' ufnasc=?, nacionalidade=?, sexo=?, cpf=?, identidade=?, orgaoidentidade=?,'+
                 ' ufidentidade=?, estadocivil=?, conjuge=?, profissao=?, ctps=?, pis=? where pessoa=?', 
