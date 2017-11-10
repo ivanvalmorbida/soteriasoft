@@ -82,12 +82,12 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         $scope.andar            = 0;
 
         $scope.valor        = 0;
-        $scope.mcmv         = 0;
-        $scope.financia     = 0;
+        $scope.mcmv         = false;
+        $scope.financia     = false;
         $scope.entrada      = 0;
-        $scope.permuta      = 0;
-        $scope.carro        = 0;
-        $scope.fgts         = 0;
+        $scope.permuta      = false;
+        $scope.carro        = false;
+        $scope.fgts         = false;
         $scope.condominio   = 0;
         $scope.captador     = 0;
     }
@@ -119,7 +119,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                 andar: $scope.andar}); 
 
             $http.post('/imovel_financeiro/gravar', {imovel: $scope.codigo, 
-                valor: $scope.valor,mcmv: $scope.mcmv, financia: $scope.financia, 
+                valor: $scope.valor, mcmv: $scope.mcmv, financia: $scope.financia, 
                 entrada: $scope.entrada, permuta: $scope.permuta, carro: $scope.carro,
                 fgts: $scope.fgts, condominio: $scope.condominio, captador: $scope.captador}); 
 
@@ -200,15 +200,15 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                 $http.post('/imovel_financeiro/imovel', {cod: $scope.codigo}).
                 success(function (data, status, headers, config) {
                     if (data.dados.length>0){
-                        $scope.valor = data.dados[0].andar;
-                        $scope.mcmv = data.dados[0].andar;
-                        $scope.financia = data.dados[0].andar;
-                        $scope.entrada = data.dados[0].andar;
-                        $scope.permuta = data.dados[0].andar;
-                        $scope.carro = data.dados[0].andar;
-                        $scope.fgts = data.dados[0].andar;
-                        $scope.condominio = data.dados[0].andar;
-                        $scope.captador = data.dados[0].andar;
+                        $scope.valor = data.dados[0].valor;
+                        $scope.mcmv = (data.dados[0].mcmv==1);
+                        $scope.financia = data.dados[0].financia;
+                        $scope.entrada = data.dados[0].entrada;
+                        $scope.permuta = data.dados[0].permuta;
+                        $scope.carro = data.dados[0].carro;
+                        $scope.fgts = data.dados[0].fgts;
+                        $scope.condominio = data.dados[0].condominio;
+                        $scope.captador = data.dados[0].captador;
                     }
                 });
             }
@@ -218,7 +218,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     }
 
     $scope.Localizar = function(ev) {
-        $mdDialog.show({
+        console.dir($scope.mcmv)
+        /*$mdDialog.show({
           controller: ApagarController,
           templateUrl: './imovel/dlg/localizar',
           parent: angular.element(document.body),
@@ -241,7 +242,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
             console.dir('You said the information was "' + answer + '".');
         }, function() {
           console.dir('You cancelled the dialog.');
-        });
+        });*/
     };
     
     function LocalizarController($scope, $mdDialog, inscricao_incra) {

@@ -25,7 +25,7 @@ exports.gravar = function (req, res) {
                 connection.query('update tb_imovel_financeiro set valor=?, mcmv=?, financia=?,'+
                 ' entrada=?, permuta=?, carro=?, fgts=?, condominio=?, captador=? where imovel=?',
                 [data.valor, data.mcmv, data.financia, data.entrada, data.permuta, 
-                data.carro, data.fgts, data.condominio, data.condominio, data.captador, data.imovel],
+                data.carro, data.fgts, data.condominio, data.captador, data.imovel],
                 function(err, rows) {
                     if (!err)
                         res.json({dados: rows})
@@ -46,7 +46,7 @@ exports.imovel = function (req, res) {
     connection.connect();
     connection.query('SELECT i.*, p.nome as proprietario_ from tb_imovel_financeiro i'+
     ' left join tb_pessoa p on p.codigo=i.captador'+
-    ' where i.codigo='+cod, function(err, rows, fields) {
+    ' where i.imovel='+cod, function(err, rows, fields) {
         if (!err)
             res.json({dados: rows})
         else

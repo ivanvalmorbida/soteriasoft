@@ -53,7 +53,7 @@ exports.imovel = function (req, res) {
 
     connection.connect();
     connection.query('SELECT i.* from tb_imovel_construcao i'+
-    ' where i.codigo='+cod, function(err, rows, fields) {
+    ' where i.imovel='+cod, function(err, rows, fields) {
         if (!err)
             res.json({dados: rows})
         else

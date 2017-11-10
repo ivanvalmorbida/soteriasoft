@@ -52,7 +52,7 @@ exports.imovel = function (req, res) {
     ' left join tb_cidade m on m.codigo=i.cidade'+
     ' left join tb_bairro b on b.codigo=i.bairro'+
     ' left join tb_endereco e on e.codigo=i.endereco'+
-    ' where i.codigo='+cod, function(err, rows, fields) {
+    ' where i.imovel='+cod, function(err, rows, fields) {
         if (!err)
             res.json({dados: rows})
         else
