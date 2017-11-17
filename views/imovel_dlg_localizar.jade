@@ -20,7 +20,7 @@ md-dialog(aria-label="Localizar Imóvel")
             input(ng-model='txtpesquisa')
 
           #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
-            ng-click='LocalizarExe()',
+            ng-click='LocalizarExe(campopesq, txtpesquisa)', style='height: 10px;',
             ng-disabled='txtpesquisa==undefined') Executar
 
         div(layout-gt-sm='row')
@@ -39,7 +39,7 @@ md-dialog(aria-label="Localizar Imóvel")
               
             tr(ng-repeat="d in l_dados")
               td
-                a(ng-click='ExibirImove(d.codigo)') {{d.nome}}
+                a(ng-click="ExibirImove('OK', d.codigo)") {{d.nome}}
               td
                 | {{d.insc}}
               td

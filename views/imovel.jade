@@ -91,7 +91,7 @@ html(lang='pt-br')
                         span(md-highlight-text='SearchEst') {{item.nome}}
                         
                   div(flex="")
-                    md-autocomplete(flex='',
+                    md-autocomplete(flex='95',
                       md-selected-item='cidade',
                       md-min-length='3', 
                       md-search-text='SearchCid', 
@@ -314,13 +314,15 @@ html(lang='pt-br')
                       md-checkbox.md-primary(ng-model="fgts")
                         | FGTS                        
                   
+                div(layout-gt-sm='row', style='margin-top: -30px')
+                
                   div(flex="")
                     md-input-container
                       label Condominio
                       input(ng-model='condominio', type='number')
     
                   div(flex="")
-                    md-autocomplete(flex='',
+                    md-autocomplete(flex='95',
                       md-selected-item='captador',
                       md-min-length='3', 
                       md-search-text='SearcrRep', 
@@ -334,5 +336,6 @@ html(lang='pt-br')
             md-button.md-raised(ng-click='Limpar()') Adicionar
             md-button.md-raised.md-primary(ng-click='Gravar()',
             ng-disabled='proprietario.codigo==undefined || tipo==0') Gravar
-            md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar($event)') Apagar
-            md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar
+            md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar($event)',
+            ng-disabled='proprietario.codigo==undefined') Apagar
+            md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar($event)') Localizar

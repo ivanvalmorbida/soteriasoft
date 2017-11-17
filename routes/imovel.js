@@ -66,13 +66,15 @@ exports.localizar = function (req, res) {
     var data = req.body;
     var sql = '', par = [];
 
-    sql += "SELECT p.nome, case when p.tipo=1 then 'Fis' else 'Jur' end as tipo,";
-    sql += " case when p.tipo=1 then f.cpf else j.cnpj end as cpf_cnpj"; 
-    sql += " FROM tb_imovel p left join tb_imovel_fisica f on f.imovel=p.codigo";
-    sql += " left join tb_imovel_juridica j on j.imovel=p.codigo Where";
+    sql += "SELECT p.nome as Proprietario, i.inscricao_incra, t.descricao as tipo, i.lote_unidade, i.quadra_bloco"; 
+    sql += " FROM tb_imovel as i left join tb_pessoa p on i.proprietario=p.codigo";
+    sql += " left join tb_imovel_tipo t on i.tipo=t.codigo Where";
 
-    if (data.nome!=undefined){
-        sql += " nome like '%"+data.nome+"%'"
+    if (data.camp=="prop"){
+        sql += " p.nome like '%"+data.text+"%'"
+    }
+    if (data.camp=="insc"){
+        sql += " i.inscricao_incra like '%"+data.text+"%'"
     }
 
     connection.connect();

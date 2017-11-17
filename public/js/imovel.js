@@ -133,12 +133,6 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         }
         return r;
     }  
-    
-    $scope.ExibirImovel = function(codigo) {
-        $scope.codigo = codigo;
-        $scope.BuscarCodigo();
-        $('#myModalLocalizar').modal('hide');
-    }
 
     $scope.BuscarCodigo = function() {
         $http.post('/imovel/codigo', {cod: $scope.codigo}).
@@ -219,7 +213,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 
     $scope.Localizar = function(ev) {
         console.dir($scope.mcmv)
-        /*$mdDialog.show({
+        $mdDialog.show({
           controller: ApagarController,
           templateUrl: './imovel/dlg/localizar',
           parent: angular.element(document.body),
@@ -227,22 +221,18 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           clickOutsideToClose: true,
           locals: { inscricao_incra: $scope.inscricao_incra }
         })
-        .then(function(answer, param) {
-            if (answer=='loc'){
-                $http.post('/imovel/localizar', {nome: param}).
-                success(function (data, status, headers, config) {
-                    $scope.l_dados = data.dados;
-                }).error(function (data, status, headers, config) {
-                    //
-                });
+        .then(function(answer, codi) {
+            if (answer=='OK'){
+                $scope.codigo=codi;
+                $scope.BuscarCodigo();
             }
             else{
 
             }            
-            console.dir('You said the information was "' + answer + '".');
+            //console.dir('You said the information was "' + answer + '".');
         }, function() {
           console.dir('You cancelled the dialog.');
-        });*/
+        });
     };
     
     function LocalizarController($scope, $mdDialog, inscricao_incra) {
@@ -252,8 +242,17 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           $mdDialog.cancel();
         };
 
-        $scope.Efetivar = function(answer, param) {
-            $mdDialog.hide(answer, param);
+        $scope.LocalizarExe = function(camp, text) {
+            $http.post('/imovel/localizar', {camp: camp, text: text}).
+            success(function (data, status, headers, config) {
+                $scope.l_dados = data.dados;
+            }).error(function (data, status, headers, config) {
+                //
+            });            
+        };
+
+        $scope.ExibirImovel = function(answer, codi) {
+            $mdDialog.hide(answer, codi);
         };
     }
     
