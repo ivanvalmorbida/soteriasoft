@@ -66,7 +66,8 @@ exports.localizar = function (req, res) {
     var data = req.body;
     var sql = '', par = [];
 
-    sql += "SELECT p.nome as Proprietario, i.inscricao_incra, t.descricao as tipo, i.lote_unidade, i.quadra_bloco"; 
+    sql += "SELECT i.codigo, p.nome as proprietario, i.inscricao_incra,"
+    sql += " t.descricao as tipo, i.lote_unidade, i.quadra_bloco"; 
     sql += " FROM tb_imovel as i left join tb_pessoa p on i.proprietario=p.codigo";
     sql += " left join tb_imovel_tipo t on i.tipo=t.codigo Where";
 

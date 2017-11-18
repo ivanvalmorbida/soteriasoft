@@ -214,15 +214,15 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.Localizar = function(ev) {
         console.dir($scope.mcmv)
         $mdDialog.show({
-          controller: ApagarController,
+          controller: LocalizarController,
           templateUrl: './imovel/dlg/localizar',
           parent: angular.element(document.body),
           targetEvent: ev,
-          clickOutsideToClose: true,
-          locals: { inscricao_incra: $scope.inscricao_incra }
+          clickOutsideToClose: true
         })
         .then(function(answer, codi) {
             if (answer=='OK'){
+                alert(codi);
                 $scope.codigo=codi;
                 $scope.BuscarCodigo();
             }
@@ -235,8 +235,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         });
     };
     
-    function LocalizarController($scope, $mdDialog, inscricao_incra) {
-        $scope.inscricao_incra = inscricao_incra;
+    function LocalizarController($scope, $mdDialog) {
+        $scope.campopesq = 'prop';
 
         $scope.Cancel = function() {
           $mdDialog.cancel();

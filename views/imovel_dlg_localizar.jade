@@ -39,15 +39,15 @@ md-dialog(aria-label="Localizar Imóvel")
               
             tr(ng-repeat="d in l_dados")
               td
-                a(ng-click="ExibirImove('OK', d.codigo)") {{d.nome}}
+                a(ng-click="ExibirImovel('OK', d.codigo)") {{d.proprietario}}
               td
-                | {{d.insc}}
+                | {{d.inscricao_incra}}
               td
                 | {{d.tipo}}
               td
-                | {{d.quad}}
+                | {{d.quadra_bloco}}
               td
-                | {{d.lote}}
+                | {{d.lote_unidade}}
                       
     md-dialog-actions(layout="row")
       span(flex="")
