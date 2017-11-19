@@ -28,7 +28,7 @@ html(lang='pt-br')
           div(layout-gt-sm='row')
             div(flex="")
               md-input-container 
-                md-radio-group(layout='row', ng-model='tipo')
+                md-radio-group(layout-gt-sm='row', ng-model='tipo')
                   md-radio-button.md-primary(value=4) Geminado 
                   md-radio-button.md-primary(value=3) Apartamento
                   md-radio-button.md-primary(value=2) Casa padrão
@@ -80,7 +80,7 @@ html(lang='pt-br')
                       input(ng-model='cep', ui-cep, ng-change='BuscarCEP()')
 
                   div(flex="")
-                    md-autocomplete(flex='',
+                    md-autocomplete(flex='95',
                       md-selected-item='estado',
                       md-min-length='1', 
                       md-search-text='SearchEst', 
@@ -103,7 +103,7 @@ html(lang='pt-br')
                 
                 div(layout-gt-sm='row', style='margin-top: -30px')
                   div(flex="")
-                    md-autocomplete(flex='',
+                    md-autocomplete(flex='95',
                       md-selected-item='bairro',
                       md-min-length='3', 
                       md-search-text='SearchBai', 
@@ -114,7 +114,7 @@ html(lang='pt-br')
                         span(md-highlight-text='SearchBai') {{item.nome}}
 
                   div(flex="")
-                    md-autocomplete(flex='',
+                    md-autocomplete(flex='95',
                       md-selected-item='endereco',
                       md-min-length='3', 
                       md-search-text='SearchEnd', 
@@ -331,8 +331,69 @@ html(lang='pt-br')
                       md-item-text='item.nome')
                       md-item-template
                         span(md-highlight-text='SearcrRep') {{item.nome}}
+            
+            md-tab(label='Fotos')
+              md-content
+                div(layout-gt-sm="row", layout-margin="")
+                  form.form.form-inverse(name='formfoto', ng-submit='upload()', novalidate='')
+                    input(type="file", file-model="myFile", accept="application/pdf")
+                    button(type='submit') ok
+                div(layout-gt-sm="row", layout-margin="")
+                  md-card
+                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
+                    md-card-content
+                      md-button.md-small.md-raised.md-primary |<< 
+                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
+                      md-button.md-small.md-raised.md-primary  >>|
+                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
+                  md-card
+                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
+                    md-card-content
+                      md-button.md-small.md-raised.md-primary |<< 
+                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
+                      md-button.md-small.md-raised.md-primary  >>|
+                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
+                  md-card
+                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
+                    md-card-content
+                      md-button.md-small.md-raised.md-primary |<< 
+                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
+                      md-button.md-small.md-raised.md-primary  >>|
+                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
 
-          div(layout='row', layout-align='start', flex='')
+                div(layout-gt-sm="row", layout-margin="")
+                  md-card
+                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
+                    md-card-content
+                      md-button.md-small.md-raised.md-primary |<< 
+                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
+                      md-button.md-small.md-raised.md-primary  >>|
+                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
+                  md-card
+                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
+                    md-card-content
+                      md-button.md-small.md-raised.md-primary |<< 
+                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
+                      md-button.md-small.md-raised.md-primary  >>|
+                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
+                  md-card
+                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
+                    md-card-content
+                      md-button.md-small.md-raised.md-primary |<< 
+                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
+                      md-button.md-small.md-raised.md-primary  >>|
+                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
+
+                div(layout-gt-sm="row", layout-margin="")
+                    md-card
+                      img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
+                      md-card-content
+                        md-button.md-small.md-raised.md-primary |<< 
+                        //input(ng-model='foto_posicao', type='number',style='width:50px;')    
+                        md-button.md-small.md-raised.md-primary  >>|
+                        md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
+
+          div(layout-gt-sm='row', layout-align='start', flex='')
             md-button.md-raised(ng-click='Limpar()') Adicionar
             md-button.md-raised.md-primary(ng-click='Gravar()',
             ng-disabled='proprietario.codigo==undefined || tipo==0') Gravar

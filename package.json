@@ -24,6 +24,7 @@
 		"passport-google-oauth": "latest",
     "multer": "latest",
     "mysql": "~2.13.0",
+    "formidable": "latest",
     "dateformat": "latest"    
   }
 }

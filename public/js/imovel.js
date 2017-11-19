@@ -220,14 +220,10 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           targetEvent: ev,
           clickOutsideToClose: true
         })
-        .then(function(answer, codi) {
-            if (answer=='OK'){
-                alert(codi);
-                $scope.codigo=codi;
+        .then(function(answer) {
+            if (answer>0){
+                $scope.codigo=answer;
                 $scope.BuscarCodigo();
-            }
-            else{
-
             }            
             //console.dir('You said the information was "' + answer + '".');
         }, function() {
@@ -251,11 +247,28 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
             });            
         };
 
-        $scope.ExibirImovel = function(answer, codi) {
-            $mdDialog.hide(answer, codi);
+        $scope.ExibirImovel = function(answer) {
+            $mdDialog.hide(answer);
         };
     }
     
+    $scope.upload = function() {
+      var file = $scope.myFile;
+        var fd = new FormData();
+        fd.append('file', file);
+        $http.post("/multer", fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+            console.log("ok");
+        })
+        .error(function(){
+            console.log("error!!");
+        });
+    }
+
+
     $scope.PessoaNome = function(StrSearch) {
         return $http.get('/pessoa/pessoa_nome', {
         params: {

@@ -39,7 +39,7 @@ md-dialog(aria-label="Localizar Imóvel")
               
             tr(ng-repeat="d in l_dados")
               td
-                a(ng-click="ExibirImovel('OK', d.codigo)") {{d.proprietario}}
+                a(ng-click="ExibirImovel(d.codigo)") {{d.proprietario}}
               td
                 | {{d.inscricao_incra}}
               td
