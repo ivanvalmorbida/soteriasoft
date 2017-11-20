@@ -256,7 +256,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       var file = $scope.myFile;
         var fd = new FormData();
         fd.append('file', file);
-        $http.post("/multer", fd, {
+        fd.append('imovel', 1001);
+        $http.post("/imovel/add_imagem", fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })

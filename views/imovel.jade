@@ -336,8 +336,8 @@ html(lang='pt-br')
               md-content
                 div(layout-gt-sm="row", layout-margin="")
                   form.form.form-inverse(name='formfoto', ng-submit='upload()', novalidate='')
-                    input(type="file", file-model="myFile", accept="application/pdf")
-                    button(type='submit') ok
+                    input(type="file", file-model="myFile", accept="image/*")
+                    button(type='submit') Enviar
                 div(layout-gt-sm="row", layout-margin="")
                   md-card
                     img.md-card-image(src="http://placehold.it/350x150", alt="image caption")

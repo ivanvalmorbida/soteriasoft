@@ -102,21 +102,29 @@ app.use(session({secret: '7C77-3D33-WppQ38S'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-global.uploadFileName = 'temp.pdf'
-var multer  = require('multer');
+/*var multer  = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './public/uploads/')
     },
     filename: function (req, file, cb) {
-        cb(null, global.uploadFileName);
+      var datetimestamp = Date.now();
+      cb(null, 'foto_imovel_' + datetimestamp 
+        + '.' + file.originalname.split('.')
+        [file.originalname.split('.').length -1]);
     }
 });
 
-var upload = multer({ storage: storage });
-app.post('/multer', upload.single('file'), function (req, res) {
-    res.end("File uploaded.");
-});
+var upload = multer({ storage: storage }).single('file');
+
+app.post('/multer', function(req, res, next) {
+  upload(req,res,function(err){
+    if(!err){
+      console.log(req.file);
+      console.log('TEST: ' + req.file.filename);
+    }
+  });
+});*/
 
 app.get('/facebook/auth', passport.authenticate('facebook',{scope:'email'}));
 app.get('/facebook/auth/callback',
@@ -185,6 +193,7 @@ app.post('/pessoa_juridica/pessoa', pessoa_juridica.pessoa);
 app.post('/imovel/gravar', imovel.gravar);
 app.post('/imovel/codigo', imovel.codigo);
 app.post('/imovel/localizar', imovel.localizar);
+app.post('/imovel/add_imagem', imovel.add_imagem);
 
 app.post('/imovel_construcao/gravar', imovel_construcao.gravar);
 app.post('/imovel_construcao/imovel', imovel_construcao.imovel);
