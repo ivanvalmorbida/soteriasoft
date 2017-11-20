@@ -205,6 +205,11 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                         $scope.captador = data.dados[0].captador;
                     }
                 });
+
+                $http.post('/imovel_imagem/imovel', {cod: $scope.codigo}).
+                success(function (data, status, headers, config) {
+                    $scope.imagens = data.dados;
+                });
             }
         }).error(function (data, status, headers, config) {
             $scope.Limpar();
@@ -252,16 +257,17 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         };
     }
     
-    $scope.upload = function() {
-      var file = $scope.myFile;
+    $scope.upload_imagem = function() {
+      var file = $scope.imgFile;
         var fd = new FormData();
         fd.append('file', file);
-        fd.append('imovel', 1001);
-        $http.post("/imovel/add_imagem", fd, {
+        fd.append('imovel', $scope.codigo);
+        $http.post("/imovel_imagem/adicionar", fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
         .success(function(){
+            $scope.imgFile = undefined;
             console.log("ok");
         })
         .error(function(){

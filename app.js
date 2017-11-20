@@ -41,7 +41,8 @@ var express = require('express'),
   imovel_construcao = require('./routes/imovel_construcao'),    
   imovel_financeiro = require('./routes/imovel_financeiro'),    
   imovel_terreno = require('./routes/imovel_terreno'),
-  
+  imovel_imagem = require('./routes/imovel_imagem'),
+
   app = module.exports = express();
 
 app.use(cookieParser('soteriasoft'));
@@ -203,6 +204,10 @@ app.post('/imovel_financeiro/imovel', imovel_financeiro.imovel);
 
 app.post('/imovel_terreno/gravar', imovel_terreno.gravar);
 app.post('/imovel_terreno/imovel', imovel_terreno.imovel);
+
+app.post('/imovel_imagem/imovel', imovel_imagem.imovel);
+app.post('/imovel_imagem/adicionar', imovel_imagem.adicionar);
+app.post('/imovel_imagem/remover', imovel_imagem.remover);
 
 app.post('/upload', function(req, res) {
   var form = new formidable.IncomingForm();

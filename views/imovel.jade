@@ -335,63 +335,26 @@ html(lang='pt-br')
             md-tab(label='Fotos')
               md-content
                 div(layout-gt-sm="row", layout-margin="")
-                  form.form.form-inverse(name='formfoto', ng-submit='upload()', novalidate='')
-                    input(type="file", file-model="myFile", accept="image/*")
+                  form.form.form-inverse(name='formfoto', ng-submit='upload_imagem()', novalidate='')
+                    input(type="file", file-model="imgFile", accept="image/*")
                     button(type='submit') Enviar
+                
                 div(layout-gt-sm="row", layout-margin="")
-                  md-card
-                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
+                  md-card(ng-repeat="i in imagens")
+                    img.md-card-image(src="{{i.arquivo}}", alt="image caption")
                     md-card-content
                       md-button.md-small.md-raised.md-primary |<< 
-                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
                       md-button.md-small.md-raised.md-primary  >>|
-                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
-                  md-card
-                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
-                    md-card-content
-                      md-button.md-small.md-raised.md-primary |<< 
-                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
-                      md-button.md-small.md-raised.md-primary  >>|
-                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
-                  md-card
-                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
-                    md-card-content
-                      md-button.md-small.md-raised.md-primary |<< 
-                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
-                      md-button.md-small.md-raised.md-primary  >>|
-                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
+                      md-button.md-small.md-raised.md-warn.md-hue-1(
+                        ng-click='remover_imagem(i.arquivo)') - Remover - 
 
-                div(layout-gt-sm="row", layout-margin="")
-                  md-card
+                  //md-card
                     img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
                     md-card-content
                       md-button.md-small.md-raised.md-primary |<< 
-                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
+                      input(ng-model='foto_posicao', type='number',style='width:50px;')    
                       md-button.md-small.md-raised.md-primary  >>|
                       md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
-                  md-card
-                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
-                    md-card-content
-                      md-button.md-small.md-raised.md-primary |<< 
-                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
-                      md-button.md-small.md-raised.md-primary  >>|
-                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
-                  md-card
-                    img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
-                    md-card-content
-                      md-button.md-small.md-raised.md-primary |<< 
-                      //input(ng-model='foto_posicao', type='number',style='width:50px;')    
-                      md-button.md-small.md-raised.md-primary  >>|
-                      md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
-
-                div(layout-gt-sm="row", layout-margin="")
-                    md-card
-                      img.md-card-image(src="http://placehold.it/350x150", alt="image caption")
-                      md-card-content
-                        md-button.md-small.md-raised.md-primary |<< 
-                        //input(ng-model='foto_posicao', type='number',style='width:50px;')    
-                        md-button.md-small.md-raised.md-primary  >>|
-                        md-button.md-small.md-raised.md-warn.md-hue-1 - Remover - 
 
           div(layout-gt-sm='row', layout-align='start', flex='')
             md-button.md-raised(ng-click='Limpar()') Adicionar
