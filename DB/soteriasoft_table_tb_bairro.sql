@@ -2227,8 +2227,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (2210, 'Chácara Jardim Flórida'),
 (2211, 'Chácara Jockey Club (Zona Rural)'),
 (2212, 'Chácara Julieta Cristina'),
-(2213, 'Chácara Junqueira');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(2213, 'Chácara Junqueira'),
 (2214, 'Chácara Lagoa Branca'),
 (2215, 'Chácara Laguna'),
 (2216, 'Chácara Leal'),
@@ -3692,8 +3691,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (3674, 'Conjunto José Vallim de Melo'),
 (3675, 'Conjunto Lagoa'),
 (3676, 'Conjunto Liberdade'),
-(3677, 'Conjunto Libra');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(3677, 'Conjunto Libra'),
 (3678, 'Conjunto Libra II'),
 (3679, 'Conjunto Mabel'),
 (3680, 'Conjunto Madre Ângela'),
@@ -5488,8 +5486,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (5469, 'Guadalupe'),
 (5470, 'Guagiru'),
 (5471, 'Guaianazes'),
-(5472, 'Guaiaúna');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(5472, 'Guaiaúna'),
 (5473, 'Guaibim'),
 (5474, 'Guaicurus'),
 (5475, 'Guaíra'),
@@ -7416,8 +7413,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (7396, 'Jardim Elisa'),
 (7397, 'Jardim Elisa Maria'),
 (7398, 'Jardim Elisio'),
-(7399, 'Jardim Elite');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(7399, 'Jardim Elite'),
 (7400, 'Jardim Eliza'),
 (7401, 'Jardim Eliza I'),
 (7402, 'Jardim Eliza II'),
@@ -9251,8 +9247,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (9230, 'Jardim Prefeito Milton Menezes'),
 (9231, 'Jardim Premiano'),
 (9232, 'Jardim Presidencial'),
-(9233, 'Jardim Presidente');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(9233, 'Jardim Presidente'),
 (9234, 'Jardim Presidente Dutra'),
 (9235, 'Jardim Presidente I'),
 (9236, 'Jardim Presidente II'),
@@ -11021,8 +11016,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (10999, 'Loteamento Colina Santa Bárbara'),
 (11000, 'Loteamento Colina Verde'),
 (11001, 'Loteamento Colinas de Homero'),
-(11002, 'Loteamento Coloninha');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(11002, 'Loteamento Coloninha'),
 (11003, 'Loteamento Comercial e Residencial Cataratas'),
 (11004, 'Loteamento Coral'),
 (11005, 'Loteamento Costa'),
@@ -12767,8 +12761,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (12744, 'Padre Andrade'),
 (12745, 'Padre Chiquinho'),
 (12746, 'Padre Cunha'),
-(12747, 'Padre Elly');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(12747, 'Padre Elly'),
 (12748, 'Padre Eustáquio'),
 (12749, 'Padre Gabriel'),
 (12750, 'Padre Gianni'),
@@ -14418,8 +14411,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (14394, 'Pedro Dorascenzi (Cruz das Posses)'),
 (14395, 'Pedro Gerônimo'),
 (14396, 'Pedro Gondim'),
-(14397, 'Pedro II');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(14397, 'Pedro II'),
 (14398, 'Pedro Mendizabal'),
 (14399, 'Pedro Morello'),
 (14400, 'Pedro Patrício'),
@@ -16142,8 +16134,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (16117, 'Residencial Morumbi'),
 (16118, 'Residencial Mundo Novo 3'),
 (16119, 'Residencial Nancy'),
-(16120, 'Residencial Nato Vetorasso');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(16120, 'Residencial Nato Vetorasso'),
 (16121, 'Residencial Negreiros'),
 (16122, 'Residencial Nobre'),
 (16123, 'Residencial Nobreville'),
@@ -17919,8 +17910,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (17893, 'Taboão'),
 (17894, 'Taboãozinho'),
 (17895, 'Tabocas'),
-(17896, 'Taboinha');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(17896, 'Taboinha'),
 (17897, 'Taboleiro'),
 (17898, 'Taboleiro do Pinto'),
 (17899, 'Taboleiro Verde'),
@@ -17943,7 +17933,8 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (17916, 'Taipas De Pedras (Mailasqui)'),
 (17917, 'Taliana'),
 (17918, 'Tamancão'),
-(17919, 'Tamandaré'),
+(17919, 'Tamandaré');
+INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (17920, 'Tamandaré (Distrito)'),
 (17921, 'Tamanduá'),
 (17922, 'Tamarineira'),
@@ -19954,8 +19945,7 @@ INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
 (19927, 'Vila Jundia'),
 (19928, 'Vila Jundiaí'),
 (19929, 'Vila Jundiainópolis'),
-(19930, 'Vila Junqueira');
-INSERT INTO `tb_bairro` (`Codigo`, `Nome`) VALUES
+(19930, 'Vila Junqueira'),
 (19931, 'Vila Júpiter'),
 (19932, 'Vila Júpiter Nova'),
 (19933, 'Vila Juracy'),

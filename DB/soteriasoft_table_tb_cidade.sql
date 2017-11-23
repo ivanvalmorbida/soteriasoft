@@ -2411,8 +2411,7 @@ INSERT INTO `tb_cidade` (`Codigo`, `Nome`) VALUES
 (2394, 'Cruzália'),
 (2395, 'Cruzaltense'),
 (2396, 'Cruzaltina'),
-(2397, 'Cruzeirinho');
-INSERT INTO `tb_cidade` (`Codigo`, `Nome`) VALUES
+(2397, 'Cruzeirinho'),
 (2398, 'Cruzeiro'),
 (2399, 'Cruzeiro da Fortaleza'),
 (2400, 'Cruzeiro do Iguaçu'),
@@ -4876,8 +4875,7 @@ INSERT INTO `tb_cidade` (`Codigo`, `Nome`) VALUES
 (4858, 'Mato Queimado'),
 (4859, 'Mato Rico'),
 (4860, 'Mato Verde'),
-(4861, 'Matões');
-INSERT INTO `tb_cidade` (`Codigo`, `Nome`) VALUES
+(4861, 'Matões'),
 (4862, 'Matões do Norte'),
 (4863, 'Matos Costa'),
 (4864, 'Matozinhos'),
@@ -7131,8 +7129,7 @@ INSERT INTO `tb_cidade` (`Codigo`, `Nome`) VALUES
 (7112, 'Santana'),
 (7113, 'Santana da Boa Vista'),
 (7114, 'Santana da Ponte Pensa'),
-(7115, 'Santana da Vargem');
-INSERT INTO `tb_cidade` (`Codigo`, `Nome`) VALUES
+(7115, 'Santana da Vargem'),
 (7116, 'Santana de Caldas'),
 (7117, 'Santana de Cataguases'),
 (7118, 'Santana de Mangueira'),

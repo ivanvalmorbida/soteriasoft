@@ -25,4 +25,5 @@ CREATE TABLE `tb_pessoa` (
 --
 
 INSERT INTO `tb_pessoa` (`codigo`, `tipo`, `nome`, `cep`, `estado`, `cidade`, `bairro`, `endereco`, `numero`, `complemento`, `obs`, `cadastro`) VALUES
-(1, '1', 'teste1', '89208500', 24, 4187, 14462, 124486, '335', 'x', '', '2017-09-30 22:10:28');
+(1, '1', 'teste1', '89208500', 24, 4187, 14462, 124486, '335', 'x', '', '2017-09-30 22:10:28'),
+(2, '2', '', '', NULL, NULL, NULL, NULL, '', '', '', '2017-11-01 20:36:56');

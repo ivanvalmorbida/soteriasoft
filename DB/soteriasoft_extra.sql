@@ -78,6 +78,12 @@ ALTER TABLE `tb_historico_contabil`
   ADD PRIMARY KEY (`Codgo`);
 
 --
+-- Indexes for table `tb_imovel`
+--
+ALTER TABLE `tb_imovel`
+  ADD PRIMARY KEY (`codigo`);
+
+--
 -- Indexes for table `tb_imovel_area_comum`
 --
 ALTER TABLE `tb_imovel_area_comum`
@@ -96,9 +102,21 @@ ALTER TABLE `tb_imovel_financeiro`
   ADD PRIMARY KEY (`imovel`);
 
 --
+-- Indexes for table `tb_imovel_imagem`
+--
+ALTER TABLE `tb_imovel_imagem`
+  ADD PRIMARY KEY (`codigo`);
+
+--
 -- Indexes for table `tb_imovel_terreno`
 --
 ALTER TABLE `tb_imovel_terreno`
+  ADD PRIMARY KEY (`imovel`);
+
+--
+-- Indexes for table `tb_imovel_tipo`
+--
+ALTER TABLE `tb_imovel_tipo`
   ADD PRIMARY KEY (`codigo`);
 
 --
@@ -229,10 +247,20 @@ ALTER TABLE `tb_estado_civil`
 ALTER TABLE `tb_historico_contabil`
   MODIFY `Codgo` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `tb_imovel_terreno`
+-- AUTO_INCREMENT for table `tb_imovel`
 --
-ALTER TABLE `tb_imovel_terreno`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tb_imovel`
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
+--
+-- AUTO_INCREMENT for table `tb_imovel_imagem`
+--
+ALTER TABLE `tb_imovel_imagem`
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `tb_imovel_tipo`
+--
+ALTER TABLE `tb_imovel_tipo`
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_lancto_contabil`
 --
@@ -247,7 +275,7 @@ ALTER TABLE `tb_nacionalidade`
 -- AUTO_INCREMENT for table `tb_pessoa`
 --
 ALTER TABLE `tb_pessoa`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_pessoa_email`
 --

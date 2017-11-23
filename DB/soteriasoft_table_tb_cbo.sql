@@ -1153,8 +1153,7 @@ INSERT INTO `tb_cbo` (`CBO`, `Descricao`) VALUES
 ('373110', 'Operador de central de rádio'),
 ('373210', 'Técnico em operação de equipamento de exibição de televisão'),
 ('373205', 'Técnico em operação de equipamentos de produção para televisão  e produtoras de vídeo'),
-('373215', 'Técnico em operação de equipamentos de transmissão/recepção de televisão');
-INSERT INTO `tb_cbo` (`CBO`, `Descricao`) VALUES
+('373215', 'Técnico em operação de equipamentos de transmissão/recepção de televisão'),
 ('373220', 'Supervisor técnico operacional de sistemas de televisão e produtoras de vídeo'),
 ('374145', 'Dj (disc jockey)'),
 ('374105', 'Técnico em gravação de áudio'),
@@ -2292,8 +2291,7 @@ INSERT INTO `tb_cbo` (`CBO`, `Descricao`) VALUES
 ('791130', 'Artesão escultor'),
 ('810110', 'Mestre de produção química'),
 ('810105', 'Mestre (indústria petroquímica e carboquímica)'),
-('810205', 'Mestre (indústria de borracha e plástico)');
-INSERT INTO `tb_cbo` (`CBO`, `Descricao`) VALUES
+('810205', 'Mestre (indústria de borracha e plástico)'),
 ('810305', 'Mestre de produção farmacêutica'),
 ('811005', 'Operador de processos químicos e petroquímicos'),
 ('811010', 'Operador de sala de controle de instalações químicas, petroquímicas e afins'),
