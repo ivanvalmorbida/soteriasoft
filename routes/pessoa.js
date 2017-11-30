@@ -37,6 +37,7 @@ exports.gravar = function (req, res) {
                 console.log('Error while performing Query.')
         })
     }         
+    connection.end();
 }
 
 exports.codigo = function (req, res) {
@@ -56,6 +57,7 @@ exports.codigo = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.pessoa_todas = function (req, res) {
@@ -68,6 +70,7 @@ exports.pessoa_todas = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.pessoa_nome = function (req, res) {
@@ -82,6 +85,7 @@ exports.pessoa_nome = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.localizar = function (req, res) {
@@ -89,7 +93,7 @@ exports.localizar = function (req, res) {
     var data = req.body;
     var sql = '', par = [];
 
-    sql += "SELECT p.nome, case when p.tipo=1 then 'Fis' else 'Jur' end as tipo,";
+    sql += "SELECT p.codigo, p.nome, case when p.tipo=1 then 'Fis' else 'Jur' end as tipo,";
     sql += " case when p.tipo=1 then f.cpf else j.cnpj end as cpf_cnpj"; 
     sql += " FROM tb_pessoa p left join tb_pessoa_fisica f on f.pessoa=p.codigo";
     sql += " left join tb_pessoa_juridica j on j.pessoa=p.codigo Where";
@@ -106,4 +110,13 @@ exports.localizar = function (req, res) {
             console.log('Error while performing Query.')
     });
 
+    connection.end();
 }
+
+exports.dlg_localizar = function (req, res) {
+    res.render('pessoa_dlg_localizar');
+};
+
+exports.dlg_apagar = function (req, res) {
+    res.render('pessoa_dlg_apagar');
+};

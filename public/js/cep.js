@@ -1,31 +1,11 @@
 angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
-.controller('Soteriasoft.Control', function($http,$scope) {
+.controller('Soteriasoft.Control', function($http,$scope, $mdDialog) {
     function format(mask, number) {
         var s = ''+number, r = '';
         for (var im=0, is = 0; im<mask.length && is<s.length; im++) {
           r += mask.charAt(im)=='#' ? s.charAt(is++) : mask.charAt(im);
         }
         return r;
-    }  
-
-    $scope.ApagarEfetivar = function(cep) {
-        $http.post('/cep/cep_apagar', {cep: $scope.cep}).
-        success(function (data, status, headers, config) {
-            $scope.Limpar(true);
-            $('#myModalApagar').modal('hide');
-        }).error(function (data, status, headers, config) {
-            //
-        });  
-    }
-    
-    $scope.Apagar = function(cep) {
-        $('#myModalApagar').modal('show');
-    }
-    
-    $scope.ExibirCEP = function(cep) {
-        $scope.cep = format('#####-###', cep);
-        $scope.BuscarCEP();
-        $('#myModalLocalizar').modal('hide');
     }
 
     $scope.Limpar = function(booCep) {
@@ -39,7 +19,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     
     $scope.BuscarCEP = function() {
         if ($scope.cep.length==9){
-            $http.post('/cep/cep_cep', {cep: $scope.cep}).
+            $http.post('/cep/cep', {cep: $scope.cep}).
             success(function (data, status, headers, config) {
                 if (data.dados.length>0){
                     $scope.complemento  = data.dados[0].complemento;
@@ -57,7 +37,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     }
 
     $scope.Gravar = function() {
-        $http.post('/cep/cep_gravar', {cep: $scope.cep, estado: $scope.estado.codigo, 
+        $http.post('/cep/gravar', {cep: $scope.cep, estado: $scope.estado.codigo, 
             cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
             endereco: $scope.endereco.codigo, complemento: $scope.complemento}).
         success(function (data, status, headers, config) {
@@ -68,8 +48,102 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
         });  
     }
 
-    $scope.Localizar = function() {
-        $('#myModalLocalizar').modal('show'); 
+    $scope.Localizar = function(ev) {
+        $mdDialog.show({
+          controller: LocalizarController,
+          templateUrl: './cep/dlg/localizar',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose: true,
+          locals: {EstadoSigla: $scope.EstadoSigla}          
+        })
+        .then(function(answer) {
+            if (answer>0){
+                $scope.cep = format('#####-###', answer);
+                $scope.BuscarCEP();
+            }            
+            //console.dir('You said the information was "' + answer + '".');
+        }, function() {
+          console.dir('You cancelled the dialog.');
+        });
+    };
+    
+    function LocalizarController($scope, $mdDialog, EstadoSigla) {
+        $scope.EstadoSigla = EstadoSigla;
+
+        $scope.CidadeEstadoNome = function(StrSearch) {
+            return $http.get('/cidade/cidade_estado_nome', {
+            params: {
+                txt: StrSearch,
+                est: $scope.l_estado.codigo
+            }
+            }).then(function(data) {
+                return data.data;
+            });
+        };
+
+        $scope.EnderecoCidadeNome = function(StrSearch) {
+            return $http.get('/endereco/endereco_cidade_nome', {
+            params: {
+                txt: StrSearch,
+                est: $scope.l_estado.codigo,
+                cid: $scope.l_cidade.codigo
+            }
+            }).then(function(data) {
+                return data.data;
+            });
+        };    
+       
+        $scope.Cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.LocalizarExe = function() {
+            $http.post('/cep/endereco', { estado: $scope.l_estado.codigo,
+            cidade: $scope.l_cidade.codigo, endereco: $scope.l_endereco.codigo}).
+            success(function (data, status, headers, config) {
+                $scope.l_dados = data.dados;
+            }).error(function (data, status, headers, config) {
+                //
+            }); 
+        };
+
+        $scope.ExibirCEP = function(answer) {
+            $mdDialog.hide(answer);
+        };
+    }
+
+    $scope.Apagar = function(ev) {
+        $mdDialog.show({
+          controller: ApagarController,
+          templateUrl: './cep/dlg/apagar',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose: true,
+          locals: {cep: $scope.cep }
+        })
+        .then(function(answer) {
+            $http.post('/cep/apagar', {cep: $scope.cep}).
+            success(function (data, status, headers, config) {
+                $scope.Limpar();
+            }).error(function (data, status, headers, config) {
+                //
+            });              
+        }, function() {
+          //console.dir('You cancelled the dialog.');
+        });
+    };
+    
+    function ApagarController($scope, $mdDialog, cep) {
+        $scope.cep = cep;
+
+        $scope.Cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.Efetivar = function(answer) {
+            $mdDialog.hide(answer);
+        };
     }
 
     $scope.EstadoNome = function(StrSearch) {
@@ -101,17 +175,6 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
             return data.data;
         });
     };
-
-    $scope.CidadeEstadoNome = function(StrSearch) {
-        return $http.get('/cidade/cidade_estado_nome', {
-        params: {
-            txt: StrSearch,
-            est: $scope.l_estado.codigo
-        }
-        }).then(function(data) {
-            return data.data;
-        });
-    };
     
     $scope.BairroNome = function(StrSearch) {
         return $http.get('/bairro/bairro_nome', {
@@ -133,27 +196,5 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
         });
     };
 
-    $scope.EnderecoCidadeNome = function(StrSearch) {
-        return $http.get('/endereco/endereco_cidade_nome', {
-        params: {
-            txt: StrSearch,
-            est: $scope.l_estado.codigo,
-            cid: $scope.l_cidade.codigo
-        }
-        }).then(function(data) {
-            return data.data;
-        });
-    };    
-
-    $scope.LocalizarExe = function() {
-        $http.post('/cep/cep_endereco', { estado: $scope.l_estado.codigo,
-        cidade: $scope.l_cidade.codigo, endereco: $scope.l_endereco.codigo}).
-        success(function (data, status, headers, config) {
-            $scope.l_dados = data.dados;
-        }).error(function (data, status, headers, config) {
-            //
-        }); 
-    };
-    
     $scope.Limpar(); 
 });

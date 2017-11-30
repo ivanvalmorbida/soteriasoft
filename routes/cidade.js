@@ -13,6 +13,7 @@ exports.cidade_todas = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.cidade_estado = function (req, res) {
@@ -29,6 +30,7 @@ exports.cidade_estado = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.cidade_nome = function (req, res) {
@@ -43,6 +45,7 @@ exports.cidade_nome = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.cidade_estado_nome = function (req, res) {
@@ -51,14 +54,14 @@ exports.cidade_estado_nome = function (req, res) {
     var est = req.query.est;
 
     connection.connect();
-    connection.query('select ci.codigo, ci.nome from tb_cep as ce'+
-    ' inner join tb_cidade as ci on ce.cidade=ci.codigo'+
-    " where ce.estado=? and ci.nome like '"+txt+"%'"+
-    " group by ci.codigo, ci.Nome order by ci.nome LIMIT 20", 
+    connection.query("select ci.codigo, ci.nome from tb_cidade as ci"+
+    " where ci.codigo in(select cidade from tb_cep where estado=?)"+
+    " and ci.nome like '"+txt+"%' order by ci.nome LIMIT 20", 
     [est], function(err, rows) {
         if (!err)
             return res.json(rows)
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }

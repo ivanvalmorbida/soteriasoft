@@ -1,0 +1,54 @@
+md-dialog(aria-label="Localizar Imóvel")
+  form(ng-cloak="")
+    md-toolbar
+      .md-toolbar-tools
+        h2 Localizar Imóvel    
+        span(flex="")
+        md-button.md-icon-button(ng-click="Cancel()")
+          md-icon(md-svg-src="img/fechar.svg", aria-label="Fechar diálogo")
+    md-dialog-content
+      .md-dialog-content
+        div(layout='row')
+          md-input-container.md-block(style='margin-top: 10px;')
+            label campo
+            md-select(ng-model='campopesq')
+              md-option(value='prop') Proprietário
+              md-option(value='insc') Inscrição / Incra
+            
+          md-input-container.md-block(flex='',style='margin-top: 10px;')
+            label localizar
+            input(ng-model='txtpesquisa')
+
+          #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
+            ng-click='LocalizarExe(campopesq, txtpesquisa)', style='height: 10px;',
+            ng-disabled='txtpesquisa==undefined') Executar
+
+        div(layout-gt-sm='row')
+          table(style='width: 100%')
+            tr
+              td(style='width: 40%')
+                | Proprietário
+              td(style='width: 25%')
+                | Inscrição / Incra
+              td(style='width: 15%')
+                | Tipo
+              td(style='width: 10%')
+                | Quadra/Bloco
+              td(style='width: 10%')
+                | Lote/UN
+              
+            tr(ng-repeat="d in l_dados")
+              td
+                a(ng-click="ExibirImovel(d.codigo)") {{d.proprietario}}
+              td
+                | {{d.inscricao_incra}}
+              td
+                | {{d.tipo}}
+              td
+                | {{d.quadra_bloco}}
+              td
+                | {{d.lote_unidade}}
+                      
+    md-dialog-actions(layout="row")
+      span(flex="")
+      md-button.md-raised(type='button', ng-click="Cancel()") Fechar

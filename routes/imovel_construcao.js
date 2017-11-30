@@ -45,6 +45,7 @@ exports.gravar = function (req, res) {
         else
             console.log('Error while performing Query.')
     })                  
+    connection.end();
 }
 
 exports.imovel = function (req, res) {
@@ -59,4 +60,5 @@ exports.imovel = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }

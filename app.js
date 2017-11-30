@@ -1,25 +1,24 @@
-
-var express = require('express'),
+var express = require('express'), 
   bodyParser = require('body-parser'),
   cookieParser = require('cookie-parser'),
-  methodOverride = require('method-override'),
-  errorHandler = require('error-handler'),
-  morgan = require('morgan'),
-	http = require('http'),
   path = require('path'),
+  favicon = require('serve-favicon'),
+  logger = require('morgan');
+
+var methodOverride = require('method-override'),
+  errorHandler = require('error-handler'),
+	http = require('http'),
   session = require('express-session'),
   passport = require('passport'),
   FacebookStrategy = require('passport-facebook').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-  server = http.createServer(app),
-	io = require('socket.io').listen(server),
   settings = require("./settings"),
-  routes = require('./routes/index'),
-  formidable = require('formidable'),
-  fs = require('fs'),
-  teste = require('./routes/teste'),
+  fs = require('fs');
   
-  users = require('./routes/users'),
+var server = http.createServer(app),
+	io = require('socket.io').listen(server);
+
+var routes = require('./routes/index'),
   cep = require('./routes/cep'),
   estado = require('./routes/estado'),
   cidade = require('./routes/cidade'),
@@ -41,12 +40,31 @@ var express = require('express'),
   imovel_construcao = require('./routes/imovel_construcao'),    
   imovel_financeiro = require('./routes/imovel_financeiro'),    
   imovel_terreno = require('./routes/imovel_terreno'),
-  imovel_imagem = require('./routes/imovel_imagem'),
+  imovel_imagem = require('./routes/imovel_imagem');
+  
+var index = require('./routes/index');
+var users = require('./routes/users');
 
-  app = module.exports = express();
+var app = express();
 
 app.use(cookieParser('soteriasoft'));
 app.use(bodyParser());
+  
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.set('port', process.env.PORT || settings.webPort);
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({secret: '7C77-3D33-WppQ38S'}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Passport session setup.
 passport.serializeUser(function(user, done) {
@@ -92,68 +110,42 @@ passport.use(new GoogleStrategy({
   )}
 ));
 
-app.set('port', process.env.PORT || settings.webPort);
-app.set('views', path.join(__dirname, 'views/'));
-app.set('view engine', 'jade');
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret: '7C77-3D33-WppQ38S'}));
-app.use(passport.initialize());
-app.use(passport.session());
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
+// Fim passport
 
-/*var multer  = require('multer');
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/uploads/')
-    },
-    filename: function (req, file, cb) {
-      var datetimestamp = Date.now();
-      cb(null, 'foto_imovel_' + datetimestamp 
-        + '.' + file.originalname.split('.')
-        [file.originalname.split('.').length -1]);
-    }
-});
-
-var upload = multer({ storage: storage }).single('file');
-
-app.post('/multer', function(req, res, next) {
-  upload(req,res,function(err){
-    if(!err){
-      console.log(req.file);
-      console.log('TEST: ' + req.file.filename);
-    }
-  });
-});*/
+app.use('/', index);
+app.use('/users', users);
 
 app.get('/facebook/auth', passport.authenticate('facebook',{scope:'email'}));
 app.get('/facebook/auth/callback',
   passport.authenticate('facebook', { successRedirect : '/', failureRedirect: '/' }),
   function(req, res) {res.redirect('/');}
 );
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
-
 app.get('/google/auth', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/google/auth/callback',
   passport.authenticate('google', { successRedirect : '/', failureRedirect : '/'}),
   function(req, res) {res.redirect('/');}
 );
 
-app.use('/', routes);
-app.use('/users', users);
 app.get('/cep', cep.index);
+app.get('/cep/dlg/localizar', cep.dlg_localizar);
+app.get('/cep/dlg/apagar', cep.dlg_apagar);
+
 app.get('/estado/estado_nome', estado.estado_nome);
 app.get('/estado/estado_sigla', estado.estado_sigla);
+
 app.get('/cidade/cidade_nome', cidade.cidade_nome);
 app.get('/cidade/cidade_estado_nome', cidade.cidade_estado_nome);
+
 app.get('/bairro/bairro_nome', bairro.bairro_nome);
+app.get('/bairro/bairro_cidade_nome', bairro.bairro_cidade_nome);
+
 app.get('/endereco/endereco_nome', endereco.endereco_nome);
 app.get('/endereco/endereco_cidade_nome', endereco.endereco_cidade_nome);
+
 app.get('/estado/estado_todos', estado.estado_todos);
 app.get('/nacionalidade/nacionalidade_pais', nacionalidade.nacionalidade_pais);
 app.get('/estado_civil/estado_civil_descricao', estado_civil.estado_civil_descricao);
@@ -162,18 +154,17 @@ app.get('/atividade_economica/atividade_economica_descricao', atividade_economic
 
 app.get('/pessoa', pessoa.index);
 app.get('/pessoa/pessoa_nome', pessoa.pessoa_nome);
+app.get('/pessoa/dlg/apagar', pessoa.dlg_apagar);
+app.get('/pessoa/dlg/localizar', pessoa.dlg_localizar);
 
 app.get('/imovel', imovel.index);
 app.get('/imovel/dlg/apagar', imovel.dlg_apagar);
 app.get('/imovel/dlg/localizar', imovel.dlg_localizar);
 
-app.get('/teste', teste.index);
-app.get('/teste/dlg', teste.dialogo);
-
-app.post('/cep/cep_cep', cep.cep_cep);
-app.post('/cep/cep_endereco', cep.cep_endereco);
-app.post('/cep/cep_gravar', cep.cep_gravar);
-app.post('/cep/cep_apagar', cep.cep_apagar);
+app.post('/cep/cep', cep.cep);
+app.post('/cep/endereco', cep.endereco);
+app.post('/cep/gravar', cep.gravar);
+app.post('/cep/apagar', cep.apagar);
 
 app.post('/pessoa/gravar', pessoa.gravar);
 app.post('/pessoa/codigo', pessoa.codigo);
@@ -208,71 +199,31 @@ app.post('/imovel_terreno/imovel', imovel_terreno.imovel);
 app.post('/imovel_imagem/imovel', imovel_imagem.imovel);
 app.post('/imovel_imagem/adicionar', imovel_imagem.adicionar);
 app.post('/imovel_imagem/remover', imovel_imagem.remover);
-
-app.post('/upload', function(req, res) {
-  var form = new formidable.IncomingForm();
-  form.parse(req, function(err, fields, files) {
-      // `file` is the name of the <input> field of type `file`
-      var old_path = files.file.path,
-          file_size = files.file.size,
-          file_ext = files.file.name.split('.').pop(),
-          index = old_path.lastIndexOf('/') + 1,
-          file_name = old_path.substr(index),
-          new_path = path.join(process.env.PWD, './public/uploads/', file_name + '.' + file_ext);
-
-      fs.readFile(old_path, function(err, data) {
-          fs.writeFile(new_path, data, function(err) {
-              fs.unlink(old_path, function(err) {
-                  if (err) {
-                      res.status(500);
-                      res.json({'success': false});
-                  } else {
-                      res.status(200);
-                      res.json({'success': true});
-                  }
-              });
-          });
-      });
-  });
-});
-
-//app.get('/err404', err404.index);
+  
 app.get('*', routes);
 
+///////////////////////////////////
+///////////////////////////////////
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
-  res.redirect('/err404')
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
+// error handler
 app.use(function(err, req, res, next) {
-  res.redirect('/');
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+  res.render('error');
 });
 
-http.createServer(app).listen(app.get('port'), function () {
-  console.log('Express server escutando na porta ' + app.get('port'));
-});
+module.exports = app;
+//http.createServer(app).listen(app.get('port'), function () {
+//  console.log('Express server escutando na porta ' + app.get('port'));
+//});

@@ -1,0 +1,15 @@
+md-dialog(aria-label="Apagar CEP")
+  form(ng-cloak="")
+    md-toolbar.md-warn
+      .md-toolbar-tools
+        h2 Apagar Registro de CEP    
+        span(flex="")
+        md-button.md-icon-button(ng-click="Cancel()")
+          md-icon(md-svg-src="img/fechar.svg", aria-label="Fechar diálogo")
+    md-dialog-content
+      .md-dialog-content
+        h2 Tem certeza que deseja eliminar o CEP: {{cep}}
+    md-dialog-actions(layout="row")
+      span(flex="")
+      md-button.md-raised.md-warn.md-hue-1(ng-click="Efetivar('OK')") Efetivar
+      md-button.md-raised(type='button', ng-click="Cancel()") Cancelar

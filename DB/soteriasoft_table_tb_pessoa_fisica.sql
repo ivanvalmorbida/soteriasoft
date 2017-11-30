@@ -22,10 +22,3 @@ CREATE TABLE `tb_pessoa_fisica` (
   `ctps` varchar(15) DEFAULT NULL,
   `pis` varchar(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `tb_pessoa_fisica`
---
-
-INSERT INTO `tb_pessoa_fisica` (`pessoa`, `nascimento`, `cidadenasc`, `ufnasc`, `nacionalidade`, `sexo`, `cpf`, `identidade`, `orgaoidentidade`, `ufidentidade`, `estadocivil`, `conjuge`, `profissao`, `ctps`, `pis`) VALUES
-(1, '2017-10-08 12:00:00', 4187, 24, 104, '2', '88888888888', '73739799', 'ssp', 18, 4, 1, 317110, '123', '7777');

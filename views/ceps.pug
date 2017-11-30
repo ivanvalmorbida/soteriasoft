@@ -1,0 +1,84 @@
+html(lang='pt-br')
+  head
+    meta(name='viewport', content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui')
+    link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css')
+    link(rel='stylesheet', href='css/cep.css')
+    
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='js/comum.js')
+    script(src='js/cep.js')
+
+  body
+    md-content(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft')
+      md-card
+        md-card-title
+          md-card-title-text
+            span.md-headline Cadastro de Código Postal
+            //span.md-subhead ...... .... ....
+        md-card-content
+
+          div(layout-gt-sm='row')
+            md-input-container
+              label CEP
+              input(ng-model='cep', ui-cep, ng-change='BuscarCEP()')
+            md-autocomplete(flex='',
+              md-selected-item='estado',
+              md-min-length='1', 
+              md-search-text='SearchEst', 
+              md-items='item in EstadoNome(SearchEst)',
+              md-floating-label='Estado',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchEst') {{item.nome}}
+                
+            md-autocomplete(flex='',
+              md-selected-item='cidade',
+              md-min-length='3', 
+              md-search-text='SearchCid', 
+              md-items='item in CidadeNome(SearchCid)',
+              md-floating-label='Cidade',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchCid') {{item.nome}}
+          
+          div(layout-gt-sm='row')
+            md-autocomplete(flex='',
+              md-selected-item='bairro',
+              md-min-length='3', 
+              md-search-text='SearchBai', 
+              md-items='item in BairroNome(SearchBai)',
+              md-floating-label='Bairro',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchBai') {{item.nome}}
+
+            md-autocomplete(flex='',
+              md-selected-item='endereco',
+              md-min-length='3', 
+              md-search-text='SearchEnd', 
+              md-items='item in EnderecoNome(SearchEnd)',
+              md-floating-label='Endereço',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchEnd') {{item.nome}}
+
+            md-input-container(flex='')
+              label Complemento
+              input(ng-model='complemento', type='text')
+
+
+          div(layout-gt-sm='row', layout-align='start', flex='')
+            md-button.md-raised(ng-click='Limpar(true)') Adicionar
+            md-button.md-raised.md-primary(ng-click='Gravar()',
+            ng-disabled='cep.length<9 || cep==undefined || estado==undefined || cidade==undefined || bairro==undefined || endereco==undefined',) Gravar
+            md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()',
+            ng-disabled='cep.length<9 || cep==undefined || estado==undefined || cidade==undefined || bairro==undefined || endereco==undefined') Apagar
+            md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar

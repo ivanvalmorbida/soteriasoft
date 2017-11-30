@@ -13,6 +13,7 @@ exports.estado_todos = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.estado_nome = function (req, res) {
@@ -27,6 +28,7 @@ exports.estado_nome = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.estado_sigla = function (req, res) {
@@ -41,4 +43,5 @@ exports.estado_sigla = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }

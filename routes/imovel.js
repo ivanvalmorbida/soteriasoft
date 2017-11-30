@@ -57,6 +57,7 @@ exports.gravar = function (req, res) {
                 console.log('Error while performing Query.')
         })
     }         
+    connection.end();
 }
 
 exports.codigo = function (req, res) {
@@ -72,6 +73,7 @@ exports.codigo = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.localizar = function (req, res) {
@@ -98,6 +100,7 @@ exports.localizar = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.add_imagem =  function(req, res, next) {

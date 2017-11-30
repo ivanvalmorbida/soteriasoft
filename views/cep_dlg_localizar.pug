@@ -1,0 +1,76 @@
+md-dialog(aria-label="Localizar Imóvel")
+  form(ng-cloak="")
+    md-toolbar
+      .md-toolbar-tools
+        h2 Localizar CEPs   
+        span(flex="")
+        md-button.md-icon-button(ng-click="Cancel()")
+          md-icon(md-svg-src="img/fechar.svg", aria-label="Fechar diálogo")
+    md-dialog-content
+      .md-dialog-content
+        div(layout-gt-sm='row')
+          md-autocomplete(flex='',
+            md-selected-item='l_estado',
+            md-min-length='1', 
+            md-search-text='l_SearchEst', 
+            md-items='item in EstadoSigla(l_SearchEst)',
+            md-floating-label='Estado',
+            md-item-text='item.sigla')
+            md-item-template
+              span(md-highlight-text='l_SearchEst') {{item.sigla}}
+
+          md-autocomplete(flex='',
+            ng-disabled='l_estado==undefined',
+            md-selected-item='l_cidade',
+            md-min-length='2', 
+            md-search-text='l_SearchCid', 
+            md-items='item in CidadeEstadoNome(l_SearchCid)',
+            md-floating-label='Cidade',
+            md-item-text='item.nome')
+            md-item-template
+              span(md-highlight-text='l_SearchCid') {{item.nome}}
+
+          md-autocomplete(flex='',
+            ng-disabled='l_cidade==undefined',
+            md-selected-item='l_endereco',
+            md-min-length='3', 
+            md-search-text='l_SearchEnd', 
+            md-items='item in EnderecoCidadeNome(l_SearchEnd)',
+            md-floating-label='Endereço',
+            md-item-text='item.nome')
+            md-item-template
+              span(md-highlight-text='l_SearchEnd') {{item.nome}}
+
+          #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
+            ng-click='LocalizarExe()',
+            ng-disabled='l_endereco==undefined') Executar
+
+        div(layout='row')
+          div(flex="") 
+            | CEP   
+          div(hide-xs="", show-gt-sm="", flex="") UF
+          |   
+          div(hide-xs="", show-gt-sm="", flex="") Cidade
+          |   
+          div(flex="") Bairro
+          |   
+          div(hide-xs="", show-gt-sm="", flex="") Endereço
+          |   
+          div(flex="") Complemento
+          
+        div(layout='row', ng-repeat="d in l_dados")
+          div(flex="") 
+            a(ng-click='ExibirCEP(d.cep)') {{d.cep}}   
+          div(hide-xs="", show-gt-sm="", flex="") {{d.estado_}}
+          |   
+          div(hide-xs="", show-gt-sm="", flex="") {{d.cidade_}}
+          |   
+          div(flex="") {{d.bairro_}}
+          |   
+          div(hide-xs="", show-gt-sm="", flex="") {{d.endereco_}}
+          |   
+          div(flex="") {{d.complemento}}
+
+    md-dialog-actions(layout="row")
+      span(flex="")
+      md-button.md-raised(type='button', ng-click="Cancel()") Fechar

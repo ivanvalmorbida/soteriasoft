@@ -13,6 +13,7 @@ exports.nacionalidade_todas = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.nacionalidade_pais = function (req, res) {
@@ -27,4 +28,5 @@ exports.nacionalidade_pais = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }

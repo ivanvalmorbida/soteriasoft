@@ -38,6 +38,7 @@ exports.gravar = function (req, res) {
         else
             console.log('Error while performing Query.')
     })
+    connection.end();
 }
 
 exports.pessoa = function (req, res) {
@@ -55,4 +56,5 @@ exports.pessoa = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }

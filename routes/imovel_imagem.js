@@ -31,6 +31,7 @@ exports.adicionar =  function(req, res, next) {
         else
           console.log('Error while performing Query: '+err)
       });
+      connection.end();
     }
   });
 }
@@ -40,12 +41,13 @@ exports.imovel = function (req, res) {
   var cod = req.body.cod;
 
   connection.connect();
-connection.query("SELECT codigo, ordem, concat('uploads/', arquivo) as arquivo from tb_imovel_imagem where imovel="+cod, function(err, rows, fields) {
+  connection.query("SELECT codigo, ordem, concat('uploads/', arquivo) as arquivo from tb_imovel_imagem where imovel="+cod, function(err, rows, fields) {
     if (!err)
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
   });
+  connection.end();
 }
 
 exports.remover = function (req, res) {
@@ -59,4 +61,5 @@ exports.remover = function (req, res) {
     else
       console.log('Error while performing Query.')
   });
+  connection.end();
 }

@@ -22,10 +22,3 @@ CREATE TABLE `tb_imovel_terreno` (
   `gabarito` int(11) DEFAULT NULL,
   `esquina` bit(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `tb_imovel_terreno`
---
-
-INSERT INTO `tb_imovel_terreno` (`imovel`, `cep`, `estado`, `cidade`, `bairro`, `endereco`, `numero`, `complemento`, `area_terreno`, `frente`, `fundo`, `lateral1`, `lateral2`, `gabarito`, `esquina`) VALUES
-(1000, '', NULL, NULL, NULL, NULL, '', '', 0, 0, 0, 0, 0, 0, b'0');

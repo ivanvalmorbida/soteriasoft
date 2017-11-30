@@ -1,5 +1,5 @@
 angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
-.controller('Soteriasoft.Control', function($http,$scope) {
+.controller('Soteriasoft.Control', function($http, $scope, $mdDialog) {
     $scope.format = function(mask, number) {
         return format(mask, number);
     }  
@@ -93,6 +93,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         return r;
     }  
 
+    /*
     $scope.ApagarEfetivar = function(cep) {
         $http.post('/pessoa/pessoa_apagar', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
@@ -106,11 +107,39 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.Apagar = function(cep) {
         $('#myModalApagar').modal('show');
     }
+    */
+
+    $scope.Apagar = function(ev) {
+        $mdDialog.show({
+          controller: ApagarController,
+          templateUrl: './pessoa/dlg/apagar',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose: true,
+          locals: {nome: $scope.nome}
+        })
+        .then(function(answer) {
+            $http.post('/pessoa/apagar', {cod: $scope.codigo}).
+            success(function (data, status, headers, config) {
+                $scope.Limpar();
+            }).error(function (data, status, headers, config) {
+                //
+            });              
+        }, function() {
+          //console.dir('You cancelled the dialog.');
+        });
+    };
     
-    $scope.ExibirPessoa = function(codigo) {
-        $scope.codigo = codigo;
-        $scope.BuscarCodigo();
-        $('#myModalLocalizar').modal('hide');
+    function ApagarController($scope, $mdDialog, nome) {
+        $scope.nome = nome;
+
+        $scope.Cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.Efetivar = function(answer) {
+            $mdDialog.hide(answer);
+        };
     }
 
     $scope.BuscarCodigo = function() {
@@ -190,19 +219,44 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         });         
     }
 
-    $scope.Localizar = function() {
-        $('#myModalLocalizar').modal('show'); 
-    }
-
-    $scope.LocalizarExe = function() {
-        $http.post('/pessoa/localizar', {nome: $scope.txtpesquisa}).
-        success(function (data, status, headers, config) {
-            $scope.l_dados = data.dados;
-        }).error(function (data, status, headers, config) {
-            //
-        }); 
+    $scope.Localizar = function(ev) {
+        $mdDialog.show({
+          controller: LocalizarController,
+          templateUrl: './pessoa/dlg/localizar',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose: true         
+        })
+        .then(function(answer) {
+            if (answer>0){
+                $scope.codigo = answer;
+                $scope.BuscarCodigo();
+            }            
+            //console.dir('You said the information was "' + answer + '".');
+        }, function() {
+          console.dir('You cancelled the dialog.');
+        });
     };
     
+    function LocalizarController($scope, $mdDialog) {
+        $scope.Cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.LocalizarExe = function() {
+            $http.post('/pessoa/localizar', {nome: $scope.txtpesquisa}).
+            success(function (data, status, headers, config) {
+                $scope.l_dados = data.dados;    
+            }).error(function (data, status, headers, config) {
+                //
+            }); 
+        };
+
+        $scope.ExibirPessoa = function(answer) {
+            $mdDialog.hide(answer);
+        };
+    }
+
     $scope.PessoaNome = function(StrSearch) {
         return $http.get('/pessoa/pessoa_nome', {
         params: {
@@ -277,7 +331,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         return $http.get('/cidade/cidade_estado_nome', {
         params: {
             txt: StrSearch,
-            est: $scope.l_estado.codigo
+            est: $scope.estado.codigo
         }
         }).then(function(data) {
             return data.data;
@@ -304,18 +358,49 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         });
     };
 
+    $scope.BairroCidadeNome = function(StrSearch) {
+        return $http.get('/bairro/bairro_cidade_nome', {
+        params: {
+            txt: StrSearch,
+            est: $scope.estado.codigo,
+            cid: $scope.cidade.codigo
+        }
+        }).then(function(data) {
+            return data.data;
+        });
+    };    
+
     $scope.EnderecoCidadeNome = function(StrSearch) {
         return $http.get('/endereco/endereco_cidade_nome', {
         params: {
             txt: StrSearch,
-            est: $scope.l_estado.codigo,
-            cid: $scope.l_cidade.codigo
+            est: $scope.estado.codigo,
+            cid: $scope.cidade.codigo
         }
         }).then(function(data) {
             return data.data;
         });
     };    
     
+    $scope.BuscarCEP = function() {
+        if ($scope.cep.length==9){
+            $http.post('/cep/cep', {cep: $scope.cep}).
+            success(function (data, status, headers, config) {
+                if (data.dados.length>0){
+                    $scope.complemento  = data.dados[0].complemento;
+                    $scope.estado       = {codigo: data.dados[0].estado, nome: data.dados[0].estado_};
+                    $scope.cidade       = {codigo: data.dados[0].cidade, nome: data.dados[0].cidade_};                
+                    $scope.bairro       = {codigo: data.dados[0].bairro, nome: data.dados[0].bairro_};
+                    $scope.endereco     = {codigo: data.dados[0].endereco, nome: data.dados[0].endereco_};
+                }else{
+                    $scope.Limpar(false);
+                }
+            }).error(function (data, status, headers, config) {
+                //
+            }); 
+        }              
+    }
+
     var url = new URL(location.href);
     var cod = url.searchParams.get("codigo");    
     if (cod!=undefined){
@@ -326,3 +411,5 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         $scope.Limpar();         
     }
 });
+
+        

@@ -13,6 +13,7 @@ exports.cbo_todos = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.cbo_descricao = function (req, res) {
@@ -27,4 +28,5 @@ exports.cbo_descricao = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }

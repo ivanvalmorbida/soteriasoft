@@ -13,6 +13,7 @@ exports.atividade_economica_todas = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.atividade_economica_descricao = function (req, res) {
@@ -27,4 +28,5 @@ exports.atividade_economica_descricao = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }

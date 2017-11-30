@@ -13,6 +13,7 @@ exports.estado_civil_todos = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.estado_civil_descricao = function (req, res) {
@@ -27,4 +28,5 @@ exports.estado_civil_descricao = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }

@@ -7,7 +7,7 @@ exports.index = function (req, res) {
     res.render('ceps');
 };
 
-exports.cep_apagar = function (req, res) {
+exports.apagar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
 
@@ -22,9 +22,10 @@ exports.cep_apagar = function (req, res) {
         else
             console.log('Error while performing Query.')
     })
+    connection.end();
 }
 
-exports.cep_gravar = function (req, res) {
+exports.gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
 
@@ -58,9 +59,10 @@ exports.cep_gravar = function (req, res) {
         else
             console.log('Error while performing Query.')
     })
+    connection.end();
 }
 
-exports.cep_cep = function (req, res) {
+exports.cep = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
     
@@ -68,38 +70,45 @@ exports.cep_cep = function (req, res) {
 
     connection.connect();
 
-    connection.query('SELECT c.*, u.nome as estado_, m.nome as cidade_,'+
-        ' b.nome as bairro_, e.nome as endereco_'+
-        ' FROM tb_cep c inner join tb_estado u on u.codigo=c.estado'+
-        ' inner join tb_cidade m on m.codigo=c.cidade'+
-        ' inner join tb_bairro b on b.codigo=c.bairro'+
-        ' inner join tb_endereco e on e.codigo=c.endereco where c.cep=?;', [data.cep], 
+    connection.query('SELECT c.*, (select nome from tb_estado where codigo=c.estado) as estado_,'+
+    ' (select nome from tb_cidade where codigo=c.cidade) as cidade_,'+
+    ' (select nome from tb_bairro where codigo=c.bairro) as bairro_,'+
+    ' (select nome from tb_endereco where codigo=c.endereco) as endereco_'+
+    ' from tb_cep as c where c.cep=?;', [data.cep], 
     function(err, rows) {
         if (!err)
             res.json({dados: rows})            
         else
             console.log('Error while performing Query.')
     })
+    connection.end();
 }
 
-exports.cep_endereco = function (req, res) {
+exports.endereco = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
-    var data = req.body;
-    
+    var data = req.body;                 
+
     connection.connect();
 
-    connection.query('SELECT c.*, u.nome as estado_, m.nome as cidade_,'+
-        ' b.nome as bairro_, e.nome as endereco_'+
-        ' FROM tb_cep c inner join tb_estado u on u.codigo=c.estado'+
-        ' inner join tb_cidade m on m.codigo=c.cidade'+
-        ' inner join tb_bairro b on b.codigo=c.bairro'+
-        ' inner join tb_endereco e on e.codigo=c.endereco'+
-        ' where c.estado=? and c.cidade=? and c.endereco=?',
+    connection.query('SELECT c.*, (select nome from tb_estado where codigo=c.estado) as estado_,'+
+    ' (select nome from tb_cidade where codigo=c.cidade) as cidade_,'+
+    ' (select nome from tb_bairro where codigo=c.bairro) as bairro_,'+
+    ' (select nome from tb_endereco where codigo=c.endereco) as endereco_'+
+    ' FROM tb_cep c where c.estado=? and c.cidade=? and c.endereco=?',
         [data.estado, data.cidade, data.endereco], 
     function(err, rows) {
         if (!err)
             res.json({dados: rows})            
         else
-            console.log('Error while performing Query.')
+            console.log(err)
     })
+    connection.end();
 }
+
+exports.dlg_localizar = function (req, res) {
+    res.render('cep_dlg_localizar');
+};
+
+exports.dlg_apagar = function (req, res) {
+    res.render('cep_dlg_apagar');
+};

@@ -13,6 +13,7 @@ exports.endereco_todos = function (req, res) {
         else
             console.log('Error while performing Query.')
     })
+    connection.end();
 }
 
 exports.endereco_cidade = function (req, res) {
@@ -29,6 +30,7 @@ exports.endereco_cidade = function (req, res) {
         else
             console.log('Error while performing Query.')
     })
+    connection.end();
 }
 
 exports.endereco_nome = function (req, res) {
@@ -43,6 +45,7 @@ exports.endereco_nome = function (req, res) {
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
 
 exports.endereco_cidade_nome = function (req, res) {
@@ -52,14 +55,14 @@ exports.endereco_cidade_nome = function (req, res) {
     var cid = req.query.cid;
 
     connection.connect();
-    connection.query('Select en.codigo, en.nome from tb_cep as ce'+
-    ' inner join tb_endereco as en on ce.endereco=en.codigo'+
-    " where ce.estado=? And ce.cidade=? and en.nome like '"+txt+"%'"+
-    ' group by en.codigo, en.Nome order by en.Nome LIMIT 20;', 
+    connection.query("select en.codigo, en.nome from tb_endereco as en"+
+    " where en.codigo in(select endereco from tb_cep where estado=? and cidade=?)"+
+    " and en.nome like '"+txt+"%' order by en.nome LIMIT 20", 
     [est, cid], function(err, rows) {
         if (!err)
             return res.json(rows)
         else
             console.log('Error while performing Query.')
     });
+    connection.end();
 }
