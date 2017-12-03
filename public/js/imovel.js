@@ -268,13 +268,27 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         })
         .success(function(){
             $scope.imgFile = undefined;
-            console.log("ok");
+            $http.post('/imovel_imagem/imovel', {cod: $scope.codigo}).
+            success(function (data, status, headers, config) {
+                $scope.imagens = data.dados;
+            });
         })
         .error(function(){
             console.log("error!!");
         });
     }
 
+    $scope.remover_imagem = function(cod) {
+        if (confirm("Confirma a remoção da imagem?")){
+            $http.post('/imovel_imagem/remover', {cod: cod}).
+            success(function (data, status, headers, config) {
+                $http.post('/imovel_imagem/imovel', {cod: $scope.codigo}).
+                success(function (data, status, headers, config) {
+                    $scope.imagens = data.dados;
+                });
+            });
+        }
+    }
 
     $scope.PessoaNome = function(StrSearch) {
         return $http.get('/pessoa/pessoa_nome', {
@@ -357,5 +371,24 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     }
     else{
         $scope.Limpar();         
+    }
+
+    $scope.BuscarCEP = function() {
+        if ($scope.cep.length==9){
+            $http.post('/cep/cep', {cep: $scope.cep}).
+            success(function (data, status, headers, config) {
+                if (data.dados.length>0){
+                    $scope.complemento  = data.dados[0].complemento;
+                    $scope.estado       = {codigo: data.dados[0].estado, nome: data.dados[0].estado_};
+                    $scope.cidade       = {codigo: data.dados[0].cidade, nome: data.dados[0].cidade_};                
+                    $scope.bairro       = {codigo: data.dados[0].bairro, nome: data.dados[0].bairro_};
+                    $scope.endereco     = {codigo: data.dados[0].endereco, nome: data.dados[0].endereco_};
+                }else{
+                    $scope.Limpar(false);
+                }
+            }).error(function (data, status, headers, config) {
+                //
+            }); 
+        }              
     }
 });

@@ -185,7 +185,6 @@ app.post('/pessoa_juridica/pessoa', pessoa_juridica.pessoa);
 app.post('/imovel/gravar', imovel.gravar);
 app.post('/imovel/codigo', imovel.codigo);
 app.post('/imovel/localizar', imovel.localizar);
-app.post('/imovel/add_imagem', imovel.add_imagem);
 
 app.post('/imovel_construcao/gravar', imovel_construcao.gravar);
 app.post('/imovel_construcao/imovel', imovel_construcao.imovel);

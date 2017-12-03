@@ -3,18 +3,6 @@ var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 var multer  = require('multer');
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/uploads/')
-    },
-    filename: function (req, file, cb) {
-      var datetimestamp = Date.now();
-      cb(null, 'foto_imovel_' + datetimestamp 
-        + '.' + file.originalname.split('.')
-        [file.originalname.split('.').length -1]);
-    }
-});
-var upload = multer({ storage: storage }).single('file');
 
 exports.index = function (req, res) {
     res.render('imovel');
@@ -101,14 +89,4 @@ exports.localizar = function (req, res) {
             console.log('Error while performing Query.')
     });
     connection.end();
-}
-
-exports.add_imagem =  function(req, res, next) {
-    upload(req, res, function(err){
-      if(!err){
-        console.log(req.file);
-        console.log(req.file.filename);
-        console.log(req.body.imovel);
-      }
-    });
 }

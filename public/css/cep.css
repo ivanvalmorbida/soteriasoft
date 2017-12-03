@@ -1,13 +1,11 @@
 .md-autocomplete-suggestions-container{  
     z-index:100000 !important; 
 }
-
-#myModalLocalizar .modal-dialog{
-    width:80%;    
-}
-
 #btLocalizarExe {
     height: 20px;
 }
 
-a { cursor: pointer; }
+a { 
+    cursor: pointer; 
+    color: #0000ff;
+}

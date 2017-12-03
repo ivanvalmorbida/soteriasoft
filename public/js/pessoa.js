@@ -93,21 +93,6 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         return r;
     }  
 
-    /*
-    $scope.ApagarEfetivar = function(cep) {
-        $http.post('/pessoa/pessoa_apagar', {cod: $scope.codigo}).
-        success(function (data, status, headers, config) {
-            $scope.Limpar();
-            $('#myModalApagar').modal('hide');
-        }).error(function (data, status, headers, config) {
-            //
-        });  
-    }
-    
-    $scope.Apagar = function(cep) {
-        $('#myModalApagar').modal('show');
-    }
-    */
 
     $scope.Apagar = function(ev) {
         $mdDialog.show({
@@ -239,6 +224,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     };
     
     function LocalizarController($scope, $mdDialog) {
+        $scope.campopesq='nome';
+        
         $scope.Cancel = function() {
           $mdDialog.cancel();
         };

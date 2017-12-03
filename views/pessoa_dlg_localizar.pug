@@ -1,14 +1,14 @@
-md-dialog(layout='row', aria-label="Localizar Imóvel")
+md-dialog(aria-label="Localizar Imóvel", flex='80')
   form(ng-cloak="")
     md-toolbar
       .md-toolbar-tools
-        h2 Localizar Pessoas   
+        h2 Localizar Pessoas
         span(flex="")
         md-button.md-icon-button(ng-click="Cancel()")
           md-icon(md-svg-src="img/fechar.svg", aria-label="Fechar diálogo")
     md-dialog-content
       .md-dialog-content
-        div(layout-gt-sm='row')
+        div(layout='row')
           md-input-container.md-block(style='margin-top: 10px;')
             label campo
             md-select(ng-model='campopesq')
@@ -40,5 +40,6 @@ md-dialog(layout='row', aria-label="Localizar Imóvel")
           div(flex="") {{format('###.###.###-##',d.cpf_cnpj)}}
           |   
               
-      .modal-footer
-        button.btn.btn-default(type='button', data-dismiss='modal') Fechar      
+    md-dialog-actions(layout="row")
+      span(flex="")
+      md-button.md-raised(type='button', ng-click="Cancel()") Fechar

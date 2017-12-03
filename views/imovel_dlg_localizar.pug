@@ -1,4 +1,4 @@
-md-dialog(aria-label="Localizar Imóvel")
+md-dialog(aria-label="Localizar Imóvel",flex='80')
   form(ng-cloak="")
     md-toolbar
       .md-toolbar-tools
@@ -23,32 +23,21 @@ md-dialog(aria-label="Localizar Imóvel")
             ng-click='LocalizarExe(campopesq, txtpesquisa)', style='height: 10px;',
             ng-disabled='txtpesquisa==undefined') Executar
 
-        div(layout-gt-sm='row')
-          table(style='width: 100%')
-            tr
-              td(style='width: 40%')
-                | Proprietário
-              td(style='width: 25%')
-                | Inscrição / Incra
-              td(style='width: 15%')
-                | Tipo
-              td(style='width: 10%')
-                | Quadra/Bloco
-              td(style='width: 10%')
-                | Lote/UN
-              
-            tr(ng-repeat="d in l_dados")
-              td
-                a(ng-click="ExibirImovel(d.codigo)") {{d.proprietario}}
-              td
-                | {{d.inscricao_incra}}
-              td
-                | {{d.tipo}}
-              td
-                | {{d.quadra_bloco}}
-              td
-                | {{d.lote_unidade}}
-                      
+        div(layout='row')
+          div(flex="") Proprietário
+          div(flex="") Inscrição / Incra
+          div(flex="") Tipo
+          div(flex="") Quadra/Bloco
+          div(flex="") Lote/UN
+
+        div(layout='row', ng-repeat="d in l_dados")
+          div(flex="") 
+            a(ng-click="ExibirImovel(d.codigo)") {{d.proprietario}}
+          div(flex="") {{d.inscricao_incra}}
+          div(flex="") {{d.tipo}}
+          div(flex="") {{d.quadra_bloco}}
+          div(flex="") {{d.lote_unidade}}
+
     md-dialog-actions(layout="row")
       span(flex="")
       md-button.md-raised(type='button', ng-click="Cancel()") Fechar
