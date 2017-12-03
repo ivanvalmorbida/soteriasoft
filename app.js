@@ -198,7 +198,8 @@ app.post('/imovel_terreno/imovel', imovel_terreno.imovel);
 app.post('/imovel_imagem/imovel', imovel_imagem.imovel);
 app.post('/imovel_imagem/adicionar', imovel_imagem.adicionar);
 app.post('/imovel_imagem/remover', imovel_imagem.remover);
-  
+app.post('/imovel_imagem/ordem', imovel_imagem.ordem);
+
 app.get('*', routes);
 
 ///////////////////////////////////

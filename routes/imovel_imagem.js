@@ -41,7 +41,8 @@ exports.imovel = function (req, res) {
   var cod = req.body.cod;
 
   connection.connect();
-  connection.query("SELECT codigo, ordem, concat('uploads/', arquivo) as arquivo from tb_imovel_imagem where imovel="+cod, function(err, rows, fields) {
+  connection.query("SELECT codigo, ordem, concat('uploads/', arquivo) as arquivo"+
+  " from tb_imovel_imagem where imovel="+cod+" order by ordem", function(err, rows, fields) {
     if (!err)
       res.json({dados: rows})
     else
@@ -63,3 +64,54 @@ exports.remover = function (req, res) {
   });
   connection.end();
 }
+
+exports.ordem = function (req, res) {
+  var connection = mysql.createConnection(settings.dbConect);
+  var cod = req.body.cod;
+  var dir = req.body.dir;
+  var cla='';
+
+  if (dir=='<'){cla='desc'}
+
+  connection.connect();
+  connection.query("SELECT ordem, imovel from tb_imovel_imagem where codigo="+cod, 
+  function(err, row, fields) {
+    if (!err) {
+      var ord=row[0].ordem;
+      var imo=row[0].imovel;
+
+      connection.query("SELECT codigo from tb_imovel_imagem"+
+      " where ordem"+dir+ord+" and imovel="+imo+" order by ordem "+cla+" LIMIT 1", 
+      function(err, row, fields) {
+        if (!err && row.length>0){
+          connection.query('update tb_imovel_imagem set ordem='+ord+' where codigo='+row[0].codigo, function(err, rows, fields) {
+            if (!err){
+              dir = dir.replace('>','+');
+              dir = dir.replace('<','-');
+              connection.query('update tb_imovel_imagem set ordem=ordem'+dir+'1 where codigo='+cod, function(err, rows, fields) {
+                if (!err){
+                  res.json({dados: rows})
+                }
+                connection.end();
+              });    
+            }
+            else{
+              connection.end();
+            }            
+          });
+        }
+        else{
+          connection.end();
+        }
+      })
+    }
+  })
+
+}
+
+//else {
+//      console.log('Error while performing Query.');
+//    }
+//  });
+//  connection.end();
+//}

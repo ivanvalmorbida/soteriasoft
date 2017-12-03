@@ -290,6 +290,16 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         }
     }
 
+    $scope.ordem_imagem = function(cod,dir) {   
+        $http.post('/imovel_imagem/ordem', {cod: cod, dir: dir}).
+        success(function (data, status, headers, config) {
+            $http.post('/imovel_imagem/imovel', {cod: $scope.codigo}).
+            success(function (data, status, headers, config) {
+                $scope.imagens = data.dados;
+            });
+        });
+    }
+
     $scope.PessoaNome = function(StrSearch) {
         return $http.get('/pessoa/pessoa_nome', {
         params: {

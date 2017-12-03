@@ -344,8 +344,10 @@ html(lang='pt-br')
                   md-card(ng-repeat="i in imagens")
                     img.md-card-image(src="{{i.arquivo}}", alt="image caption")
                     md-card-content
-                      md-button.md-small.md-raised.md-primary |<< 
-                      md-button.md-small.md-raised.md-primary  >>|
+                      md-button.md-small.md-raised.md-primary(
+                        ng-click="ordem_imagem(i.codigo,'<')") |<< 
+                      md-button.md-small.md-raised.md-primary(
+                        ng-click="ordem_imagem(i.codigo,'>')")  >>|
                       md-button.md-small.md-raised.md-warn.md-hue-1(
                         ng-click='remover_imagem(i.codigo)') | X | 
 
