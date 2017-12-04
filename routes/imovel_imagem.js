@@ -108,10 +108,3 @@ exports.ordem = function (req, res) {
   })
 
 }
-
-//else {
-//      console.log('Error while performing Query.');
-//    }
-//  });
-//  connection.end();
-//}
