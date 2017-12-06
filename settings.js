@@ -1,10 +1,8 @@
 exports.dbConect = {
-    //host     : 'mysql762.umbler.com',
-    //user     : 'soteriasoft',
-    host     : 'localhost',
+    host     : 'mysql762.umbler.com',
     user     : 'root',
     password : 'ivanluis',
-    database : 'soteriasoft'
+    database : 'hnimoveis'
 };
 
 var url = "http://localhost";

@@ -223,7 +223,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//module.exports = app;
-http.createServer(app).listen(app.get('port'), function () {
-  console.log('Express server escutando na porta ' + app.get('port'));
-});
+module.exports = app;
+//http.createServer(app).listen(app.get('port'), function () {
+//  console.log('Express server escutando na porta ' + app.get('port'));
+//});
