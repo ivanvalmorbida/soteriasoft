@@ -36,7 +36,7 @@ html(lang='pt-br')
                   md-radio-button.md-primary(value=1) Terreno
                   md-radio-button.md-primary(value=5) Rural
 
-            div(flex="")
+            div(layout="row", layout-sm="column", flex="")
               md-autocomplete(flex='',
                 md-selected-item='proprietario',
                 md-min-length='3', 
@@ -46,6 +46,10 @@ html(lang='pt-br')
                 md-item-text='item.nome')
                 md-item-template
                   span(md-highlight-text='SearchPro') {{item.nome}}
+
+              md-button.md-icon-button.launch(href="http://google.com", title="Launch Google.com in new window", 
+              target="_blank", aria-label="Google.com")
+                md-icon(md-svg-icon="img/people.svg")
 
           div(layout-gt-sm='row', style='margin-top: -30px')
             div(flex="")
