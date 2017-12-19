@@ -170,9 +170,11 @@ app.post('/pessoa/gravar', pessoa.gravar);
 app.post('/pessoa/codigo', pessoa.codigo);
 app.post('/pessoa/localizar', pessoa.localizar);
 
+app.post('/pessoa_email/apagar', pessoa_email.apagar);
 app.post('/pessoa_email/gravar', pessoa_email.gravar);
 app.post('/pessoa_email/pessoa', pessoa_email.pessoa);
 
+app.post('/pessoa_fone/apagar', pessoa_fone.apagar);
 app.post('/pessoa_fone/gravar', pessoa_fone.gravar);
 app.post('/pessoa_fone/pessoa', pessoa_fone.pessoa);
 
