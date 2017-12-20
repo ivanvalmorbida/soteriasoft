@@ -122,7 +122,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                 valor: $scope.valor, mcmv: $scope.mcmv, financia: $scope.financia, 
                 entrada: $scope.entrada, permuta: $scope.permuta, carro: $scope.carro,
                 fgts: $scope.fgts, condominio: $scope.condominio, captador: $scope.captador}); 
-
+            
+            alert('Informações salvas com sucesso!');
         });  
     }
   

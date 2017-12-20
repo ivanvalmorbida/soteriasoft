@@ -78,6 +78,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                 atividade: $scope.atividade.codigo, homepage: $scope.homepage, 
                 representante: $scope.representante.codigo});
             } 
+
+            alert('Informações salvas com sucesso!');
         });  
     }
 
