@@ -43,7 +43,7 @@ var routes = require('./routes/index'),
   imovel_imagem = require('./routes/imovel_imagem');
   
 var index = require('./routes/index');
-var users = require('./routes/users');
+var usuario = require('./routes/usuario');
 
 var app = express();
 
@@ -117,7 +117,6 @@ function ensureAuthenticated(req, res, next) {
 // Fim passport
 
 app.use('/', index);
-app.use('/users', users);
 
 app.get('/facebook/auth', passport.authenticate('facebook',{scope:'email'}));
 app.get('/facebook/auth/callback',
@@ -161,6 +160,8 @@ app.get('/imovel', imovel.index);
 app.get('/imovel/dlg/apagar', imovel.dlg_apagar);
 app.get('/imovel/dlg/localizar', imovel.dlg_localizar);
 
+app.get('/usuario', usuario.index);
+
 app.post('/cep/cep', cep.cep);
 app.post('/cep/endereco', cep.endereco);
 app.post('/cep/gravar', cep.gravar);
@@ -201,6 +202,8 @@ app.post('/imovel_imagem/imovel', imovel_imagem.imovel);
 app.post('/imovel_imagem/adicionar', imovel_imagem.adicionar);
 app.post('/imovel_imagem/remover', imovel_imagem.remover);
 app.post('/imovel_imagem/ordem', imovel_imagem.ordem);
+
+//app.use('/usuario/gravar', usuario.gravar);
 
 app.get('*', routes);
 
