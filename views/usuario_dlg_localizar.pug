@@ -1,0 +1,45 @@
+md-dialog(aria-label="Localizar Usuario", flex='80')
+  form(ng-cloak="")
+    md-toolbar
+      .md-toolbar-tools
+        h2 Localizar usuario
+        span(flex="")
+        md-button.md-icon-button(ng-click="Cancel()")
+          md-icon(md-svg-src="img/fechar.svg", aria-label="Fechar diálogo")
+    md-dialog-content
+      .md-dialog-content
+        div(layout='row')
+          md-input-container.md-block(style='margin-top: 10px;')
+            label campo
+            md-select(ng-model='campopesq')
+              md-option(value='nome') Nome
+              md-option(value='cpf') CPF
+              md-option(value='cnpj') CNPJ
+            
+          md-input-container.md-block(flex='',style='margin-top: 10px;')
+            label localizar
+            input(ng-model='txtpesquisa')
+
+          #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
+            ng-click='LocalizarExe()',
+            ng-disabled='txtpesquisa==undefined') Executar
+
+        div(layout='row')
+          div(flex="") 
+            | Nome   
+          div(flex="") Tipo
+          |   
+          div(flex="") CPF/CNPJ
+          |   
+
+        div(layout='row', ng-repeat="d in l_dados")
+          div(flex="") 
+            a(ng-click='ExibirPessoa(d.codigo)') {{d.nome}}   
+          div(flex="") {{d.tipo}}
+          |   
+          div(flex="") {{format('###.###.###-##',d.cpf_cnpj)}}
+          |   
+              
+    md-dialog-actions(layout="row")
+      span(flex="")
+      md-button.md-raised(type='button', ng-click="Cancel()") Fechar

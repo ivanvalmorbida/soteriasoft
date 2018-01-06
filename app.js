@@ -161,6 +161,8 @@ app.get('/imovel/dlg/apagar', imovel.dlg_apagar);
 app.get('/imovel/dlg/localizar', imovel.dlg_localizar);
 
 app.get('/usuario', usuario.index);
+app.get('/usuario/dlg/apagar', usuario.dlg_apagar);
+app.get('/usuario/dlg/localizar', usuario.dlg_localizar);
 
 app.post('/cep/cep', cep.cep);
 app.post('/cep/endereco', cep.endereco);
@@ -203,6 +205,9 @@ app.post('/imovel_imagem/adicionar', imovel_imagem.adicionar);
 app.post('/imovel_imagem/remover', imovel_imagem.remover);
 app.post('/imovel_imagem/ordem', imovel_imagem.ordem);
 
+app.post('/usuario/gravar', usuario.gravar);
+app.post('/usuario/codigo', usuario.codigo);
+app.post('/usuario/localizar', usuario.localizar);
 //app.use('/usuario/gravar', usuario.gravar);
 
 app.get('*', routes);
