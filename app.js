@@ -208,7 +208,6 @@ app.post('/imovel_imagem/ordem', imovel_imagem.ordem);
 app.post('/usuario/gravar', usuario.gravar);
 app.post('/usuario/codigo', usuario.codigo);
 app.post('/usuario/localizar', usuario.localizar);
-//app.use('/usuario/gravar', usuario.gravar);
 
 app.get('*', routes);
 

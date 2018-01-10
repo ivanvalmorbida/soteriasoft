@@ -24,37 +24,44 @@ html(lang='pt-br')
             span.md-headline Cadastro de Usuarios
             //span.md-subhead ...... .... ....
         md-card-content
+          form(name='formuser', ng-submit='update(formuser.$valid)', novalidate='')
 
-          div(layout-gt-sm='row')
-            md-input-container(flex='')
-              label Usuario
-              input(ng-model='usuario', type='text')
+            div(layout-gt-sm='row')
+              md-input-container(flex='')
+                label Usuario
+                input(ng-model='usuario', type='text')
 
-          div(layout-gt-sm='row')
-            md-input-container(flex='')
-              label Senha
-              input(ng-model='senha', type='text')
-              
-          div(flex="")
-            md-input-container 
-            md-radio-group(layout-gt-sm='row', ng-model='tipo')
-              md-radio-button.md-primary(value=2) Operacional 
-              md-radio-button.md-primary(value=1) Administrador
+            div(layout-gt-sm='row')
+              md-input-container(flex='')
+                label Senha
+                input(name='senha', ng-model='senha', type='password', ng-required='true')
+                
+            div(layout-gt-sm='row')
+              md-input-container(flex='')
+                label Confirmar Senha
+                input(ng-model='csenha', data-rule-equalto='#senha', 
+                type='password', ng-required='true')
+                
+            div(flex="")
+              md-input-container 
+                md-radio-group(layout-gt-sm='row', ng-model='tipo')
+                  md-radio-button.md-primary(value=2) Operacional 
+                  md-radio-button.md-primary(value=1) Administrador
 
-          div(layout="row", layout-sm="column", flex="")
-            md-autocomplete(flex='',
-              md-selected-item='pessoa',
-              md-min-length='3', 
-              md-search-text='SearchPes', 
-              md-items='item in PessoaNome(SearchPes)',
-              md-floating-label='Pessoa',
-              md-item-text='item.nome')
-              md-item-template
-                span(md-highlight-text='SearchPes') {{item.nome}}
+            div(layout="row", layout-sm="column", flex="")
+              md-autocomplete(flex='',
+                md-selected-item='pessoa',
+                md-min-length='3', 
+                md-search-text='SearchPes', 
+                md-items='item in PessoaNome(SearchPes)',
+                md-floating-label='Pessoa',
+                md-item-text='item.nome')
+                md-item-template
+                  span(md-highlight-text='SearchPes') {{item.nome}}
 
-            md-button.md-icon-button.launch(href="pessoa?codigo={{proprietario.codigo}}", style='margin-top: 20px',
-            title="Abrir cadastro de pessoas", target="_blank", aria-label="Google.com")
-              md-icon(md-svg-icon="img/people.svg")
+              md-button.md-icon-button.launch(href="pessoa?codigo={{proprietario.codigo}}", style='margin-top: 20px',
+              title="Abrir cadastro de pessoas", target="_blank", aria-label="Google.com")
+                md-icon(md-svg-icon="img/people.svg")
 
           div(layout-gt-sm='row', layout-align='start', flex='')
             md-button.md-raised(ng-click='Limpar(true)') Novo

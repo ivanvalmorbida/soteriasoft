@@ -1,0 +1,20 @@
+md-input-container {
+  margin-top: -10px;
+}
+
+md-content {
+  padding-top: 40px;
+}
+
+.md-select-menu-container {
+  z-index: 99999 !important;
+}
+
+#btLocalizarExe {
+  height: 20px;
+}
+
+a { 
+  cursor: pointer; 
+  color: #0000ff;
+}
