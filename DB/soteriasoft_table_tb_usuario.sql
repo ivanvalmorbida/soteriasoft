@@ -25,13 +25,13 @@ SET time_zone = "+00:00";
 --
 -- Estrutura da tabela `tb_usuario`
 --
-
 CREATE TABLE `tb_usuario` (
-  `codigo` int(11) NOT NULL,
+  `codigo` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(45) DEFAULT NULL,
   `senha` varchar(45) DEFAULT NULL,
   `tipo` int(11) DEFAULT NULL,
-  `pessoa` int(11) DEFAULT NULL
+  `pessoa` int(11) DEFAULT NULL,
+  `cadastro` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
