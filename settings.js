@@ -1,6 +1,4 @@
 exports.dbConect = {
-    //host     : 'mysql762.umbler.com',
-    //database : 'hnimoveis',
     host     : 'localhost',
     database : 'soteriasoft',
     user     : 'root',
