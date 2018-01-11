@@ -25,7 +25,7 @@ exports.gravar = function (req, res) {
     }   
     else {
         connection.query('update tb_usuario set tipo=?, usuario=?, senha=?, '+
-        'pessoa=? where codigo=?',[data.tipo, data.usuario, data.senha, data.pessoa],
+        'pessoa=? where codigo=?',[data.tipo, data.usuario, data.senha, data.pessoa, data.codigo],
         function(err, rows) {
             if (!err)
                 res.json({codigo: data.codigo})
