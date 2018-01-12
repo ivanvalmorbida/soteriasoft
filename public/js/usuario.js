@@ -61,6 +61,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
                 if(data.dados[0].pessoa>0){$scope.pessoa = {codigo: data.dados[0].pessoa, nome: data.dados[0].pessoa_}};
                 $scope.usuario = data.dados[0].usuario;
                 $scope.senha = data.dados[0].senha;
+                $scope.csenha = data.dados[0].senha;
             }
         }).error(function (data, status, headers, config) {
             $scope.Limpar();
@@ -88,7 +89,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     };
     
     function LocalizarController($scope, $mdDialog) {
-        $scope.campopesq = 'usua';
+        $scope.campopesq = 'usuario';
 
         $scope.Cancel = function() {
           $mdDialog.cancel();

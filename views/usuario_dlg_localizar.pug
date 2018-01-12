@@ -12,32 +12,31 @@ md-dialog(aria-label="Localizar Usuario", flex='80')
           md-input-container.md-block(style='margin-top: 10px;')
             label campo
             md-select(ng-model='campopesq')
-              md-option(value='nome') Nome
-              md-option(value='cpf') CPF
-              md-option(value='cnpj') CNPJ
+              md-option(value='usuario') Usuario
+              md-option(value='pessoa') Pessoa
             
           md-input-container.md-block(flex='',style='margin-top: 10px;')
             label localizar
             input(ng-model='txtpesquisa')
 
           #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
-            ng-click='LocalizarExe()',
+            ng-click='LocalizarExe(campopesq, txtpesquisa)',
             ng-disabled='txtpesquisa==undefined') Executar
 
         div(layout='row')
           div(flex="") 
-            | Nome   
-          div(flex="") Tipo
+            | Usuario   
+          div(flex="") Pessoa
           |   
-          div(flex="") CPF/CNPJ
+          div(flex="") Tipo
           |   
 
         div(layout='row', ng-repeat="d in l_dados")
           div(flex="") 
-            a(ng-click='ExibirPessoa(d.codigo)') {{d.nome}}   
-          div(flex="") {{d.tipo}}
+            a(ng-click='ExibirUsuario(d.codigo)') {{d.usuario}}   
+          div(flex="") {{d.pessoa}}
           |   
-          div(flex="") {{format('###.###.###-##',d.cpf_cnpj)}}
+          div(flex="") {{d.tipo}}
           |   
               
     md-dialog-actions(layout="row")

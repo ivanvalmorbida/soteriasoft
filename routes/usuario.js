@@ -57,13 +57,13 @@ exports.localizar = function (req, res) {
     var data = req.body;
     var sql = '', par = [];
 
-    sql += "SELECT p.codigo, p.nome, case when p.tipo=1 then 'Fis' else 'Jur' end as tipo,";
-    sql += " case when p.tipo=1 then f.cpf else j.cnpj end as cpf_cnpj"; 
-    sql += " FROM tb_usuario p left join tb_usuario_fisica f on f.usuario=p.codigo";
-    sql += " left join tb_usuario_juridica j on j.usuario=p.codigo Where";
+    sql += "SELECT u.codigo, u.usuario, p.nome as pessoa,";
+    sql += " case when u.tipo=1 then 'Admin' else 'Operac' end as tipo";
+    sql += " FROM tb_usuario u left join tb_pessoa p on p.codigo=u.pessoa";
+    sql += " Where";
 
-    if (data.nome!=undefined){
-        sql += " nome like '%"+data.nome+"%'"
+    if (data.camp=="usuario"){
+        sql += " usuario like '%"+data.text+"%'"
     }
 
     connection.connect();
