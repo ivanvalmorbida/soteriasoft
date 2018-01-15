@@ -90,3 +90,5 @@ exports.localizar = function (req, res) {
     });
     connection.end();
 }
+
+//tipo, 
