@@ -1,0 +1,12 @@
+#container {
+    box-shadow: 0 0 10px -3px #fff;
+    display: none;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 140px;
+    z-index: 2;
+    background-color: #afafaf;
+    margin: 0px 13px 0px 13px;
+    padding: 10px 10px 0px 10px;
+}

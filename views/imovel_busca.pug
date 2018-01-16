@@ -3,7 +3,7 @@ html(lang='pt-br')
     meta(name='viewport', content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui')
     link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css')
-    link(rel='stylesheet', href='css/usuario.css')
+    link(rel='stylesheet', href='css/imovel_busca.css')
     
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
@@ -14,91 +14,108 @@ html(lang='pt-br')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
     script(src='js/comum.js')
-    script(src='js/usuario.js')
+    script(src='js/imovel_busca.js')
 
   body
-    div(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft', style='margin-left: 10px')
+    br
+
+    div(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft', style='margin: 0px 20px 0px 10px')
       h2 Busca de Imóveis
 
       div(layout-gt-sm='row')
-        div(flex="")
-          md-input-container 
-            md-radio-group(layout-gt-sm='row', ng-model='tipo')
-              md-radio-button.md-primary(value=4) Geminado 
-              md-radio-button.md-primary(value=3) Apartamento
-              md-radio-button.md-primary(value=2) Casa padrão
-              md-radio-button.md-primary(value=1) Terreno
-              md-radio-button.md-primary(value=5) Rural          
+        div(layout="row", flex="")
+          md-input-container.md-block(flex='')
+            label Pesquisar imóveis
+            input(ng-model='pesquisa')
 
-        div(flex="")
-          md-input-container
-            label Valor
-            input(ng-model='valor', type='number')    
-
-      div(layout-gt-sm='row', style='margin-top: -20px')
-        div(flex="")
-          md-input-container
-            md-checkbox.md-primary(ng-model="mcmv")
-              | MCMV
-
-        div(flex="")
-          md-input-container
-            md-checkbox.md-primary(ng-model="financia")
-              | Financiavel
-
-      div(layout-gt-sm='row')
-        div(flex="")
-          md-autocomplete(flex='',
-            md-selected-item='pessoa',
-            md-min-length='3', 
-            md-search-text='SearchPes', 
-            md-items='item in PessoaNome(SearchPes)',
-            md-floating-label='Pessoa',
-            md-item-text='item.nome')
-            md-item-template
-              span(md-highlight-text='SearchPes') {{item.nome}}
-      div(layout-gt-sm='row')
-        div(flex="")
-          md-autocomplete(flex='95',
-            md-selected-item='estado',
-            md-min-length='1', 
-            md-search-text='SearchEst', 
-            md-items='item in EstadoNome(SearchEst)',
-            md-floating-label='Estado',
-            md-item-text='item.nome')
-            md-item-template
-              span(md-highlight-text='SearchEst') {{item.nome}}
-              
-        div(flex="")
-          md-autocomplete(flex='95',
-            md-selected-item='cidade',
-            md-min-length='3', 
-            md-search-text='SearchCid', 
-            md-items='item in CidadeNome(SearchCid)',
-            md-floating-label='Cidade',
-            md-item-text='item.nome')
-            md-item-template
-              span(md-highlight-text='SearchCid') {{item.nome}}
+          md-button.md-icon-button.launch(onclick="$('#container').toggle();", style='margin-top: 20px',
+          title="Mostrar opções avançadas de busca")
+            md-icon(md-svg-icon="img/sort-down.svg")
       
-      div(layout-gt-sm='row')
-        div(flex="")
-          md-autocomplete(flex='95',
-            md-selected-item='bairro',
-            md-min-length='3', 
-            md-search-text='SearchBai', 
-            md-items='item in BairroNome(SearchBai)',
-            md-floating-label='Bairro',
-            md-item-text='item.nome')
-            md-item-template
-              span(md-highlight-text='SearchBai') {{item.nome}}
+          md-button.md-icon-button.launch(style='margin-top: 20px', title="Buscar imóveis")
+            md-icon(md-svg-icon="img/search.svg")
 
-        div(flex="")
-          md-autocomplete(flex='95',
-            md-selected-item='endereco',
-            md-min-length='3', 
-            md-search-text='SearchEnd', 
-            md-items='item in EnderecoNome(SearchEnd)',
-            md-floating-label='Endereço',
-            md-item-text='item.nome')
-            md-item-template
-              span(md-highlight-text='SearchEnd') {{item.nome}}
+      #container
+        div(layout-gt-sm='row')
+          div(flex="")
+            md-input-container 
+              md-radio-group(layout-gt-sm='row', ng-model='tipo')
+                md-radio-button.md-primary(value=4) Geminado 
+                md-radio-button.md-primary(value=3) Apartamento
+                md-radio-button.md-primary(value=2) Casa padrão
+                md-radio-button.md-primary(value=1) Terreno
+                md-radio-button.md-primary(value=5) Rural          
+
+          div(flex="")
+            md-input-container
+              label Valor
+              input(ng-model='valor', type='number')    
+
+        div(layout-gt-sm='row', style='margin-top: -40px')
+          div(flex="")
+            md-input-container
+              md-checkbox.md-primary(ng-model="mcmv")
+                | MCMV
+
+          div(flex="")
+            md-input-container
+              md-checkbox.md-primary(ng-model="financia")
+                | Financiavel
+
+        div(layout-gt-sm='row', style='margin-top: -30px')
+          div(flex="")
+            md-autocomplete(flex='',
+              md-selected-item='pessoa',
+              md-min-length='3', 
+              md-search-text='SearchPes', 
+              md-items='item in PessoaNome(SearchPes)',
+              md-floating-label='Pessoa',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchPes') {{item.nome}}
+
+        div(layout-gt-sm='row', style='margin-top: -30px')
+          div(flex="")
+            md-autocomplete(flex='95',
+              md-selected-item='estado',
+              md-min-length='1', 
+              md-search-text='SearchEst', 
+              md-items='item in EstadoNome(SearchEst)',
+              md-floating-label='Estado',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchEst') {{item.nome}}
+                
+          div(flex="")
+            md-autocomplete(flex='95',
+              md-selected-item='cidade',
+              md-min-length='3', 
+              md-search-text='SearchCid', 
+              md-items='item in CidadeNome(SearchCid)',
+              md-floating-label='Cidade',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchCid') {{item.nome}}
+        
+        div(layout-gt-sm='row', style='margin-top: -30px')
+          div(flex="")
+            md-autocomplete(flex='95',
+              md-selected-item='bairro',
+              md-min-length='3', 
+              md-search-text='SearchBai', 
+              md-items='item in BairroNome(SearchBai)',
+              md-floating-label='Bairro',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchBai') {{item.nome}}
+
+          div(flex="")
+            md-autocomplete(flex='95',
+              md-selected-item='endereco',
+              md-min-length='3', 
+              md-search-text='SearchEnd', 
+              md-items='item in EnderecoNome(SearchEnd)',
+              md-floating-label='Endereço',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchEnd') {{item.nome}}
