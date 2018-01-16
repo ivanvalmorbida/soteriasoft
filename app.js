@@ -208,6 +208,8 @@ app.post('/imovel_imagem/adicionar', imovel_imagem.adicionar);
 app.post('/imovel_imagem/remover', imovel_imagem.remover);
 app.post('/imovel_imagem/ordem', imovel_imagem.ordem);
 
+app.post('/imovel_busca/localizar', imovel_busca.localizar);
+
 app.post('/usuario/gravar', usuario.gravar);
 app.post('/usuario/codigo', usuario.codigo);
 app.post('/usuario/localizar', usuario.localizar);
