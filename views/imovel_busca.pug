@@ -132,4 +132,18 @@ html(lang='pt-br')
                 md-button.md-raised.md-grid-item-content(onclick="$('#container').toggle();", title="Fechar")
                   md-icon(md-svg-icon="img/fechar.svg") 
                   | Fechar
-                  
+
+      div(layout='row')
+        div(flex="") Proprietário
+        div(flex="") Inscrição / Incra
+        div(flex="") Tipo
+        div(flex="") Quadra/Bloco
+        div(flex="") Lote/UN
+
+      div(layout='row', ng-repeat="d in l_dados")
+        div(flex="") 
+          a(href="imovel?codigo={{d.codigo}}", target="_blank") {{d.proprietario}}
+        div(flex="") {{d.inscricao_incra}}
+        div(flex="") {{d.tipo}}
+        div(flex="") {{d.quadra_bloco}}
+        div(flex="") {{d.lote_unidade}}                  

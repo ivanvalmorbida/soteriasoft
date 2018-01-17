@@ -12,6 +12,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     $scope.endereco = 0;
 
     $scope.Localizar = function() {
+        $('#container').hide();
         $http.post('/imovel_busca/localizar', {tipo: $scope.tipo, valor: $scope.valor, 
             mcmv: $scope.mcmv, financia: $scope.financia, pessoa: $scope.pessoa.codigo,
             estado: $scope.estado.codigo, cidade: $scope.cidade.codigo, 

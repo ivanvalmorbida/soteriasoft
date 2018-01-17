@@ -67,7 +67,7 @@ exports.codigo = function (req, res) {
 exports.localizar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
-    var sql = '', par = [];
+    var sql = '';
 
     sql += "SELECT i.codigo, p.nome as proprietario, i.inscricao_incra,"
     sql += " t.descricao as tipo, i.lote_unidade, i.quadra_bloco"; 

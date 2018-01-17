@@ -55,7 +55,7 @@ exports.codigo = function (req, res) {
 exports.localizar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
-    var sql = '', par = [];
+    var sql = '';
 
     sql += "SELECT u.codigo, u.usuario, p.nome as pessoa,";
     sql += " case when u.tipo=1 then 'Admin' else 'Operac' end as tipo";
