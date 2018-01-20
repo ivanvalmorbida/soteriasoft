@@ -1,5 +1,61 @@
-extends layout
+html(lang='pt-br')
+  head
+    meta(name='viewport', content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui')
+    link(rel='stylesheet', href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css')
+    link(rel='stylesheet', href='css/imovel_busca.css')
+    
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='js/comum.js')
+    script(src='js/imovel_busca.js')
+    title HN Imóveis Ltda
+  body
+    br
 
-block content
-  h1= title
-  p Welcome to #{title}
+    div(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft', style='margin: 0px 20px 0px 10px')
+      div(flex='', layout-gt-sm='row', layout-align='center center') 
+        h2 HN Imóveis Ltda
+
+      md-list(flex='', layout-gt-sm='row', layout-align='center center')
+        md-list-item
+          div
+            md-button.md-raised.md-grid-item-content(href='pessoa', target="_blank", title="Pessoas")
+              p
+              md-icon(md-svg-icon="img/people.svg")
+              p
+              | Pessoas                
+        md-list-item
+          div
+            md-button.md-raised.md-grid-item-content(href="imovel", target="_blank", title="Imóveis")
+              p
+              md-icon(md-svg-icon="img/imovel.svg") 
+              p
+              | Imóveis          
+        md-list-item
+          div
+            md-button.md-raised.md-grid-item-content(href="imovel_busca", target="_blank", title="Buscar Imóveis")
+              p
+              md-icon(md-svg-icon="img/search2.svg") 
+              p
+              | Buscar
+        md-list-item
+          div
+            md-button.md-raised.md-grid-item-content(href="cep", target="_blank", title="CEPs")
+              p
+              md-icon(md-svg-icon="img/cep.svg") 
+              p
+              | CEPs
+        md-list-item
+          div
+            md-button.md-raised.md-grid-item-content(href="usuario", target="_blank", title="Usuários")
+              p
+              md-icon(md-svg-icon="img/usuario.svg") 
+              p
+              | Usuários                                    
