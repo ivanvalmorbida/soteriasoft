@@ -213,6 +213,7 @@ app.post('/imovel_busca/localizar', imovel_busca.localizar);
 app.post('/usuario/gravar', usuario.gravar);
 app.post('/usuario/codigo', usuario.codigo);
 app.post('/usuario/localizar', usuario.localizar);
+app.post('/usuario/login', usuario.login);
 
 app.get('*', routes);
 

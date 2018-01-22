@@ -7,6 +7,37 @@ exports.index = function (req, res) {
     res.render('usuario');
 };
 
+exports.login = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var usu = req.body.usu;
+    var sen = req.body.sen;
+
+    connection.connect();
+    connection.query('SELECT codigo, tipo from tb_usuario'+
+    ' where usuario=? and senha=?',[usu, sen], function(err, rows, fields) {
+        if (!err){
+            if (rows.length>0){
+                var minute = 60 * 1000;
+                var hour = 60 * minute;
+                var day = 24 * hour;
+                var month = 30 * day;
+                res.cookie('UserCod', rows[0].codigo, {maxAge: month});
+                res.cookie('UserNom', usu, {maxAge: month});
+                res.cookie('UserTip', rows[0].tipo, {maxAge: month});
+
+                req.session.UserCod = rows[0].codigo;
+                req.session.UserNom = usu;
+                req.session.UserTip = rows[0].tipo;
+                
+            }
+            res.json({dados: rows})
+        }
+        else
+            console.log('Error while performing Query.')
+    });
+    connection.end();
+}
+
 exports.gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;

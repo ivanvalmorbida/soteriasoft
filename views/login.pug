@@ -1,0 +1,30 @@
+extends layout
+
+block cabecal
+  link(rel='stylesheet', href='css/login.css')
+  script(src='js/login.js')
+  title Soteria Software Ltda
+
+block content
+  div(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft', style='margin: 0px 20px 0px 10px')
+    div(flex='', layout-gt-sm='row', layout-align='center center') 
+      h2 Soteria Software Ltda
+    div(flex='', layout-gt-sm='row', layout-align='center center')
+      div(flex='25')
+        md-card(theme="forest")
+          md-card-title
+            md-card-title-text
+              span.md-headline Login de Usuário
+          md-card-content
+            br
+            div(layout-gt-sm='row')
+              md-input-container(flex='')
+                label Usuario
+                input(ng-model='usuario', type='text', ng-required='true')
+
+            div(layout-gt-sm='row')
+              md-input-container(flex='')
+                label Senha
+                input(ng-model='senha', type='password', ng-required='true')
+            
+          md-button.md-raised.md-primary(ng-click='login()') Confirmar

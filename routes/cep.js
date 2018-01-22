@@ -1,9 +1,14 @@
+var auth = require('../authetication');
 var express = require('express');
 var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
 
 exports.index = function (req, res) {
+    auth.active_user(req, res, render_index)
+}
+
+function render_index(req, res) {
     res.render('ceps');
 };
 

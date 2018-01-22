@@ -1,368 +1,356 @@
-html(lang='pt-br')
-  head
-    meta(name='viewport', content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui')
-    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic")
-    link(rel="stylesheet prefetch", href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.5/angular-material.css")
-    link(rel="stylesheet prefetch", href="https://material.angularjs.org/1.1.5/docs.css")
-    link(rel='stylesheet', href='css/imovel.css')
-    
-    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
-    script(src='js/comum.js')    
-    script(src='js/mask.js')
-    script(src='js/imovel.js')
-  body
-    div(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft')
+extends layout
 
-      md-card
-        md-card-title
-          md-card-title-text
-            span.md-headline Cadastro de Imóvel
-            //span.md-subhead ...... .... ....
-        md-card-content
-          div(layout-gt-sm='row')
-            div(flex="")
-              md-input-container 
-                md-radio-group(layout-gt-sm='row', ng-model='tipo')
-                  md-radio-button.md-primary(value=4) Geminado 
-                  md-radio-button.md-primary(value=3) Apartamento
-                  md-radio-button.md-primary(value=2) Casa padrão
-                  md-radio-button.md-primary(value=1) Terreno
-                  md-radio-button.md-primary(value=5) Rural
+block cabecal
+  link(rel='stylesheet', href='css/imovel.css')
+  script(src='js/mask.js')
+  script(src='js/imovel.js')
 
-            div(layout="row", layout-sm="column", flex="")
-              md-autocomplete(flex='',
-                md-selected-item='proprietario',
-                md-min-length='3', 
-                md-search-text='SearchPro', 
-                md-items='item in PessoaNome(SearchPro)',
-                md-floating-label='Proprietário',
-                md-item-text='item.nome')
-                md-item-template
-                  span(md-highlight-text='SearchPro') {{item.nome}}
+block content
+  div(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft')
 
-              md-button.md-icon-button.launch(href="pessoa?codigo={{proprietario.codigo}}", style='margin-top: 20px',
-              title="Abrir cadastro de pessoas", target="_blank", aria-label="Google.com")
-                md-icon(md-svg-icon="img/people.svg")
+    md-card
+      md-card-title
+        md-card-title-text
+          span.md-headline Cadastro de Imóvel
+          //span.md-subhead ...... .... ....
+      md-card-content
+        div(layout-gt-sm='row')
+          div(flex="")
+            md-input-container 
+              md-radio-group(layout-gt-sm='row', ng-model='tipo')
+                md-radio-button.md-primary(value=4) Geminado 
+                md-radio-button.md-primary(value=3) Apartamento
+                md-radio-button.md-primary(value=2) Casa padrão
+                md-radio-button.md-primary(value=1) Terreno
+                md-radio-button.md-primary(value=5) Rural
 
-          div(layout-gt-sm='row', style='margin-top: -30px')
-            div(flex="")
-              md-input-container(flex='')
-                label documentação
-                md-select(ng-model='documentacao')
-                  md-option(value=1) Escritura
-                  md-option(value=4) Contrato
-                  md-option(value=6) Posse
+          div(layout="row", layout-sm="column", flex="")
+            md-autocomplete(flex='',
+              md-selected-item='proprietario',
+              md-min-length='3', 
+              md-search-text='SearchPro', 
+              md-items='item in PessoaNome(SearchPro)',
+              md-floating-label='Proprietário',
+              md-item-text='item.nome')
+              md-item-template
+                span(md-highlight-text='SearchPro') {{item.nome}}
 
-            div(flex="")
-              md-input-container(flex='')
-                label Inscrição Imobiliaria
-                input(ng-model='inscricao_incra', type='text')
-                                
-            div(flex="")
-              md-input-container(flex='')
-                label Lote / Unidade
-                input(ng-model='lote_unidade', type='text')
-                
-            div(flex="")
-              md-input-container(flex='')
-                label Quadra / Bloco
-                input(ng-model='quadra_bloco', type='text')
+            md-button.md-icon-button.launch(href="pessoa?codigo={{proprietario.codigo}}", style='margin-top: 20px',
+            title="Abrir cadastro de pessoas", target="_blank", aria-label="Google.com")
+              md-icon(md-svg-icon="img/people.svg")
 
-          md-tabs(md-dynamic-height='', md-border-bottom='', style='margin-top: -40px')
-            md-tab(label='Terreno')
-              md-content
-                div(layout-gt-sm='row', style='margin-top: 10px')
-                  div(flex="")
-                    md-input-container
-                      label CEP
-                      input(ng-model='cep', ui-cep, ng-change='BuscarCEP()')
+        div(layout-gt-sm='row', style='margin-top: -30px')
+          div(flex="")
+            md-input-container(flex='')
+              label documentação
+              md-select(ng-model='documentacao')
+                md-option(value=1) Escritura
+                md-option(value=4) Contrato
+                md-option(value=6) Posse
 
-                  div(flex="")
-                    md-autocomplete(flex='95',
-                      md-selected-item='estado',
-                      md-min-length='1', 
-                      md-search-text='SearchEst', 
-                      md-items='item in EstadoNome(SearchEst)',
-                      md-floating-label='Estado',
-                      md-item-text='item.nome')
-                      md-item-template
-                        span(md-highlight-text='SearchEst') {{item.nome}}
-                        
-                  div(flex="")
-                    md-autocomplete(flex='95',
-                      md-selected-item='cidade',
-                      md-min-length='3', 
-                      md-search-text='SearchCid', 
-                      md-items='item in CidadeNome(SearchCid)',
-                      md-floating-label='Cidade',
-                      md-item-text='item.nome')
-                      md-item-template
-                        span(md-highlight-text='SearchCid') {{item.nome}}
-                
-                div(layout-gt-sm='row', style='margin-top: -30px')
-                  div(flex="")
-                    md-autocomplete(flex='95',
-                      md-selected-item='bairro',
-                      md-min-length='3', 
-                      md-search-text='SearchBai', 
-                      md-items='item in BairroNome(SearchBai)',
-                      md-floating-label='Bairro',
-                      md-item-text='item.nome')
-                      md-item-template
-                        span(md-highlight-text='SearchBai') {{item.nome}}
-
-                  div(flex="")
-                    md-autocomplete(flex='95',
-                      md-selected-item='endereco',
-                      md-min-length='3', 
-                      md-search-text='SearchEnd', 
-                      md-items='item in EnderecoNome(SearchEnd)',
-                      md-floating-label='Endereço',
-                      md-item-text='item.nome')
-                      md-item-template
-                        span(md-highlight-text='SearchEnd') {{item.nome}}
-
-                  div(flex="")
-                    md-input-container
-                      label Número
-                      input(ng-model='numero', type='text')
-
-                  div(flex="")
-                    md-input-container(flex='')
-                      label Complemento
-                      input(ng-model='complemento', type='text')
-
-                div(layout-gt-sm='row', style='margin-top: -30px')
-                  div(flex="")
-                    md-input-container
-                      label Area m²
-                      input(ng-model='area_terreno', type='number')
-
-                  div(flex="")
-                    md-input-container
-                      label Frente
-                      input(ng-model='frente', type='number')                    
-
-                  div(flex="")
-                    md-input-container
-                      label Fundo
-                      input(ng-model='fundo', type='number')                    
-
-                  div(flex="")
-                    md-input-container
-                      label Lateral 1
-                      input(ng-model='lateral1', type='number')                    
-
-                  div(flex="")
-                    md-input-container
-                      label Lateral 2
-                      input(ng-model='lateral2', type='number')                    
-
-                  div(flex="")
-                    md-input-container
-                      label Gabarito
-                      input(ng-model='gabarito', type='number')     
-
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="esquina")
-                        | Esquina
-                    
-            md-tab(label='Construção')
-              md-content
-                div(layout-gt-sm='row', style='margin-top: 10px')
-                  div(flex="")
-                    md-input-container
-                      label Entrega
-                      md-datepicker(md-hide-icons="calendar", ng-model='entrega')
-
-                  div(flex="")
-                    md-input-container
-                      label Ano de Construção
-                      input(ng-model='ano_construcao', type='number')    
-
-                  div(flex="")
-                    md-input-container
-                      label Área total
-                      input(ng-model='area_total', type='number')    
-
-                  div(flex="")
-                    md-input-container
-                      label Área privativa
-                      input(ng-model='area_privativa', type='number')    
-
-                  div(flex="")
-                    md-input-container
-                      label Quartos
-                      input(ng-model='quartos', type='number')    
-                      
-                  div(flex="")
-                    md-input-container
-                      label Suítes
-                      input(ng-model='suites', type='number')    
-
-                  div(flex="")
-                    md-input-container
-                      label Garagens
-                      input(ng-model='garagens', type='number')    
-
-                div(layout-gt-sm='row', style='margin-top: -30px')
-
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="mobiliada")
-                        | Mobiliada
-
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="churasqueira")
-                        | Churasqueira
-
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="infra_ar_cond")
-                        | Infra ar condicionado
-                        
-                  div(flex="")
-                    md-input-container
-                      label Piso
-                      md-select(ng-model='piso')
-                        md-option(value=1) Ceramico
-                        md-option(value=2) Porcelanato
-                        md-option(value=3) Madeira
-                
-                  div(flex="")
-                    md-input-container
-                      label Teto
-                      md-select(ng-model='teto')
-                        md-option(value=1) Ceramico
-                        md-option(value=2) Porcelanato
-                        md-option(value=3) Madeira
-
-                  div(flex="")
-                    md-input-container
-                      label Reboco
-                      md-select(ng-model='reboco')
-                        md-option(value=1) Ceramico
-                        md-option(value=2) Porcelanato
-                        md-option(value=3) Madeira
-
-                div(layout-gt-sm='row', style='margin-top: -10px')
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="murro")
-                        | Murro
-
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="portao")
-                        | Portão
-
-                  div(flex="")
-                    md-input-container
-                      label Quintal Largura
-                      input(ng-model='quintal_larg', type='number')    
-
-                  div(flex="")
-                    md-input-container
-                      label Quintal Comprimento
-                      input(ng-model='quintal_comp', type='number')    
-
-                  div(flex="")
-                    md-input-container
-                      label Andar
-                      input(ng-model='andar', type='number')    
-
-            md-tab(label='Financeiro')
-              md-content
-                div(layout-gt-sm='row', style='margin-top: 10px')
-                  div(flex="")
-                    md-input-container
-                      label Valor
-                      input(ng-model='valor', type='number')    
-
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="mcmv")
-                        | MCMV
-
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="financia")
-                        | Financiavel
-                 
-                  div(flex="")
-                    md-input-container
-                      label Entrada
-                      input(ng-model='entrada', type='number')    
-
-                div(layout-gt-sm='row', style='margin-top: -30px')
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="permuta")
-                        | Permuta
-
-                  div(flex="")
-                    md-input-container
-                      md-checkbox.md-primary(ng-model="carro")
-                        | Carro                  
+          div(flex="")
+            md-input-container(flex='')
+              label Inscrição Imobiliaria
+              input(ng-model='inscricao_incra', type='text')
+                              
+          div(flex="")
+            md-input-container(flex='')
+              label Lote / Unidade
+              input(ng-model='lote_unidade', type='text')
               
-                  div(flex="")
-                    md-input-container    
-                      md-checkbox.md-primary(ng-model="fgts")
-                        | FGTS                        
+          div(flex="")
+            md-input-container(flex='')
+              label Quadra / Bloco
+              input(ng-model='quadra_bloco', type='text')
+
+        md-tabs(md-dynamic-height='', md-border-bottom='', style='margin-top: -40px')
+          md-tab(label='Terreno')
+            md-content
+              div(layout-gt-sm='row', style='margin-top: 10px')
+                div(flex="")
+                  md-input-container
+                    label CEP
+                    input(ng-model='cep', ui-cep, ng-change='BuscarCEP()')
+
+                div(flex="")
+                  md-autocomplete(flex='95',
+                    md-selected-item='estado',
+                    md-min-length='1', 
+                    md-search-text='SearchEst', 
+                    md-items='item in EstadoNome(SearchEst)',
+                    md-floating-label='Estado',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchEst') {{item.nome}}
+                      
+                div(flex="")
+                  md-autocomplete(flex='95',
+                    md-selected-item='cidade',
+                    md-min-length='3', 
+                    md-search-text='SearchCid', 
+                    md-items='item in CidadeNome(SearchCid)',
+                    md-floating-label='Cidade',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchCid') {{item.nome}}
+              
+              div(layout-gt-sm='row', style='margin-top: -30px')
+                div(flex="")
+                  md-autocomplete(flex='95',
+                    md-selected-item='bairro',
+                    md-min-length='3', 
+                    md-search-text='SearchBai', 
+                    md-items='item in BairroNome(SearchBai)',
+                    md-floating-label='Bairro',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchBai') {{item.nome}}
+
+                div(flex="")
+                  md-autocomplete(flex='95',
+                    md-selected-item='endereco',
+                    md-min-length='3', 
+                    md-search-text='SearchEnd', 
+                    md-items='item in EnderecoNome(SearchEnd)',
+                    md-floating-label='Endereço',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchEnd') {{item.nome}}
+
+                div(flex="")
+                  md-input-container
+                    label Número
+                    input(ng-model='numero', type='text')
+
+                div(flex="")
+                  md-input-container(flex='')
+                    label Complemento
+                    input(ng-model='complemento', type='text')
+
+              div(layout-gt-sm='row', style='margin-top: -30px')
+                div(flex="")
+                  md-input-container
+                    label Area m²
+                    input(ng-model='area_terreno', type='number')
+
+                div(flex="")
+                  md-input-container
+                    label Frente
+                    input(ng-model='frente', type='number')                    
+
+                div(flex="")
+                  md-input-container
+                    label Fundo
+                    input(ng-model='fundo', type='number')                    
+
+                div(flex="")
+                  md-input-container
+                    label Lateral 1
+                    input(ng-model='lateral1', type='number')                    
+
+                div(flex="")
+                  md-input-container
+                    label Lateral 2
+                    input(ng-model='lateral2', type='number')                    
+
+                div(flex="")
+                  md-input-container
+                    label Gabarito
+                    input(ng-model='gabarito', type='number')     
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="esquina")
+                      | Esquina
                   
-                div(layout-gt-sm='row', style='margin-top: -30px')
-                
-                  div(flex="")
-                    md-input-container
-                      label Condominio
-                      input(ng-model='condominio', type='number')
-    
-                  div(layout="row", layout-sm="column", flex="")
-                    md-autocomplete(flex='95',
-                      md-selected-item='captador',
-                      md-min-length='3', 
-                      md-search-text='SearcrRep', 
-                      md-items='item in PessoaNome(SearcrRep)',
-                      md-floating-label='Captador',
-                      md-item-text='item.nome')
-                      md-item-template
-                        span(md-highlight-text='SearcrRep') {{item.nome}}
+          md-tab(label='Construção')
+            md-content
+              div(layout-gt-sm='row', style='margin-top: 10px')
+                div(flex="")
+                  md-input-container
+                    label Entrega
+                    md-datepicker(md-hide-icons="calendar", ng-model='entrega')
 
-                    md-button.md-icon-button.launch(href="pessoa?codigo={{captador.codigo}}", style='margin-top: 20px',
-                    title="Abrir cadastro de pessoas", target="_blank", aria-label="Google.com")
-                      md-icon(md-svg-icon="img/people.svg")
-                                  
-            md-tab(label='Fotos')
-              md-content
-                div(layout-gt-sm="row", layout-margin="")
-                  form.form.form-inverse(name='formfoto', ng-submit='upload_imagem()', novalidate='')
-                    input(type="file", file-model="imgFile", accept="image/*")
-                    button(type='submit') Enviar
-                
-                div(layout-gt-sm="row", layout-margin="")
-                  md-card(ng-repeat="i in imagens")
-                    img.md-card-image(src="{{i.arquivo}}", alt="image caption")
-                    md-card-content
-                      md-button.md-small.md-raised.md-primary(
-                        ng-click="ordem_imagem(i.codigo,'<')") |<< 
-                      md-button.md-small.md-raised.md-primary(
-                        ng-click="ordem_imagem(i.codigo,'>')")  >>|
-                      md-button.md-small.md-raised.md-warn.md-hue-1(
-                        ng-click='remover_imagem(i.codigo)') | X | 
+                div(flex="")
+                  md-input-container
+                    label Ano de Construção
+                    input(ng-model='ano_construcao', type='number')    
 
-          div(layout-gt-sm='row', layout-align='start', flex='')
-            md-button.md-raised(ng-click='Limpar()') Novo
-            md-button.md-raised.md-primary(ng-click='Gravar()',
-            ng-disabled='proprietario.codigo==undefined || tipo==0') Gravar
-            md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar($event)',
-            ng-disabled='proprietario.codigo==undefined') Apagar
-            md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar($event)') Localizar
+                div(flex="")
+                  md-input-container
+                    label Área total
+                    input(ng-model='area_total', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Área privativa
+                    input(ng-model='area_privativa', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Quartos
+                    input(ng-model='quartos', type='number')    
+                    
+                div(flex="")
+                  md-input-container
+                    label Suítes
+                    input(ng-model='suites', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Garagens
+                    input(ng-model='garagens', type='number')    
+
+              div(layout-gt-sm='row', style='margin-top: -30px')
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="mobiliada")
+                      | Mobiliada
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="churasqueira")
+                      | Churasqueira
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="infra_ar_cond")
+                      | Infra ar condicionado
+                      
+                div(flex="")
+                  md-input-container
+                    label Piso
+                    md-select(ng-model='piso')
+                      md-option(value=1) Ceramico
+                      md-option(value=2) Porcelanato
+                      md-option(value=3) Madeira
+              
+                div(flex="")
+                  md-input-container
+                    label Teto
+                    md-select(ng-model='teto')
+                      md-option(value=1) Ceramico
+                      md-option(value=2) Porcelanato
+                      md-option(value=3) Madeira
+
+                div(flex="")
+                  md-input-container
+                    label Reboco
+                    md-select(ng-model='reboco')
+                      md-option(value=1) Ceramico
+                      md-option(value=2) Porcelanato
+                      md-option(value=3) Madeira
+
+              div(layout-gt-sm='row', style='margin-top: -10px')
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="murro")
+                      | Murro
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="portao")
+                      | Portão
+
+                div(flex="")
+                  md-input-container
+                    label Quintal Largura
+                    input(ng-model='quintal_larg', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Quintal Comprimento
+                    input(ng-model='quintal_comp', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Andar
+                    input(ng-model='andar', type='number')    
+
+          md-tab(label='Financeiro')
+            md-content
+              div(layout-gt-sm='row', style='margin-top: 10px')
+                div(flex="")
+                  md-input-container
+                    label Valor
+                    input(ng-model='valor', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="mcmv")
+                      | MCMV
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="financia")
+                      | Financiavel
+                
+                div(flex="")
+                  md-input-container
+                    label Entrada
+                    input(ng-model='entrada', type='number')    
+
+              div(layout-gt-sm='row', style='margin-top: -30px')
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="permuta")
+                      | Permuta
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="carro")
+                      | Carro                  
+            
+                div(flex="")
+                  md-input-container    
+                    md-checkbox.md-primary(ng-model="fgts")
+                      | FGTS                        
+                
+              div(layout-gt-sm='row', style='margin-top: -30px')
+              
+                div(flex="")
+                  md-input-container
+                    label Condominio
+                    input(ng-model='condominio', type='number')
+  
+                div(layout="row", layout-sm="column", flex="")
+                  md-autocomplete(flex='95',
+                    md-selected-item='captador',
+                    md-min-length='3', 
+                    md-search-text='SearcrRep', 
+                    md-items='item in PessoaNome(SearcrRep)',
+                    md-floating-label='Captador',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearcrRep') {{item.nome}}
+
+                  md-button.md-icon-button.launch(href="pessoa?codigo={{captador.codigo}}", style='margin-top: 20px',
+                  title="Abrir cadastro de pessoas", target="_blank", aria-label="Google.com")
+                    md-icon(md-svg-icon="img/people.svg")
+                                
+          md-tab(label='Fotos')
+            md-content
+              div(layout-gt-sm="row", layout-margin="")
+                form.form.form-inverse(name='formfoto', ng-submit='upload_imagem()', novalidate='')
+                  input(type="file", file-model="imgFile", accept="image/*")
+                  button(type='submit') Enviar
+              
+              div(layout-gt-sm="row", layout-margin="")
+                md-card(ng-repeat="i in imagens")
+                  img.md-card-image(src="{{i.arquivo}}", alt="image caption")
+                  md-card-content
+                    md-button.md-small.md-raised.md-primary(
+                      ng-click="ordem_imagem(i.codigo,'<')") |<< 
+                    md-button.md-small.md-raised.md-primary(
+                      ng-click="ordem_imagem(i.codigo,'>')")  >>|
+                    md-button.md-small.md-raised.md-warn.md-hue-1(
+                      ng-click='remover_imagem(i.codigo)') | X | 
+
+        div(layout-gt-sm='row', layout-align='start', flex='')
+          md-button.md-raised(ng-click='Limpar()') Novo
+          md-button.md-raised.md-primary(ng-click='Gravar()',
+          ng-disabled='proprietario.codigo==undefined || tipo==0') Gravar
+          md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar($event)',
+          ng-disabled='proprietario.codigo==undefined') Apagar
+          md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar($event)') Localizar
