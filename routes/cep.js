@@ -1,8 +1,8 @@
-var auth = require('../authetication');
 var express = require('express');
 var router  = express.Router();
 var settings = require("../settings");
 var mysql   = require('mysql');
+var auth = require('../authetication');
 
 exports.index = function (req, res) {
     auth.active_user(req, res, render_index)
