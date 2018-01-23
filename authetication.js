@@ -2,7 +2,7 @@ var express = require('express');
 var router  = express.Router();
 
 exports.active_user = function (req, res, callback) {
-/*    if(req.session.UserCod==null){req.session.UserCod=''}
+    if(req.session.UserCod==null){req.session.UserCod=''}
 
     if(req.session.UserCod==''){
         res.render('login');
@@ -10,6 +10,6 @@ exports.active_user = function (req, res, callback) {
     else{
         callback(req, res);
     }
-*/
-    callback(req, res);
+
+    //callback(req, res);
 }
