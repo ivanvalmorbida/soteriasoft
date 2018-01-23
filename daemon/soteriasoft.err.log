@@ -140,3 +140,11 @@ TypeError: Cannot read property 'send' of null
     at emitTwo (events.js:126:13)
     at ChildProcess.emit (events.js:214:7)
     at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)
+Tue, 23 Jan 2018 12:25:08 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at app.js:52:9
+Tue, 23 Jan 2018 12:25:08 GMT body-parser deprecated undefined extended: provide extended option at node_modules\body-parser\index.js:105:29
+Tue, 23 Jan 2018 12:25:08 GMT express-session deprecated undefined resave option; provide resave option at app.js:65:9
+Tue, 23 Jan 2018 12:25:08 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:65:9
+Tue, 23 Jan 2018 12:33:42 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at app.js:52:9
+Tue, 23 Jan 2018 12:33:42 GMT body-parser deprecated undefined extended: provide extended option at node_modules\body-parser\index.js:105:29
+Tue, 23 Jan 2018 12:33:42 GMT express-session deprecated undefined resave option; provide resave option at app.js:65:9
+Tue, 23 Jan 2018 12:33:42 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:65:9

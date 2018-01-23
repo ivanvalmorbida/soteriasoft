@@ -63,27 +63,27 @@ exports.localizar = function (req, res) {
 
     if (data.pessoa!=undefined){
         sqlw += " and i.proprietario=?"
-        par.push(data.i.pessoa);
+        par.push(data.pessoa);
     }
 
     if (data.estado!=undefined){
         sqlw += " and l.estado=?"
-        par.push(data.i.estado);
+        par.push(data.estado);
     }
 
     if (data.cidade!=undefined){
         sqlw += " and l.cidade=?"
-        par.push(data.i.cidade);
+        par.push(data.cidade);
     }
 
     if (data.bairro!=undefined){
         sqlw += " and l.bairro=?"
-        par.push(data.i.bairro);
+        par.push(data.bairro);
     }
 
     if (data.endereco!=undefined){
         sqlw += " and l.endereco=?"
-        par.push(data.i.endereco);
+        par.push(data.endereco);
     }
 
     if (sqlw.length>0) {

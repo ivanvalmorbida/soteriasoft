@@ -4,6 +4,8 @@ var mysql   = require('mysql');
 exports.gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
+    
+    data.cep = data.cep.replace("-", "");
 
     connection.connect();
     connection.query('select imovel from tb_imovel_terreno where imovel=?', [data.imovel], 
