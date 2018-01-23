@@ -1,0 +1,54 @@
+2018-01-23 10:23:39 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\devel\soteriasoft\app.js --log "SoteriaSoft wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2018-01-23 10:23:49 - Started 3968
+2018-01-23 10:24:24 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\devel\soteriasoft\app.js --log "SoteriaSoft wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2018-01-23 10:24:28 - Started 1344
+2018-01-23 10:25:05 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\devel\soteriasoft\app.js --log "SoteriaSoft wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2018-01-23 10:25:06 - Started 9328
+2018-01-23 10:33:35 - Stopping soteriasoft.exe
+2018-01-23 10:33:35 - ProcessKill 9328
+2018-01-23 10:33:35 - Found child process: 1212 Name: conhost.exe
+2018-01-23 10:33:35 - Found child process: 1988 Name: node.exe
+2018-01-23 10:33:35 - Stopping process 1212
+2018-01-23 10:33:35 - Send SIGINT 1212
+2018-01-23 10:33:35 - SIGINT to 1212 failed - Killing as fallback
+2018-01-23 10:33:35 - Stopping process 1988
+2018-01-23 10:33:35 - Send SIGINT 1988
+2018-01-23 10:33:35 - SIGINT to 1988 failed - Killing as fallback
+2018-01-23 10:33:35 - Stopping process 9328
+2018-01-23 10:33:35 - Send SIGINT 9328
+2018-01-23 10:33:35 - SIGINT to 9328 failed - Killing as fallback
+2018-01-23 10:33:35 - Finished soteriasoft.exe
+2018-01-23 10:33:36 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\devel\soteriasoft\app.js --log "SoteriaSoft wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2018-01-23 10:33:36 - Started 7888
+2018-01-23 10:47:31 - Stopping soteriasoft.exe
+2018-01-23 10:47:31 - ProcessKill 7888
+2018-01-23 10:47:32 - Found child process: 3116 Name: conhost.exe
+2018-01-23 10:47:32 - Found child process: 2872 Name: node.exe
+2018-01-23 10:47:32 - Stopping process 3116
+2018-01-23 10:47:32 - Send SIGINT 3116
+2018-01-23 10:47:32 - SIGINT to 3116 failed - Killing as fallback
+2018-01-23 10:47:32 - Stopping process 2872
+2018-01-23 10:47:32 - Send SIGINT 2872
+2018-01-23 10:47:32 - SIGINT to 2872 failed - Killing as fallback
+2018-01-23 10:47:32 - Stopping process 7888
+2018-01-23 10:47:32 - Send SIGINT 7888
+2018-01-23 10:47:32 - SIGINT to 7888 failed - Killing as fallback
+2018-01-23 10:47:32 - Finished soteriasoft.exe
+2018-01-23 10:59:02 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\devel\soteriasoft\app.js --log "SoteriaSoft wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2018-01-23 10:59:02 - Started 5576
+2018-01-23 11:01:53 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\devel\soteriasoft\app.js --log "SoteriaSoft wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2018-01-23 11:01:53 - Started 5740
+2018-01-23 11:03:08 - Stopping soteriasoft.exe
+2018-01-23 11:03:08 - ProcessKill 5740
+2018-01-23 11:03:08 - Found child process: 7768 Name: conhost.exe
+2018-01-23 11:03:08 - Found child process: 2040 Name: node.exe
+2018-01-23 11:03:08 - Stopping process 7768
+2018-01-23 11:03:08 - Send SIGINT 7768
+2018-01-23 11:03:08 - SIGINT to 7768 failed - Killing as fallback
+2018-01-23 11:03:08 - Stopping process 2040
+2018-01-23 11:03:08 - Send SIGINT 2040
+2018-01-23 11:03:08 - SIGINT to 2040 failed - Killing as fallback
+2018-01-23 11:03:08 - Stopping process 5740
+2018-01-23 11:03:08 - Send SIGINT 5740
+2018-01-23 11:03:08 - SIGINT to 5740 failed - Killing as fallback
+2018-01-23 11:03:08 - Finished soteriasoft.exe

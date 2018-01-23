@@ -10,4 +10,6 @@ exports.active_user = function (req, res, callback) {
     else{
         callback(req, res);
     }
+
+    //callback(req, res);
 }
