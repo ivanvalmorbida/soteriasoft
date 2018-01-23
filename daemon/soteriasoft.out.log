@@ -145,3 +145,35 @@ Error while performing Query: Error: ER_DATA_TOO_LONG: Data too long for column 
 [0mGET /css/login.css [36m304 [0m2.620 ms - -[0m
 [0mGET /js/login.js [36m304 [0m2.356 ms - -[0m
 [0mGET /favicon.ico [33m404 [0m44.482 ms - 2109[0m
+info: socket.io started
+info: socket.io started
+info: socket.io started
+info: socket.io started
+Express server escutando na porta 3000
+[0mGET / [32m200 [0m949.582 ms - 2221[0m
+[0mGET /js/login.js [36m304 [0m8.142 ms - -[0m
+[0mGET /js/comum.js [36m304 [0m8.021 ms - -[0m
+[0mGET /css/login.css [36m304 [0m8.169 ms - -[0m
+[0mPOST /usuario/login [32m200 [0m326.319 ms - 33[0m
+[0mGET / [32m200 [0m193.282 ms - 2775[0m
+[0mGET /js/comum.js [36m304 [0m3.067 ms - -[0m
+[0mGET /css/index.css [36m304 [0m5.051 ms - -[0m
+[0mGET /js/index.js [36m304 [0m5.093 ms - -[0m
+[0mGET /img/people.svg [36m304 [0m2.014 ms - -[0m
+[0mGET /img/imovel.svg [36m304 [0m1.994 ms - -[0m
+[0mGET /img/search2.svg [36m304 [0m3.480 ms - -[0m
+[0mGET /img/cep.svg [36m304 [0m2.813 ms - -[0m
+[0mGET /img/usuario.svg [36m304 [0m1.232 ms - -[0m
+[0mGET /pessoa [36m304 [0m485.202 ms - -[0m
+[0mGET /js/comum.js [36m304 [0m4.350 ms - -[0m
+[0mGET /css/pessoa.css [36m304 [0m3.888 ms - -[0m
+[0mGET /js/mask.js [36m304 [0m3.856 ms - -[0m
+[0mGET /js/pessoa.js [36m304 [0m3.139 ms - -[0m
+[0mGET /pessoa/dlg/localizar [36m304 [0m108.746 ms - -[0m
+[0mGET /img/fechar.svg [36m304 [0m3.814 ms - -[0m
+[0mPOST /pessoa/localizar [32m200 [0m18.055 ms - 83[0m
+[0mPOST /pessoa/codigo [32m200 [0m14.941 ms - 328[0m
+[0mPOST /pessoa_fisica/pessoa [32m200 [0m20.541 ms - 12[0m
+[0mPOST /pessoa_juridica/pessoa [32m200 [0m69.489 ms - 12[0m
+[0mPOST /pessoa_email/pessoa [32m200 [0m91.992 ms - 165[0m
+[0mPOST /pessoa_fone/pessoa [32m200 [0m102.366 ms - 143[0m

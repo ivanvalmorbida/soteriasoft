@@ -158,7 +158,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                         $scope.emails.push(data.dados[i].email);
                     }
                 }).error(function (data, status, headers, config) {
-
+                
+                console.dir($scope.emails);
                 }); 
 
                 $http.post('/pessoa_fone/pessoa', {cod: $scope.codigo}).
