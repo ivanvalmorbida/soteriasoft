@@ -1,0 +1,142 @@
+Tue, 23 Jan 2018 12:23:53 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at app.js:52:9
+Tue, 23 Jan 2018 12:23:53 GMT body-parser deprecated undefined extended: provide extended option at node_modules\body-parser\index.js:105:29
+Tue, 23 Jan 2018 12:23:53 GMT express-session deprecated undefined resave option; provide resave option at app.js:65:9
+Tue, 23 Jan 2018 12:23:53 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:65:9
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::3000
+    at Object._errnoException (util.js:1022:11)
+    at _exceptionWithHostPort (util.js:1044:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1351:14)
+    at listenInCluster (net.js:1392:12)
+    at Server.listen (net.js:1476:7)
+    at Object.<anonymous> (C:\devel\soteriasoft\app.js:243:24)
+    at Module._compile (module.js:643:30)
+    at Object.Module._extensions..js (module.js:654:10)
+    at Module.load (module.js:556:32)
+    at tryModuleLoad (module.js:499:12)
+Tue, 23 Jan 2018 12:23:58 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at app.js:52:9
+Tue, 23 Jan 2018 12:23:58 GMT body-parser deprecated undefined extended: provide extended option at node_modules\body-parser\index.js:105:29
+Tue, 23 Jan 2018 12:23:58 GMT express-session deprecated undefined resave option; provide resave option at app.js:65:9
+Tue, 23 Jan 2018 12:23:58 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:65:9
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::3000
+    at Object._errnoException (util.js:1022:11)
+    at _exceptionWithHostPort (util.js:1044:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1351:14)
+    at listenInCluster (net.js:1392:12)
+    at Server.listen (net.js:1476:7)
+    at Object.<anonymous> (C:\devel\soteriasoft\app.js:243:24)
+    at Module._compile (module.js:643:30)
+    at Object.Module._extensions..js (module.js:654:10)
+    at Module.load (module.js:556:32)
+    at tryModuleLoad (module.js:499:12)
+Tue, 23 Jan 2018 12:24:01 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at app.js:52:9
+Tue, 23 Jan 2018 12:24:01 GMT body-parser deprecated undefined extended: provide extended option at node_modules\body-parser\index.js:105:29
+Tue, 23 Jan 2018 12:24:01 GMT express-session deprecated undefined resave option; provide resave option at app.js:65:9
+Tue, 23 Jan 2018 12:24:01 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:65:9
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::3000
+    at Object._errnoException (util.js:1022:11)
+    at _exceptionWithHostPort (util.js:1044:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1351:14)
+    at listenInCluster (net.js:1392:12)
+    at Server.listen (net.js:1476:7)
+    at Object.<anonymous> (C:\devel\soteriasoft\app.js:243:24)
+    at Module._compile (module.js:643:30)
+    at Object.Module._extensions..js (module.js:654:10)
+    at Module.load (module.js:556:32)
+    at tryModuleLoad (module.js:499:12)
+C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js:177
+    child.send('shutdown');
+          ^
+
+TypeError: Cannot read property 'send' of null
+    at process.killkid (C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js:177:11)
+    at emitOne (events.js:116:13)
+    at process.emit (events.js:211:7)
+    at process.exit (internal/process.js:157:15)
+    at monitor (C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js:99:17)
+    at ChildProcess.<anonymous> (C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js:170:5)
+    at emitTwo (events.js:126:13)
+    at ChildProcess.emit (events.js:214:7)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)
+Tue, 23 Jan 2018 12:24:31 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at app.js:52:9
+Tue, 23 Jan 2018 12:24:31 GMT body-parser deprecated undefined extended: provide extended option at node_modules\body-parser\index.js:105:29
+Tue, 23 Jan 2018 12:24:31 GMT express-session deprecated undefined resave option; provide resave option at app.js:65:9
+Tue, 23 Jan 2018 12:24:31 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:65:9
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::3000
+    at Object._errnoException (util.js:1022:11)
+    at _exceptionWithHostPort (util.js:1044:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1351:14)
+    at listenInCluster (net.js:1392:12)
+    at Server.listen (net.js:1476:7)
+    at Object.<anonymous> (C:\devel\soteriasoft\app.js:243:24)
+    at Module._compile (module.js:643:30)
+    at Object.Module._extensions..js (module.js:654:10)
+    at Module.load (module.js:556:32)
+    at tryModuleLoad (module.js:499:12)
+Tue, 23 Jan 2018 12:24:35 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at app.js:52:9
+Tue, 23 Jan 2018 12:24:35 GMT body-parser deprecated undefined extended: provide extended option at node_modules\body-parser\index.js:105:29
+Tue, 23 Jan 2018 12:24:35 GMT express-session deprecated undefined resave option; provide resave option at app.js:65:9
+Tue, 23 Jan 2018 12:24:35 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:65:9
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::3000
+    at Object._errnoException (util.js:1022:11)
+    at _exceptionWithHostPort (util.js:1044:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1351:14)
+    at listenInCluster (net.js:1392:12)
+    at Server.listen (net.js:1476:7)
+    at Object.<anonymous> (C:\devel\soteriasoft\app.js:243:24)
+    at Module._compile (module.js:643:30)
+    at Object.Module._extensions..js (module.js:654:10)
+    at Module.load (module.js:556:32)
+    at tryModuleLoad (module.js:499:12)
+Tue, 23 Jan 2018 12:24:41 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at app.js:52:9
+Tue, 23 Jan 2018 12:24:41 GMT body-parser deprecated undefined extended: provide extended option at node_modules\body-parser\index.js:105:29
+Tue, 23 Jan 2018 12:24:41 GMT express-session deprecated undefined resave option; provide resave option at app.js:65:9
+Tue, 23 Jan 2018 12:24:41 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:65:9
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::3000
+    at Object._errnoException (util.js:1022:11)
+    at _exceptionWithHostPort (util.js:1044:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1351:14)
+    at listenInCluster (net.js:1392:12)
+    at Server.listen (net.js:1476:7)
+    at Object.<anonymous> (C:\devel\soteriasoft\app.js:243:24)
+    at Module._compile (module.js:643:30)
+    at Object.Module._extensions..js (module.js:654:10)
+    at Module.load (module.js:556:32)
+    at tryModuleLoad (module.js:499:12)
+C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js:177
+    child.send('shutdown');
+          ^
+
+TypeError: Cannot read property 'send' of null
+    at process.killkid (C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js:177:11)
+    at emitOne (events.js:116:13)
+    at process.emit (events.js:211:7)
+    at process.exit (internal/process.js:157:15)
+    at monitor (C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js:99:17)
+    at ChildProcess.<anonymous> (C:\Users\Computer\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js:170:5)
+    at emitTwo (events.js:126:13)
+    at ChildProcess.emit (events.js:214:7)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)
