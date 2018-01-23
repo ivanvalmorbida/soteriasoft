@@ -26,8 +26,6 @@ exports.gravar = function (req, res) {
 
     connection.connect();
     if (data.codigo==0) {
-
-
         connection.query('insert into tb_imovel (tipo, proprietario, documentacao, inscricao_incra,'+
         'lote_unidade, quadra_bloco, cadastro) values (?, ?, ?, ?, ?, ?, now());', 
         [data.tipo, data.proprietario, data.documentacao, data.inscricao_incra, 

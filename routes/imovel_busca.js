@@ -12,35 +12,20 @@ function render_index(req, res) {
     res.render('imovel_busca');
 };
 
-
 exports.palavra_chave = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
     var sql = '', sqlw = '', par = [];
     
-    /*
-select concat(
-ifNull(t.descricao, ''), ' ', ifNull(p.nome, ''), ' ', 
-ifNull(i.inscricao_incra, ''), ' ', ifNull(l.cep, ''), ' ', 
-ifNull(u.nome, ''), ' ', ifNull(m.nome, ''), ' ', 
-ifNull(b.nome, ''), ' ', ifNull(e.nome, ''), ' ', 
-ifNull(u.Sigla, ''), if(f.mcmv=1, ' mcmv', ''), 
-if(f.financia=1, ' financiavel', ''), ' ', 
-cast(cast(f.valor as unsigned) as char)
-) as x
+    sql += "CALL sp_palavra_chave(?);"
 
-from tb_imovel as i 
-left join tb_pessoa p on i.proprietario=p.codigo 
-left join tb_imovel_tipo t on i.tipo=t.codigo 
-left join tb_imovel_terreno l on l.imovel=i.codigo 
-left join tb_imovel_financeiro f on f.imovel=i.codigo
-left join tb_estado u on u.codigo=l.estado
-left join tb_cidade m on m.codigo=l.cidade
-left join tb_bairro b on b.codigo=l.bairro
-left join tb_endereco e on e.codigo=l.endereco
-where i.codigo=1000
-    */
-
+    connection.query(sql, [data.imo], function(err, rows) {
+        if (!err)
+            res.json({dados: rows})
+        else
+            console.log('Error while performing Query.')
+    });
+    connection.end();
 }
 
 exports.localizar = function (req, res) {
@@ -78,27 +63,27 @@ exports.localizar = function (req, res) {
 
     if (data.pessoa!=undefined){
         sqlw += " and i.proprietario=?"
-        par.push(data.i.pessoa);
+        par.push(data.pessoa);
     }
 
     if (data.estado!=undefined){
         sqlw += " and l.estado=?"
-        par.push(data.i.estado);
+        par.push(data.estado);
     }
 
     if (data.cidade!=undefined){
         sqlw += " and l.cidade=?"
-        par.push(data.i.cidade);
+        par.push(data.cidade);
     }
 
     if (data.bairro!=undefined){
         sqlw += " and l.bairro=?"
-        par.push(data.i.bairro);
+        par.push(data.bairro);
     }
 
     if (data.endereco!=undefined){
         sqlw += " and l.endereco=?"
-        par.push(data.i.endereco);
+        par.push(data.endereco);
     }
 
     if (sqlw.length>0) {

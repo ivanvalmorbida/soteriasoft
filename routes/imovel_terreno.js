@@ -4,11 +4,17 @@ var mysql   = require('mysql');
 exports.gravar = function (req, res) {
     var connection = mysql.createConnection(settings.dbConect);
     var data = req.body;
+    
+    data.cep = data.cep.replace("-", "");
 
     connection.connect();
     connection.query('select imovel from tb_imovel_terreno where imovel=?', [data.imovel], 
     function(err, rows) {
         if (!err) {
+            if (data.estado==undefined){data.estado=0};
+            if (data.cidade==undefined){data.cidade=0};
+            if (data.bairro==undefined){data.bairro=0};
+            if (data.endereco==undefined){data.endereco=0};
             if (rows.length == 0) {
                 connection.query('insert into tb_imovel_terreno (imovel, cep, estado, cidade, bairro,'+
                 ' endereco, numero, complemento, area_terreno, frente, fundo, lateral1, lateral2,'+
@@ -20,6 +26,8 @@ exports.gravar = function (req, res) {
                         res.json({dados: rows})            
                     else
                         console.log('Error while performing Query: '+err)
+                    
+                    connection.end();
                 });
             }   
             else {
@@ -28,18 +36,19 @@ exports.gravar = function (req, res) {
                 ' gabarito=?, esquina=? where imovel=?',
                 [data.cep, data.estado, data.cidade, data.bairro, data.endereco, 
                 data.numero, data.complemento, data.area_terreno, data.frente, data.fundo, data.lateral1,
-                data.lateral2, data.gabarito, data.esquina, data.imovel], function(err, rows) {
+                data.lateral2, data.gabarito, data.esquina, data.imovel], function(err, rows2) {
                     if (!err)
-                        res.json({dados: rows})
+                        res.json({dados: rows2})
                     else
                         console.log('Error while performing Query.')
+                            
+                    connection.end();
                 })
             }   
         }
         else
             console.log('Error while performing Query.')
     })                  
-    connection.end();
 }
 
 exports.imovel = function (req, res) {
