@@ -19,6 +19,8 @@ exports.gravar = function (req, res) {
                         res.json({dados: rows})            
                     else
                         console.log('Error while performing Query: '+err)
+
+                    connection.end();
                 });
             }   
             else {
@@ -31,13 +33,14 @@ exports.gravar = function (req, res) {
                         res.json({dados: rows})
                     else
                         console.log('Error while performing Query.')
+                    
+                    connection.end();
                 })
             }         
         }
         else
             console.log('Error while performing Query.')
     })                  
-    connection.end();
 }
 
 exports.imovel = function (req, res) {

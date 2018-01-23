@@ -99,15 +99,27 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
             quadra_bloco: $scope.quadra_bloco}).
         success(function (data, status, headers, config) {
             $scope.codigo = data.codigo;
+            if ($scope.esquina==false) {$scope.esquina=0} else {$scope.esquina=1};
+            if ($scope.mobiliada==false) {$scope.mobiliada=0} else {$scope.mobiliada=1};    
+            if ($scope.churrasqueira==false) {$scope.churrasqueira=0} else {$scope.churrasqueira=1};    
+            if ($scope.infra_ar_cond==false) {$scope.infra_ar_cond=0} else {$scope.infra_ar_cond=1};    
+            if ($scope.murro==false) {$scope.murro=0} else {$scope.murro=1};    
+            if ($scope.portao==false) {$scope.portao=0} else {$scope.portao=1};   
+            if ($scope.mcmv==false) {$scope.mcmv=0} else {$scope.mcmv=1};   
+            if ($scope.financia==false) {$scope.financia=0} else {$scope.financia=1};   
+            if ($scope.permuta==false) {$scope.permuta=0} else {$scope.permuta=1};   
+            if ($scope.carro==false) {$scope.carro=0} else {$scope.carro=1};   
+            if ($scope.fgts==false) {$scope.fgts=0} else {$scope.fgts=1};   
+            if ($scope.reboco==false) {$scope.reboco=0} else {$scope.reboco=1};   
 
             $http.post('/imovel_terreno/gravar', {imovel: $scope.codigo, 
-                cep: $scope.cep, codigo: $scope.estado.codigo, 
+                cep: $scope.cep, estado: $scope.estado.codigo, 
                 cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
                 endereco: $scope.endereco.codigo, numero: $scope.numero, 
                 complemento: $scope.complemento, area_terreno: $scope.area_terreno,                
                 frente: $scope.frente, fundo: $scope.fundo, lateral1: $scope.lateral1,
-                lateral2: $scope.lateral2, gabarito: $scope.gabarito, esquina: $scope.esquina}); 
-    
+                lateral2: $scope.lateral2, gabarito: $scope.gabarito, esquina: $scope.esquina});            
+ 
             $http.post('/imovel_construcao/gravar', {imovel: $scope.codigo, 
                 entrega: $scope.entrega, ano_construcao: $scope.ano_construcao,
                 area_total: $scope.area_total, area_privativa: $scope.area_privativa, 
@@ -122,7 +134,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                 valor: $scope.valor, mcmv: $scope.mcmv, financia: $scope.financia, 
                 entrada: $scope.entrada, permuta: $scope.permuta, carro: $scope.carro,
                 fgts: $scope.fgts, condominio: $scope.condominio, captador: $scope.captador}); 
-            
+                        
             alert('Informações salvas com sucesso!');
         });  
     }
@@ -164,14 +176,14 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
                         $scope.lateral1 = data.dados[0].lateral1;
                         $scope.lateral2 = data.dados[0].lateral2;
                         $scope.gabarito = data.dados[0].gabarito;
-                        $scope.esquina = data.dados[0].esquina;        
+                        $scope.esquina = (data.dados[0].esquina==1);        
                     }
                 });
 
                 $http.post('/imovel_construcao/imovel', {cod: $scope.codigo}).
                 success(function (data, status, headers, config) {
                     if (data.dados.length>0){
-                        $scope.entrega = data.dados[0].entrega;
+                        //$scope.entrega = data.dados[0].entrega;
                         $scope.ano_construcao = data.dados[0].ano_construcao;
                         $scope.area_total = data.dados[0].area_total;
                         $scope.area_privativa = data.dados[0].area_privativa;
