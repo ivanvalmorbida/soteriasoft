@@ -9,7 +9,7 @@ exports.index = function (req, res) {
 }
 
 function render_index(req, res) {
-    res.render('usuario');
+    res.render('usuario', {empresa: settings.empresa});
 };
 
 exports.login = function (req, res) {

@@ -3,12 +3,12 @@ extends layout
 block cabecal
   link(rel='stylesheet', href='css/login.css')
   script(src='js/login.js')
-  title HN Imobiliária Ltda
+  title #{empresa}
 
 block content
   div(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft', style='margin: 0px 20px 0px 10px')
     div(flex='', layout-gt-sm='row', layout-align='center center') 
-      h2 HN Imobiliária Ltda
+      h2 #{empresa}
     div(flex='', layout-gt-sm='row', layout-align='center center')
       div(flex='25')
         md-card(theme="forest")
@@ -20,7 +20,7 @@ block content
             div(layout-gt-sm='row')
               md-input-container(flex='')
                 label Usuario
-                input(ng-model='usuario', type='text', ng-required='true')
+                input#usuario(ng-model='usuario', type='text', ng-required='true')
 
             div(layout-gt-sm='row')
               md-input-container(flex='')

@@ -7,6 +7,7 @@ exports.dbConect = {
 
 var url = "http://localhost";
 var webPort = 3000;
+exports.empresa = 'SoteriaSoft Sistemas de Informática';
 exports.webPort = webPort;
 
 exports.facebook_api_key        = "658178304289739";

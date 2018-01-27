@@ -9,7 +9,7 @@ exports.index = function (req, res) {
 }
 
 function render_index(req, res) {
-    res.render('imovel_busca');
+    res.render('imovel_busca', {empresa: settings.empresa});
 };
 
 exports.palavra_chave = function (req, res) {
@@ -39,51 +39,56 @@ exports.localizar = function (req, res) {
     sql += " left join tb_pessoa p on i.proprietario=p.codigo";
     sql += " left join tb_imovel_tipo t on i.tipo=t.codigo";
     sql += " left join tb_imovel_terreno l on l.imovel=i.codigo";
-    sql += " left join tb_imovel_financeiro f on f.imovel=t.codigo";
+    sql += " left join tb_imovel_financeiro f on f.imovel=i.codigo";
 
-    if (data.tipo!=0){
-        sqlw += " and i.tipo=?"
-        par.push(data.tipo);
+    if (data.texto!=''){
+        sqlw += " and i.codigo in(select imovel from tb_imovel_busca where palavra_chave like '%"+data.texto+"%')"
     }
+    else{
+        if (data.tipo!=0){
+            sqlw += " and i.tipo=?"
+            par.push(data.tipo);
+        }
 
-    if (data.valor!=0){
-        sqlw += " and f.valor=?"
-        par.push(data.valor);
-    }
+        if (data.valor!=0){
+            sqlw += " and f.valor=?"
+            par.push(data.valor);
+        }
 
-    if (data.mcmv!=0){
-        sqlw += " and f.mcmv=?"
-        par.push(data.mcmv);
-    }
+        if (data.mcmv!=0){
+            sqlw += " and f.mcmv=?"
+            par.push(data.mcmv);
+        }
 
-    if (data.financia!=0){
-        sqlw += " and f.financia=?"
-        par.push(data.financia);
-    }
+        if (data.financia!=0){
+            sqlw += " and f.financia=?"
+            par.push(data.financia);
+        }
 
-    if (data.pessoa!=undefined){
-        sqlw += " and i.proprietario=?"
-        par.push(data.pessoa);
-    }
+        if (data.pessoa!=0){
+            sqlw += " and i.proprietario=?"
+            par.push(data.pessoa);
+        }
 
-    if (data.estado!=undefined){
-        sqlw += " and l.estado=?"
-        par.push(data.estado);
-    }
+        if (data.estado!=0){
+            sqlw += " and l.estado=?"
+            par.push(data.estado);
+        }
 
-    if (data.cidade!=undefined){
-        sqlw += " and l.cidade=?"
-        par.push(data.cidade);
-    }
+        if (data.cidade!=0){
+            sqlw += " and l.cidade=?"
+            par.push(data.cidade);
+        }
 
-    if (data.bairro!=undefined){
-        sqlw += " and l.bairro=?"
-        par.push(data.bairro);
-    }
+        if (data.bairro!=0){
+            sqlw += " and l.bairro=?"
+            par.push(data.bairro);
+        }
 
-    if (data.endereco!=undefined){
-        sqlw += " and l.endereco=?"
-        par.push(data.endereco);
+        if (data.endereco!=0){
+            sqlw += " and l.endereco=?"
+            par.push(data.endereco);
+        }
     }
 
     if (sqlw.length>0) {

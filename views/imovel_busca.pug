@@ -3,6 +3,7 @@ extends layout
 block cabecal
   link(rel='stylesheet', href='css/imovel_busca.css')
   script(src='js/imovel_busca.js')
+  title Busca de Imóveis - #{empresa}
 
 block content
   br
@@ -13,13 +14,13 @@ block content
       div(layout="row", flex="")
         md-input-container.md-block(flex='')
           label Pesquisar imóveis
-          input(ng-model='pesquisa')
+          input(ng-model='texto')
 
         md-button.md-icon-button.launch(onclick="$('#container').toggle();", style='margin-top: 20px',
-        title="Mostrar opções avançadas de busca")
+        title="Mostrar opções avançadas de busca", ng-click='texto=""')
           md-icon(md-svg-icon="img/sort-down.svg")
     
-        md-button.md-icon-button.launch(style='margin-top: 20px', title="Buscar imóveis")
+        md-button.md-icon-button.launch(style='margin-top: 20px', title="Buscar imóveis", ng-click='LocalizarTexto()')
           md-icon(md-svg-icon="img/search.svg")
 
     #container

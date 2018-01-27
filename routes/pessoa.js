@@ -9,7 +9,7 @@ exports.index = function (req, res) {
 }
 
 function render_index(req, res) {
-    res.render('pessoa');
+    res.render('pessoa', {empresa: settings.empresa});
 };
 
 exports.gravar = function (req, res) {

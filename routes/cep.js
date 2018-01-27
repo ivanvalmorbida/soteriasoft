@@ -9,7 +9,7 @@ exports.index = function (req, res) {
 }
 
 function render_index(req, res) {
-    res.render('ceps');
+    res.render('ceps', {empresa: settings.empresa});
 };
 
 exports.apagar = function (req, res) {

@@ -9,7 +9,7 @@ exports.index = function (req, res) {
 }
 
 function render_index(req, res) {
-    res.render('imovel');
+    res.render('imovel', {empresa: settings.empresa});
 };
 
 exports.dlg_apagar = function (req, res) {

@@ -3,6 +3,7 @@ extends layout
 block cabecal
   link(rel='stylesheet', href='css/usuario.css')
   script(src='js/usuario.js')
+  title Usuário - #{empresa}
 
 block content
   md-content(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft')
@@ -15,7 +16,7 @@ block content
         br
         div(layout-gt-sm='row')
           md-input-container(flex='')
-            label Usuario
+            label Usuário
             input(ng-model='usuario', type='text', ng-required='true')
 
         div(layout-gt-sm='row')
