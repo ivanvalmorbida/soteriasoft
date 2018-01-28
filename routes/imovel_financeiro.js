@@ -48,7 +48,7 @@ exports.imovel = function (req, res) {
     var cod = req.body.cod;
 
     connection.connect();
-    connection.query('SELECT i.*, p.nome as proprietario_ from tb_imovel_financeiro i'+
+    connection.query('SELECT i.*, p.nome as captador_ from tb_imovel_financeiro i'+
     ' left join tb_pessoa p on p.codigo=i.captador'+
     ' where i.imovel='+cod, function(err, rows, fields) {
         if (!err)

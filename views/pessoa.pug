@@ -91,7 +91,11 @@ block content
                     div
                       input(ng-model='email', type='email')
                     div
-                      md-button.md-raised.md-primary(ng-click='addEmail()') Adicionar
+                      md-button.md-icon-button.launch(ng-click='addEmail()', 
+                      title="Adicionar E-mail", target="_blank")
+                        md-icon(md-svg-icon="img/email-add.svg")
+
+                      //md-button.md-raised.md-primary(ng-click='addEmail()') Adicionar
                   md-chips(ng-model="emails", readonly='true', md-removable='true')
                 
                 md-input-container(flex='')
@@ -100,7 +104,11 @@ block content
                     div
                       input(ng-model='fone', ui-telefone)
                     div
-                      md-button.md-raised.md-primary(ng-click='addFone()') Adicionar
+                      md-button.md-icon-button.launch(ng-click='addFone()', 
+                      title="Adicionar Telefone", target="_blank")
+                        md-icon(md-svg-icon="img/fone-add.svg")
+                        
+                      //md-button.md-raised.md-primary(ng-click='addFone()') Adicionar
                   md-chips(ng-model="fones", readonly='true', md-removable='true')
 
           md-tab(label='Dados pessoa física', ng-disabled='tipo!=1')

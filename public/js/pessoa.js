@@ -9,10 +9,10 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         $scope.tipo         = 0;
         $scope.nome         = '';
         $scope.cep          = '';
-        $scope.estado       = 0;
-        $scope.cidade       = 0;                
-        $scope.bairro       = 0;
-        $scope.endereco     = 0;                
+        $scope.estado       = null;
+        $scope.cidade       = null;                
+        $scope.bairro       = null;
+        $scope.endereco     = null;                
         $scope.numero       = '';
         $scope.complemento  = '';
         $scope.obs          = '';
@@ -21,33 +21,38 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         $scope.fones        = [];
         $scope.fone         = '';
 
-        $scope.estadonasc       = 0;
-        $scope.cidadenasc       = 0;
-        $scope.nacionalidade    = 0;
+        $scope.nascimento       = ''
+        $scope.estadonasc       = null;
+        $scope.cidadenasc       = null;
+        $scope.nacionalidade    = null;
         $scope.sexo             = 0;
         $scope.cpf              = '';
         $scope.identidade       = '';
         $scope.orgaoidentidade  = '';
-        $scope.ufidentidade     = 0;
-        $scope.estadocivil      = 0;
-        $scope.conjuge          = 0;
-        $scope.profissao        = 0;
+        $scope.ufidentidade     = null;
+        $scope.estadocivil      = null;
+        $scope.conjuge          = null;
+        $scope.profissao        = null;
         $scope.ctps             = '';
         $scope.pis              = '';
         
         $scope.razaosocial      = '';
         $scope.cnpj             = '';
         $scope.incricaoestadual = '';
-        $scope.atividade        = 0;
+        $scope.atividade        = null;
         $scope.homepage         = '';
-        $scope.representante    = 0;
+        $scope.representante    = null;
     }
 
     $scope.Gravar = function() {
+        if($scope.estado==null){estado=0} else{estado=$scope.estado.codigo}
+        if($scope.cidade==null){cidade=0} else{cidade=$scope.cidade.codigo}
+        if($scope.bairro==null){bairro=0} else{bairro=$scope.bairro.codigo}
+        if($scope.endereco==null){endereco=0} else{endereco=$scope.endereco.codigo}
+
         $http.post('/pessoa/gravar', {codigo: $scope.codigo, tipo: $scope.tipo, 
-        nome: $scope.nome, cep: $scope.cep, estado: $scope.estado.codigo, 
-        cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
-        endereco: $scope.endereco.codigo, numero: $scope.numero, 
+        nome: $scope.nome, cep: $scope.cep, estado: estado, cidade: cidade, 
+        bairro: bairro, endereco: endereco, numero: $scope.numero, 
         complemento: $scope.complemento, obs: $scope.obs}).
         success(function (data, status, headers, config) {
             $scope.codigo = data.codigo;
@@ -63,20 +68,29 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
             });
 
             if ($scope.tipo==1){
+                if($scope.ufnasc==null){ufnasc=0} else{ufnasc=$scope.ufnasc.codigo}
+                if($scope.cidadenasc==null){cidadenasc=0} else{cidadenasc=$scope.cidadenasc.codigo}
+                if($scope.nacionalidade==null){nacionalidade=0} else{nacionalidade=$scope.nacionalidade.codigo}
+                if($scope.ufidentidade==null){ufidentidade=0} else{ufidentidade=$scope.ufidentidade.codigo}
+                if($scope.estadocivil==null){estadocivil=0} else{estadocivil=$scope.estadocivil.codigo}
+                if($scope.conjuge==null){conjuge=0} else{conjuge=$scope.conjuge.codigo}
+                if($scope.profissao==null){profissao=0} else{profissao=$scope.profissao.cbo}
+
                 $http.post('/pessoa_fisica/gravar', {pessoa: $scope.codigo, 
-                nascimento: $scope.nascimento, ufnasc: $scope.ufnasc.codigo, 
-                cidadenasc: $scope.cidadenasc.codigo, nacionalidade: $scope.nacionalidade.codigo, 
-                sexo: $scope.sexo, cpf: $scope.cpf, identidade: $scope.identidade, 
-                orgaoidentidade: $scope.orgaoidentidade, ufidentidade: $scope.ufidentidade.codigo, 
-                estadocivil: $scope.estadocivil.codigo, conjuge: $scope.conjuge.codigo,
-                profissao: $scope.profissao.cbo, ctps: $scope.ctps, pis: $scope.pis});
+                nascimento: $scope.nascimento, ufnasc: ufnasc, cidadenasc: cidadenasc,
+                nacionalidade: nacionalidade, sexo: $scope.sexo, cpf: $scope.cpf, 
+                identidade: $scope.identidade, orgaoidentidade: $scope.orgaoidentidade, 
+                ufidentidade: ufidentidade, estadocivil: estadocivil, conjuge: conjuge,
+                profissao: profissao, ctps: $scope.ctps, pis: $scope.pis});
             } 
             
             if ($scope.tipo==2){
+                if($scope.profissao==null){profissao=0} else{profissao=$scope.profissao.cbo}
+                if($scope.representante==null){representante=0} else{representante=$scope.representante.cbo}
+                
                 $http.post('/pessoa_juridica/gravar', {pessoa: $scope.codigo, razaosocial: $scope.razaosocial,
                 cnpj: $scope.cnpj, incricaoestadual: $scope.incricaoestadual, 
-                atividade: $scope.atividade.codigo, homepage: $scope.homepage, 
-                representante: $scope.representante.codigo});
+                atividade: atividade, homepage: $scope.homepage, representante: representante});
             } 
 
             alert('Informações salvas com sucesso!');
@@ -100,7 +114,6 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         }
         return r;
     }  
-
 
     $scope.Apagar = function(ev) {
         $mdDialog.show({

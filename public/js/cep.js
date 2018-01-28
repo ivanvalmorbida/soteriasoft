@@ -9,8 +9,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     }
 
     $scope.Limpar = function(booCep) {
-        if(booCep==true){$scope.cep = null};
-        $scope.complemento  = null;
+        if(booCep==true){$scope.cep = ''};
+        $scope.complemento  = '';
         $scope.estado       = null;
         $scope.cidade       = null;                
         $scope.bairro       = null;
@@ -37,9 +37,13 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     }
 
     $scope.Gravar = function() {
-        $http.post('/cep/gravar', {cep: $scope.cep, estado: $scope.estado.codigo, 
-            cidade: $scope.cidade.codigo, bairro: $scope.bairro.codigo, 
-            endereco: $scope.endereco.codigo, complemento: $scope.complemento}).
+        if($scope.estado==null){estado=0} else{estado=$scope.estado.codigo}
+        if($scope.cidade==null){cidade=0} else{cidade=$scope.cidade.codigo}
+        if($scope.bairro==null){bairro=0} else{bairro=$scope.bairro.codigo}
+        if($scope.endereco==null){endereco=0} else{endereco=$scope.endereco.codigo}
+        
+        $http.post('/cep/gravar', {cep: $scope.cep, estado: estado, cidade: cidade, 
+            bairro: bairro, endereco: endereco, complemento: $scope.complemento}).
         success(function (data, status, headers, config) {
             if (data.dados.length>0){
                 alert('Informações salvas com sucesso!');
@@ -63,7 +67,6 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
                 $scope.cep = format('#####-###', answer);
                 $scope.BuscarCEP();
             }            
-            //console.dir('You said the information was "' + answer + '".');
         }, function() {
           console.dir('You cancelled the dialog.');
         });
@@ -131,7 +134,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
                 //
             });              
         }, function() {
-          //console.dir('You cancelled the dialog.');
+          
         });
     };
     
