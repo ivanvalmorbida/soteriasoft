@@ -1,0 +1,24 @@
+.md-button.md-small {
+  line-height: 20px;
+  font-size: 11px;
+  min-height: 20px;
+  min-width: 20px;
+  padding: 2 2;
+  margin-top: 3;
+  /*vertical-align: top;
+  width: 20px;
+  height: 20px;*/
+}
+
+.md-autocomplete-suggestions-container{  
+  z-index:100000 !important; 
+}
+
+#btLocalizarExe {
+  height: 20px;
+}
+
+a { 
+  cursor: pointer; 
+  color: #0000ff;
+}
