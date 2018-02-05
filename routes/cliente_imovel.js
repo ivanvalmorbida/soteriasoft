@@ -4,8 +4,6 @@ var settings = require("../settings");
 var mysql   = require('mysql');
 var auth = require('../authetication');
 
-// renda ???
-
 exports.index = function (req, res) {
     auth.active_user(req, res, render_index)
 }
@@ -22,11 +20,9 @@ exports.gravar = function (req, res) {
 
     connection.connect();
     if (data.codigo==0) {
-        connection.query('insert into tb_cliente_imovel (tipo, nome, cep, estado, cidade,'+
-        ' bairro, endereco, numero, complemento, obs, cadastro)'+
-        ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now());', 
-        [data.tipo, data.nome, data.cep, data.estado, data.cidade, data.bairro, 
-        data.endereco, data.numero, data.complemento, data.obs], function(err, rows) {
+        connection.query('insert into tb_cliente_imovel (pessoa, interesse, renda,'+
+        ' origem, responsavel, cadastro) values (?, ?, ?, ?, ?, now());', 
+        [data.pessoa, data.interesse, data.renda, data.origem, data.responsavel], function(err, rows) {
             if (!err)
                 res.json({codigo: rows.insertId})            
             else
@@ -34,10 +30,9 @@ exports.gravar = function (req, res) {
         })
     }   
     else {
-        connection.query('update tb_cliente_imovel set tipo=?, nome=?, cep=?, estado=?, cidade=?,'+
-        'bairro=?, endereco=?, numero=?, complemento=?, obs=? where codigo=?',
-        [data.tipo, data.nome, data.cep, data.estado, data.cidade, data.bairro, 
-        data.endereco, data.numero, data.complemento, data.obs, data.codigo], function(err, rows) {
+        connection.query('update tb_cliente_imovel set pessoa=?, interesse=?, renda=?,'+
+        ' origem=?, responsavel=? where codigo=?', [data.pessoa, data.interesse, data.renda, 
+        data.origem, data.responsavel, data.codigo], function(err, rows) {
             if (!err)
                 res.json({codigo: data.codigo})
             else
@@ -52,43 +47,10 @@ exports.codigo = function (req, res) {
     var cod = req.body.cod;
 
     connection.connect();
-    connection.query("SELECT p.*, u.nome as estado_, m.nome as cidade_,"+
-    ' b.nome as bairro_, e.nome as endereco_ from tb_cliente_imovel p'+
-    ' left join tb_estado u on u.codigo=p.estado'+
-    ' left join tb_cidade m on m.codigo=p.cidade'+
-    ' left join tb_bairro b on b.codigo=p.bairro'+
-    ' left join tb_endereco e on e.codigo=p.endereco'+
-    ' where p.codigo='+cod, function(err, rows, fields) {
+    connection.query('SELECT c.*, p.nome as pessoa_ from tb_cliente_imovel c'+
+    ' left join tb_pessoa p on p.codigo=c.pessoa where c.codigo='+cod, function(err, rows, fields) {
         if (!err)
             res.json({dados: rows})
-        else
-            console.log('Error while performing Query.')
-    });
-    connection.end();
-}
-
-exports.cliente_imovel_todas = function (req, res) {
-    var connection = mysql.createConnection(settings.dbConect);
-
-    connection.connect();
-    connection.query('SELECT * from tb_cliente_imovel order by nome', function(err, rows, fields) {
-        if (!err)
-            res.json({cliente_imovel_todas: rows})
-        else
-            console.log('Error while performing Query.')
-    });
-    connection.end();
-}
-
-exports.cliente_imovel_nome = function (req, res) {
-    var connection = mysql.createConnection(settings.dbConect);
-    var txt = req.query.txt;
-
-    connection.connect();
-    connection.query("select codigo, nome from tb_cliente_imovel"+
-    " where nome like '"+txt+"%' order by nome LIMIT 20", function(err, rows) {
-        if (!err)
-            return res.json(rows)
         else
             console.log('Error while performing Query.')
     });

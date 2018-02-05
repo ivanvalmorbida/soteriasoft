@@ -65,7 +65,7 @@ block content
               input(ng-model='quadra_bloco', type='text')
 
         md-tabs(md-dynamic-height='', md-border-bottom='', style='margin-top: -40px')
-          md-tab(label='Terreno')
+          md-tab(label='Localização e Terreno')
             md-content
               div(layout-gt-sm='row', style='margin-top: 10px')
                 div(flex="")
@@ -231,17 +231,19 @@ block content
                   md-input-container
                     label Teto
                     md-select(ng-model='teto')
-                      md-option(value=1) Ceramico
-                      md-option(value=2) Porcelanato
+                      md-option(value=1) Gesso
+                      md-option(value=2) PVC
                       md-option(value=3) Madeira
+                      md-option(value=4) Laje
+                      md-option(value=5) Nenhum
 
                 div(flex="")
                   md-input-container
                     label Reboco
                     md-select(ng-model='reboco')
-                      md-option(value=1) Ceramico
-                      md-option(value=2) Porcelanato
-                      md-option(value=3) Madeira
+                      md-option(value=1) Padrão
+                      md-option(value=2) Gesso
+                      md-option(value=3) Nenhum
 
               div(layout-gt-sm='row', style='margin-top: -10px')
                 div(flex="")

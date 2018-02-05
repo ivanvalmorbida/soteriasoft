@@ -41,7 +41,9 @@ var routes = require('./routes/index'),
   imovel_financeiro = require('./routes/imovel_financeiro'),    
   imovel_terreno = require('./routes/imovel_terreno'),
   imovel_imagem = require('./routes/imovel_imagem'),
-  imovel_busca = require('./routes/imovel_busca');
+  imovel_busca = require('./routes/imovel_busca'),
+  
+  cliente_imovel = require('./routes/cliente_imovel');
   
 var index = require('./routes/index');
 var usuario = require('./routes/usuario');
@@ -166,6 +168,8 @@ app.get('/usuario/dlg/apagar', usuario.dlg_apagar);
 app.get('/usuario/dlg/localizar', usuario.dlg_localizar);
 
 app.get('/imovel_busca', imovel_busca.index);
+
+app.get('/cliente_imovel', cliente_imovel.index);
 
 app.post('/cep/cep', cep.cep);
 app.post('/cep/endereco', cep.endereco);

@@ -1,0 +1,311 @@
+extends layout
+
+block cabecal
+  link(rel='stylesheet', href='css/cliente_imovel.css')
+  script(src='js/mask.js')
+  script(src='js/cliente_imovel.js')
+  title Cliente Imóvel - #{empresa}
+
+block content
+  div(ng-controller='Soteriasoft.Control as ctrl', ng-app='Soteriasoft')
+
+    md-card
+      md-card-title
+        md-card-title-text
+          span.md-headline Cliente para imóvel
+      md-card-content
+        md-tabs(md-dynamic-height='', md-border-bottom='')
+          md-tab(label='Contato')
+            md-content
+              div(layout-gt-sm='row')
+                div(layout="row", layout-sm="column", flex="")
+                  md-autocomplete(flex='',
+                    md-selected-item='proprietario',
+                    md-min-length='3', 
+                    md-search-text='SearchPro', 
+                    md-items='item in PessoaNome(SearchPro)',
+                    md-floating-label='Proprietário',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchPro') {{item.nome}}
+
+                  md-button.md-icon-button.launch(href="pessoa?codigo={{proprietario.codigo}}", style='margin-top: 20px',
+                  title="Abrir cadastro de pessoas", target="_blank", aria-label="Google.com")
+                    md-icon(md-svg-icon="img/people.svg")
+                    
+              div(layout-gt-sm='row')
+                md-input-container(flex='')
+                  label E-mails
+                  div(layout='row')
+                    div
+                      input(ng-model='email', type='email')
+                    div
+                      md-button.md-icon-button.launch(ng-click='addEmail()', 
+                      title="Adicionar E-mail", target="_blank")
+                        md-icon(md-svg-icon="img/email-add.svg")
+
+                      //md-button.md-raised.md-primary(ng-click='addEmail()') Adicionar
+                  md-chips(ng-model="emails", readonly='true', md-removable='true')
+                
+                md-input-container(flex='')
+                  label Telefones
+                  div(layout='row')
+                    div
+                      input(ng-model='fone', ui-telefone)
+                    div
+                      md-button.md-icon-button.launch(ng-click='addFone()', 
+                      title="Adicionar Telefone", target="_blank")
+                        md-icon(md-svg-icon="img/fone-add.svg")
+                        
+                      //md-button.md-raised.md-primary(ng-click='addFone()') Adicionar
+                  md-chips(ng-model="fones", readonly='true', md-removable='true')
+
+          md-tab(label='Localização e Terreno')
+            md-content
+
+              div(layout-gt-sm='row')
+                md-autocomplete(flex='',
+                  md-selected-item='estado',
+                  md-min-length='1', 
+                  md-search-text='SearchEst', 
+                  md-items='item in EstadoNome(SearchEst)',
+                  md-floating-label='Estado',
+                  md-item-text='item.nome')
+                  md-item-template
+                    span(md-highlight-text='SearchEst') {{item.nome}}
+                    
+                md-autocomplete(flex='',
+                  md-selected-item='cidade',
+                  md-min-length='3', 
+                  md-search-text='SearchCid', 
+                  md-items='item in CidadeEstadoNome(SearchCid)',
+                  md-floating-label='Cidade',
+                  md-item-text='item.nome')
+                  md-item-template
+                    span(md-highlight-text='SearchCid') {{item.nome}}
+              
+              div(layout-gt-sm='row')
+                md-autocomplete(flex='',
+                  md-selected-item='bairro',
+                  md-min-length='3', 
+                  md-search-text='SearchBai', 
+                  md-items='item in BairroCidadeNome(SearchBai)',
+                  md-floating-label='Bairro',
+                  md-item-text='item.nome')
+                  md-item-template
+                    span(md-highlight-text='SearchBai') {{item.nome}}
+
+                md-autocomplete(flex='',
+                  md-selected-item='endereco',
+                  md-min-length='3', 
+                  md-search-text='SearchEnd', 
+                  md-items='item in EnderecoCidadeNome(SearchEnd)',
+                  md-floating-label='Endereço',
+                  md-item-text='item.nome')
+                  md-item-template
+                    span(md-highlight-text='SearchEnd') {{item.nome}}
+
+              div(layout-gt-sm='row', style='margin-top: -30px')
+                div(flex="")
+                  md-input-container
+                    label Area m²
+                    input(ng-model='area_terreno', type='number')
+
+                div(flex="")
+                  md-input-container
+                    label Frente
+                    input(ng-model='frente', type='number')                    
+
+                div(flex="")
+                  md-input-container
+                    label Fundo
+                    input(ng-model='fundo', type='number')                    
+
+                div(flex="")
+                  md-input-container
+                    label Lateral 1
+                    input(ng-model='lateral1', type='number')                    
+
+                div(flex="")
+                  md-input-container
+                    label Lateral 2
+                    input(ng-model='lateral2', type='number')                    
+
+                div(flex="")
+                  md-input-container
+                    label Gabarito
+                    input(ng-model='gabarito', type='number')     
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="esquina")
+                      | Esquina
+
+          md-tab(label='Construção')
+            md-content
+              div(layout-gt-sm='row', style='margin-top: 10px')
+                md-input-container(flex='')
+                  label Tipo
+                  div(layout='row')
+                    div
+                      input(ng-model='tipo', ui-telefone)
+                    div
+                      md-button.md-icon-button.launch(ng-click='addTipo()', 
+                      title="Adicionar Tipo de imóvel", target="_blank")
+                        md-icon(md-svg-icon="img/fone-add.svg")
+                        
+                    md-chips(ng-model="tipos", readonly='true', md-removable='true')
+              
+              div(layout-gt-sm='row', style='margin-top: -30px')
+                div(flex="")
+                  md-input-container
+                    label Ano de Construção
+                    input(ng-model='ano_construcao', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Área total
+                    input(ng-model='area_total', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Área privativa
+                    input(ng-model='area_privativa', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Quartos
+                    input(ng-model='quartos', type='number')    
+                    
+                div(flex="")
+                  md-input-container
+                    label Suítes
+                    input(ng-model='suites', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Garagens
+                    input(ng-model='garagens', type='number')    
+
+              div(layout-gt-sm='row', style='margin-top: -30px')
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="mobiliada")
+                      | Mobiliada
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="churrasqueira")
+                      | Churasqueira
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="infra_ar_cond")
+                      | Infra ar condicionado
+                      
+                div(flex="")
+                  md-input-container
+                    label Piso
+                    md-select(ng-model='piso')
+                      md-option(value=1) Ceramico
+                      md-option(value=2) Porcelanato
+                      md-option(value=3) Madeira
+              
+                div(flex="")
+                  md-input-container
+                    label Teto
+                    md-select(ng-model='teto')
+                      md-option(value=1) Gesso
+                      md-option(value=2) PVC
+                      md-option(value=3) Madeira
+                      md-option(value=4) Laje
+                      md-option(value=5) Nenhum
+
+                div(flex="")
+                  md-input-container
+                    label Reboco
+                    md-select(ng-model='reboco')
+                      md-option(value=1) Padrão
+                      md-option(value=2) Gesso
+                      md-option(value=3) Nenhum
+
+              div(layout-gt-sm='row', style='margin-top: -10px')
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="murro")
+                      | Murro
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="portao")
+                      | Portão
+
+                div(flex="")
+                  md-input-container
+                    label Quintal Largura
+                    input(ng-model='quintal_larg', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Quintal Comprimento
+                    input(ng-model='quintal_comp', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    label Andar
+                    input(ng-model='andar', type='number')    
+
+          md-tab(label='Financeiro')
+            md-content
+              div(layout-gt-sm='row', style='margin-top: 10px')
+                div(flex="")
+                  md-input-container
+                    label Valor
+                    input(ng-model='valor', type='number')    
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="mcmv")
+                      | MCMV
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="financia")
+                      | Financiavel
+                
+                div(flex="")
+                  md-input-container
+                    label Entrada
+                    input(ng-model='entrada', type='number')    
+
+              div(layout-gt-sm='row', style='margin-top: -30px')
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="permuta")
+                      | Permuta
+
+                div(flex="")
+                  md-input-container
+                    md-checkbox.md-primary(ng-model="carro")
+                      | Carro                  
+            
+                div(flex="")
+                  md-input-container    
+                    md-checkbox.md-primary(ng-model="fgts")
+                      | FGTS                        
+                
+              div(layout-gt-sm='row', style='margin-top: -30px')
+              
+                div(flex="")
+                  md-input-container
+                    label Condominio
+                    input(ng-model='condominio', type='number')
+              
+        div(layout-gt-sm='row', layout-align='start', flex='')
+          md-button.md-raised(ng-click='Limpar()') Novo
+          md-button.md-raised.md-primary(ng-click='Gravar()',
+          ng-disabled='nome==undefined || tipo==undefined') Gravar
+          md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()',
+          ng-disabled='codigo==undefined || codigo==0') Apagar
+          md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar
