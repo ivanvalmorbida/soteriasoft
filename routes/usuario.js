@@ -111,3 +111,19 @@ exports.dlg_localizar = function (req, res) {
 exports.dlg_apagar = function (req, res) {
     res.render('usuario_dlg_apagar');
 };
+
+exports.pessoa_nome = function (req, res) {
+    var connection = mysql.createConnection(settings.dbConect);
+    var txt = req.query.txt;
+
+    connection.connect();
+    connection.query("select codigo, nome from tb_pessoa"+
+    " where nome like '"+txt+"%' and codigo in(select pessoa FROM tb_usuario)"+
+    " order by nome LIMIT 20", function(err, rows) {
+        if (!err)
+            return res.json(rows)
+        else
+            console.log('Error while performing Query.')
+    });
+    connection.end();
+}

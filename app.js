@@ -166,6 +166,7 @@ app.get('/imovel/dlg/localizar', imovel.dlg_localizar);
 app.get('/usuario', usuario.index);
 app.get('/usuario/dlg/apagar', usuario.dlg_apagar);
 app.get('/usuario/dlg/localizar', usuario.dlg_localizar);
+app.get('/usuario/pessoa_nome', usuario.pessoa_nome);
 
 app.get('/imovel_busca', imovel_busca.index);
 

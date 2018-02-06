@@ -279,49 +279,6 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         };
     }
     
-    $scope.upload_imagem = function() {
-      var file = $scope.imgFile;
-        var fd = new FormData();
-        fd.append('file', file);
-        fd.append('imovel', $scope.codigo);
-        $http.post("/imovel_imagem/adicionar", fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-        .success(function(){
-            $scope.imgFile = undefined;
-            $http.post('/imovel_imagem/imovel', {cod: $scope.codigo}).
-            success(function (data, status, headers, config) {
-                $scope.imagens = data.dados;
-            });
-        })
-        .error(function(){
-            console.log("error!!");
-        });
-    }
-
-    $scope.remover_imagem = function(cod) {
-        if (confirm("Confirma a remoção da imagem?")){
-            $http.post('/imovel_imagem/remover', {cod: cod}).
-            success(function (data, status, headers, config) {
-                $http.post('/imovel_imagem/imovel', {cod: $scope.codigo}).
-                success(function (data, status, headers, config) {
-                    $scope.imagens = data.dados;
-                });
-            });
-        }
-    }
-
-    $scope.ordem_imagem = function(cod,dir) {   
-        $http.post('/imovel_imagem/ordem', {cod: cod, dir: dir}).
-        success(function (data, status, headers, config) {
-            $http.post('/imovel_imagem/imovel', {cod: $scope.codigo}).
-            success(function (data, status, headers, config) {
-                $scope.imagens = data.dados;
-            });
-        });
-    }
-
     $scope.PessoaNome = function(StrSearch) {
         return $http.get('/pessoa/pessoa_nome', {
         params: {
@@ -342,59 +299,29 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         });
     };
 
-    $scope.CidadeNome = function(StrSearch) {
-        return $http.get('/cidade/cidade_nome', {
-        params: {
-            txt: StrSearch
-        }
-        }).then(function(data) {
-            return data.data;
-        });
-    };
-
     $scope.CidadeEstadoNome = function(StrSearch) {
         return $http.get('/cidade/cidade_estado_nome', {
         params: {
             txt: StrSearch,
-            est: $scope.l_estado.codigo
+            est: $scope.estado.codigo
         }
         }).then(function(data) {
             return data.data;
         });
     };
     
-    $scope.BairroNome = function(StrSearch) {
-        return $http.get('/bairro/bairro_nome', {
-        params: {
-            txt: StrSearch
-        }
-        }).then(function(data) {
-            return data.data;
-        });
-    };
-
-    $scope.EnderecoNome = function(StrSearch) {
-        return $http.get('/endereco/endereco_nome', {
-        params: {
-            txt: StrSearch
-        }
-        }).then(function(data) {
-            return data.data;
-        });
-    };
-
-    $scope.EnderecoCidadeNome = function(StrSearch) {
-        return $http.get('/endereco/endereco_cidade_nome', {
+    $scope.BairroCidadeNome = function(StrSearch) {
+        return $http.get('/bairro/bairro_cidade_nome', {
         params: {
             txt: StrSearch,
-            est: $scope.l_estado.codigo,
-            cid: $scope.l_cidade.codigo
+            est: $scope.estado.codigo,
+            cid: $scope.cidade.codigo
         }
         }).then(function(data) {
             return data.data;
         });
-    };    
-    
+    };
+
     var url = new URL(location.href);
     var cod = url.searchParams.get("codigo");    
     if (cod!=undefined){
@@ -403,24 +330,5 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     }
     else{
         $scope.Limpar();         
-    }
-
-    $scope.BuscarCEP = function() {
-        if ($scope.cep.length==9){
-            $http.post('/cep/cep', {cep: $scope.cep}).
-            success(function (data, status, headers, config) {
-                if (data.dados.length>0){
-                    $scope.complemento  = data.dados[0].complemento;
-                    $scope.estado       = {codigo: data.dados[0].estado, nome: data.dados[0].estado_};
-                    $scope.cidade       = {codigo: data.dados[0].cidade, nome: data.dados[0].cidade_};                
-                    $scope.bairro       = {codigo: data.dados[0].bairro, nome: data.dados[0].bairro_};
-                    $scope.endereco     = {codigo: data.dados[0].endereco, nome: data.dados[0].endereco_};
-                }else{
-                    $scope.Limpar(false);
-                }
-            }).error(function (data, status, headers, config) {
-                //
-            }); 
-        }              
     }
 });
