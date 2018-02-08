@@ -19,7 +19,7 @@ block content
             md-content
               div(layout-gt-sm='row')
                 div(layout="row", layout-sm="column", flex="")
-                  md-autocomplete(flex='',
+                  md-autocomplete(flex='', md-selected-item-change='BuscarCliente()', 
                     md-selected-item='cliente',
                     md-min-length='3', 
                     md-search-text='SearchCli', 
@@ -29,7 +29,7 @@ block content
                     md-item-template
                       span(md-highlight-text='SearchCli') {{item.nome}}
 
-                  md-button.md-icon-button.launch(href="pessoa?codigo={{proprietario.codigo}}", style='margin-top: 20px',
+                  md-button.md-icon-button.launch(href="pessoa?codigo={{cliente.codigo}}", style='margin-top: 20px',
                   title="Abrir cadastro de pessoas", target="_blank")
                     md-icon(md-svg-icon="img/people.svg")
                   

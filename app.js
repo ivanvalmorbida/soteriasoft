@@ -221,6 +221,9 @@ app.post('/usuario/codigo', usuario.codigo);
 app.post('/usuario/localizar', usuario.localizar);
 app.post('/usuario/login', usuario.login);
 
+app.post('/cliente_imovel/codigo', cliente_imovel.codigo);
+app.post('/cliente_imovel/pessoa', cliente_imovel.pessoa);
+
 app.get('*', routes);
 
 ///////////////////////////////////
