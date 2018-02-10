@@ -155,29 +155,52 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     return r;
   }  
 
+  $scope.BuscarCliente = function() {
+    if ($scope.cliente.codigo!=null){
+      $http.post('/pessoa/codigo', {cod: $scope.cliente.codigo}).
+      success(function (data, status, headers, config) {
+        if (data.dados.length>0){
+          $http.post('/pessoa_email/pessoa', {cod: $scope.cliente.codigo}).
+          success(function (data, status, headers, config) {
+            for (i = 0; i < data.dados.length; i++) {
+              $scope.emails.push(data.dados[i].email);
+            }
+          })
+
+          $http.post('/pessoa_fone/pessoa', {cod: $scope.cliente.codigo}).
+          success(function (data, status, headers, config) {
+            for (i = 0; i < data.dados.length; i++) {
+              $scope.fones.push(data.dados[i].fone);
+            }
+          })
+        }
+      })
+
+      $http.post('/cliente_imovel/pessoa', {cod: $scope.cliente.codigo}).
+      success(function (data, status, headers, config) {
+        if (data.codigo>0){
+          $scope.codigo = data.codigo
+          $scope.BuscarCodigo
+        }
+      }).error(function (data, status, headers, config) {
+        //
+      })
+    }        
+  }
+
   $scope.BuscarCodigo = function() {
-    $http.post('/imovel/codigo', {cod: $scope.codigo}).
+    $http.post('/cliente_imovel/codigo', {cod: $scope.codigo}).
     success(function (data, status, headers, config) {
       $scope.Limpar();
       if (data.dados.length>0){
-        $scope.codigo = data.dados[0].codigo;
-        $scope.tipo = data.dados[0].tipo;
-        if(data.dados[0].proprietario>0){$scope.proprietario = {codigo: data.dados[0].proprietario, nome: data.dados[0].proprietario_}};
-        $scope.documentacao = data.dados[0].documentacao;
-        $scope.inscricao_incra = data.dados[0].inscricao_incra;
-        $scope.lote_unidade = data.dados[0].lote_unidade;
-        $scope.quadra_bloco = data.dados[0].quadra_bloco;
+        $scope.interesse = data.dados[0].interesse;
+        $scope.renda = data.dados[0].renda;
+        $scope.origem = data.dados[0].origem;
+        if(data.dados[0].responsavel>0){$scope.responsavel = {codigo: data.dados[0].responsavel, nome: data.dados[0].responsavel_}};
         
-        $http.post('/imovel_terreno/imovel', {cod: $scope.codigo}).
+        $http.post('/cliente_imovel_terreno/imovel', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
-            $scope.cep = data.dados[0].cep;
-            if(data.dados[0].estado>0){$scope.estado = {codigo: data.dados[0].estado, nome: data.dados[0].estado_}};
-            if(data.dados[0].cidade>0){$scope.cidade = {codigo: data.dados[0].cidade, nome: data.dados[0].cidade_}};
-            if(data.dados[0].bairro>0){$scope.bairro = {codigo: data.dados[0].bairro, nome: data.dados[0].bairro_}};
-            if(data.dados[0].endereco>0){$scope.endereco = {codigo: data.dados[0].endereco, nome: data.dados[0].endereco_}};
-            $scope.numero = data.dados[0].numero;
-            $scope.complemento = data.dados[0].complemento;
             $scope.area_terreno = data.dados[0].area_terreno;
             $scope.frente = data.dados[0].frente;
             $scope.fundo = data.dados[0].fundo;
@@ -188,10 +211,9 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           }
         });
 
-        $http.post('/imovel_construcao/imovel', {cod: $scope.codigo}).
+        $http.post('/cliente_imovel_construcao/imovel', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
-            $scope.entrega = new Date(data.dados[0].entrega);
             $scope.ano_construcao = data.dados[0].ano_construcao;
             $scope.area_total = data.dados[0].area_total;
             $scope.area_privativa = data.dados[0].area_privativa;
@@ -212,7 +234,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           }
         });
     
-        $http.post('/imovel_financeiro/imovel', {cod: $scope.codigo}).
+        $http.post('/cliente_imovel_financeiro/imovel', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
             $scope.valor = data.dados[0].valor;
@@ -222,15 +244,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
             $scope.permuta = (data.dados[0].permuta==1);
             $scope.carro = (data.dados[0].carro==1);
             $scope.fgts = (data.dados[0].fgts==1);
-            $scope.condominio = data.dados[0].condominio;
-            if(data.dados[0].captador>0){$scope.captador = {codigo: data.dados[0].captador, nome: data.dados[0].captador_}};
-            
+            $scope.condominio = data.dados[0].condominio;        
           }
-        });
-
-        $http.post('/imovel_imagem/imovel', {cod: $scope.codigo}).
-        success(function (data, status, headers, config) {
-          $scope.imagens = data.dados;
         });
       }
     }).error(function (data, status, headers, config) {
@@ -330,25 +345,5 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }
   else{
     $scope.Limpar()
-  }
-
-  $scope.BuscarCliente = function() {
-    if ($scope.cliente.codigo!=null){
-      $http.post('/cliente_imovel/pessoa', {cod: $scope.cliente.codigo}).
-      success(function (data, status, headers, config) {
-        if (data.codigo>0){
-          $http.post('/cliente_imovel/pessoa', {cod: $scope.cliente.codigo}).
-          success(function (data, status, headers, config) {
-
-          }).error(function (data, status, headers, config) {
-            //
-          })                
-        }else{
-          $scope.Limpar(false)
-        }
-      }).error(function (data, status, headers, config) {
-        //
-      })
-    }        
   } 
 })
