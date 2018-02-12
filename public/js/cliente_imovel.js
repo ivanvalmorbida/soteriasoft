@@ -39,57 +39,55 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }
     
   $scope.Limpar = function() {
-    $scope.codigo       = 0;
-    $scope.tipo       = 0;
-    $scope.proprietario   = null;
-    $scope.documentacao   = 0;
-    $scope.inscricao_incra  = '';
-    $scope.lote_unidade   = 0;
-    $scope.quadra_bloco   = '';
-    
-    $scope.cep      = '';
-    $scope.estado     = null;
-    $scope.cidade     = null;        
-    $scope.bairro     = null;
-    $scope.endereco   = null;        
-    $scope.numero     = '';
-    $scope.complemento  = '';
-    $scope.area_terreno = 0;        
-    $scope.frente     = 0;        
-    $scope.fundo    = 0;        
-    $scope.lateral1   = 0;        
-    $scope.lateral2   = 0;        
-    $scope.gabarito   = 0;        
-    $scope.esquina    = 0;        
-    
-    $scope.entrega      = '';
-    $scope.ano_construcao   = 0;
-    $scope.area_total     = 0;
-    $scope.area_privativa   = 0;
-    $scope.quartos      = 0;
-    $scope.suites       = 0;
-    $scope.garagens     = 0;
-    $scope.mobiliada    = false;
-    $scope.churasqueira   = false;
-    $scope.infra_ar_cond  = false;
-    $scope.piso       = 0;
-    $scope.teto       = 0;
-    $scope.reboco       = false;
-    $scope.murro      = false;
-    $scope.portao       = false;
-    $scope.quintal_larg   = 0;
-    $scope.quintal_comp   = 0;
-    $scope.andar      = 0;
+    $scope.codigo = 0
+    $scope.pessoa = null
+    $scope.cpf = ''
+    $scope.fones = []
+    $scope.emails = []
+    $scope.interesse = 0
+    $scope.renda = 0
+    $scope.origem  = 0
+    $scope.responsavel = null
 
-    $scope.valor    = 0;
-    $scope.mcmv     = false;
-    $scope.financia   = false;
-    $scope.entrada    = 0;
-    $scope.permuta    = false;
-    $scope.carro    = false;
-    $scope.fgts     = false;
-    $scope.condominio   = 0;
-    $scope.captador   = 0;
+    $scope.estado = null
+    $scope.cidade = null
+    $scope.bairro = null
+    $scope.localizacoes = []
+    $scope.area_terreno = 0
+    $scope.frente = 0
+    $scope.fundo = 0
+    $scope.lateral1 = 0
+    $scope.lateral2 = 0
+    $scope.gabarito = 0
+    $scope.esquina = 0
+    
+    $scope.tipos = []
+    $scope.ano_construcao = 0
+    $scope.area_total = 0
+    $scope.area_privativa = 0
+    $scope.quartos = 0
+    $scope.suites = 0
+    $scope.garagens = 0
+    $scope.mobiliada = false
+    $scope.churasqueira = false
+    $scope.infra_ar_cond = false
+    $scope.piso = 0
+    $scope.teto = 0
+    $scope.reboco = 0
+    $scope.murro = false
+    $scope.portao = false
+    $scope.quintal_larg = 0
+    $scope.quintal_comp = 0
+    $scope.andar = 0
+
+    $scope.valor = 0
+    $scope.mcmv = false
+    $scope.financia = false
+    $scope.entrada = 0
+    $scope.permuta = 0
+    $scope.carro = 0
+    $scope.fgts = 0
+    $scope.condominio = 0
   }
 
   $scope.Gravar = function() {
@@ -157,15 +155,18 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 
   $scope.BuscarCliente = function() {
     if ($scope.cliente.codigo!=null){
+      $http.post('/pessoa_email/pessoa', {cod: $scope.cliente.codigo}).
+      success(function (data, status, headers, config) {
+        for (i = 0; i < data.dados.length; i++) {
+          $scope.emails.push(data.dados[i].email);
+        }
+        console.dir($scope.emails)
+      })
+
       $http.post('/pessoa/codigo', {cod: $scope.cliente.codigo}).
       success(function (data, status, headers, config) {
         if (data.dados.length>0){
-          $http.post('/pessoa_email/pessoa', {cod: $scope.cliente.codigo}).
-          success(function (data, status, headers, config) {
-            for (i = 0; i < data.dados.length; i++) {
-              $scope.emails.push(data.dados[i].email);
-            }
-          })
+
 
           $http.post('/pessoa_fone/pessoa', {cod: $scope.cliente.codigo}).
           success(function (data, status, headers, config) {

@@ -64,7 +64,7 @@ exports.pessoa = function (req, res) {
   connection.connect();
   connection.query('SELECT codigo from tb_cliente_imovel where pessoa='+cod, function(err, rows, fields) {
     if (!err)
-      if (rows.lengt==0){res.json({codigo: 0})} else{res.json({codigo: rows[0].codigo})}
+      if (rows.length==0){res.json({codigo: 0})} else{res.json({codigo: rows[0].codigo})}
     else
       console.log('Error while performing Query.')
   });

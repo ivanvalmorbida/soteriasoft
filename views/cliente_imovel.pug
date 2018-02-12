@@ -51,8 +51,7 @@ block content
                       md-button.md-icon-button.launch(ng-click='addFone()', 
                       title="Adicionar Telefone", target="_blank")
                         md-icon(md-svg-icon="img/fone-add.svg")
-
-                  md-chips(ng-model="fones", readonly='true', md-removable='true')
+                    md-chips(ng-model="fones", readonly='true', md-removable='true')
 
                 md-input-container(flex='')
                   label E-mails
@@ -63,8 +62,7 @@ block content
                       md-button.md-icon-button.launch(ng-click='addEmail()', 
                       title="Adicionar E-mail", target="_blank")
                         md-icon(md-svg-icon="img/email-add.svg")
-
-                  md-chips(ng-model="emails", readonly='true', md-removable='true')
+                    md-chips(ng-model="emails", readonly='true', md-removable='true')
 
               div(layout-gt-sm='row')
                 div(flex="")
@@ -139,7 +137,7 @@ block content
                     span(md-highlight-text='SearchBai') {{item.nome}}
 
               div(layout-gt-sm='row', style='margin-top: -30px')
-                md-chips(ng-model="emails", readonly='true', md-removable='true')
+                md-chips(ng-model="localizacoes", readonly='true', md-removable='true')
 
               div(layout-gt-sm='row')
                 div(flex="")
