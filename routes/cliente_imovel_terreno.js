@@ -9,7 +9,7 @@ exports.gravar = function (req, res) {
   var data = req.body;
 
   connection.connect();
-  connection.query('select imovel from tb_cliente_imovel_terreno where cliente=?', [data.imovel], 
+  connection.query('select cliente from tb_cliente_imovel_terreno where cliente=?', [data.cliente], 
   function(err, rows) {
     if (!err) {
       if (rows.length == 0) {
@@ -18,7 +18,7 @@ exports.gravar = function (req, res) {
         [data.cliente, data.area_terreno, data.frente, data.fundo, data.lateral1, data.lateral2, 
         data.gabarito, data.esquina], function(err, rows) {
           if (!err)
-            res.json({codigo: rows.insertId})      
+            res.json({dados: rows})      
           else
             console.log('Error while performing Query: '+err)
         })
@@ -28,7 +28,7 @@ exports.gravar = function (req, res) {
         [data.area_terreno, data.frente, data.fundo, data.lateral1, data.lateral2, 
         data.gabarito, data.esquina, data.cliente], function(err, rows) {
           if (!err)
-            res.json({codigo: rows.insertId})      
+            res.json({dados: rows})      
           else
             console.log('Error while performing Query: '+err)
         })
