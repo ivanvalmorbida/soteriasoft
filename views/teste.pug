@@ -1,45 +1,61 @@
 doctype html
 head
-    title teste
-    meta(charset='utf-8')
+  title teste
+  meta(charset='utf-8', name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui")
 
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.4/vue-resource.min.js')
-    script(src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js")
+  link(rel='icon', href='images/mielina.ico')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons')
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.7/vuetify.min.css')
+
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.4/vue-resource.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.7/vuetify.min.js')
+
 
 #vue_app
-    span(v-bind:title='message')
-        | Pare o mouse sobre mim e veja a dica interligada dinamicamente!
-    br
-    br
-    br
-    table.table.table-bordered
-        tr(v-for="issue in issues")
-            td {{issue.codigo}}
-            td {{issue.nome}}
-                
-    br
-    br
-    br
-    table.table.table-bordered
-        tr(v-for="tes in teste")
-            td {{tes.codigo}}
-            td {{tes.nome}}
+  v-app#inspire
+    v-data-table.elevation-1(:headers='headers', :items='issues', hide-actions='')
+      template(slot='items', slot-scope='issue')
+        td.text-xs-right {{ issue.item.codigo }}
+        td {{ issue.item.nome }}
 
-    script.
-        var vue_app = new Vue({
-            el:"#vue_app",
-            data: {message: 'Você carregou esta página em ' + new Date().toLocaleString(), 
-            issues:[], teste:[]},
-            created: function() {
-                this.$http.get("/estado/estado_nome")
-                .then((response)=>{
-                    this.issues=response.body.cis
-                })
+  br
+  br
 
-                axios.get('/estado/estado_nome')
-                .then(function (response) {
-                    vue_app.teste = response.data.cis
-                })
-            }
+  //span(v-bind:title='message')
+      | Pare o mouse sobre mim e veja a dica interligada dinamicamente!
+
+  //table.table.table-bordered
+      tr(v-for="tes in teste")
+          td {{tes.codigo}}
+          td {{tes.nome}}
+
+
+  script.
+    var vue_app = new Vue({
+    el:"#vue_app",
+      data: {message: 'Você carregou esta página em ' + new Date().toLocaleString(), 
+      issues:[],  headers: [
+        {
+          text: 'Codigo',
+          align: 'issue.item.',
+          sortable: false,
+          value: 'codigo'
+        },
+        { text: 'Nome', value: 'nome' }],
+        
+        teste:[]},
+       
+      created: function() {
+        this.$http.get("/dados/cis_ativos")
+        .then((response)=>{
+          this.issues=response.body.cis
         })
+
+        axios.get('/dados/cis_ativos')
+        .then(function (response) {
+          vue_app.teste = response.data.cis
+        })
+      }
+    })
