@@ -43,7 +43,12 @@ var routes = require('./routes/index'),
   imovel_imagem = require('./routes/imovel_imagem'),
   imovel_busca = require('./routes/imovel_busca'),
   
-  cliente_imovel = require('./routes/cliente_imovel');
+  cliente_imovel = require('./routes/cliente_imovel'),
+  cliente_imovel_cons = require('./routes/cliente_imovel_construcao'),
+  cliente_imovel_fina = require('./routes/cliente_imovel_financeiro'),
+  cliente_imovel_loca = require('./routes/cliente_imovel_localizacao'),
+  cliente_imovel_terr = require('./routes/cliente_imovel_terreno'),
+  cliente_imovel_tipo = require('./routes/cliente_imovel_tipo');
   
 var index = require('./routes/index');
 var usuario = require('./routes/usuario');
@@ -166,6 +171,7 @@ app.get('/imovel/dlg/localizar', imovel.dlg_localizar);
 app.get('/usuario', usuario.index);
 app.get('/usuario/dlg/apagar', usuario.dlg_apagar);
 app.get('/usuario/dlg/localizar', usuario.dlg_localizar);
+app.get('/usuario/pessoa_nome', usuario.pessoa_nome);
 
 app.get('/imovel_busca', imovel_busca.index);
 
@@ -219,6 +225,24 @@ app.post('/usuario/gravar', usuario.gravar);
 app.post('/usuario/codigo', usuario.codigo);
 app.post('/usuario/localizar', usuario.localizar);
 app.post('/usuario/login', usuario.login);
+
+app.post('/cliente_imovel/codigo', cliente_imovel.codigo);
+app.post('/cliente_imovel/pessoa', cliente_imovel.pessoa);
+
+app.post('/cliente_imovel_cons/gravar', cliente_imovel_cons.gravar);
+app.post('/cliente_imovel_cons/cliente', cliente_imovel_cons.cliente);
+
+app.post('/cliente_imovel_fina/gravar', cliente_imovel_fina.gravar);
+app.post('/cliente_imovel_fina/cliente', cliente_imovel_fina.cliente);
+
+app.post('/cliente_imovel_loca/gravar', cliente_imovel_loca.gravar);
+app.post('/cliente_imovel_loca/cliente', cliente_imovel_loca.cliente);
+
+app.post('/cliente_imovel_terr/gravar', cliente_imovel_terr.gravar);
+app.post('/cliente_imovel_terr/cliente', cliente_imovel_terr.cliente);
+
+app.post('/cliente_imovel_tipo/gravar', cliente_imovel_tipo.gravar);
+app.post('/cliente_imovel_tipo/cliente', cliente_imovel_tipo.cliente);
 
 app.get('*', routes);
 

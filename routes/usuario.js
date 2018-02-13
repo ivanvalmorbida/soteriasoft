@@ -5,109 +5,125 @@ var mysql   = require('mysql');
 var auth = require('../authetication');
 
 exports.index = function (req, res) {
-    auth.active_user(req, res, render_index)
+  auth.active_user(req, res, render_index)
 }
 
 function render_index(req, res) {
-    res.render('usuario', {empresa: settings.empresa});
+  res.render('usuario', {empresa: settings.empresa});
 };
 
 exports.login = function (req, res) {
-    var connection = mysql.createConnection(settings.dbConect);
-    var usu = req.body.usu;
-    var sen = req.body.sen;
+  var connection = mysql.createConnection(settings.dbConect);
+  var usu = req.body.usu;
+  var sen = req.body.sen;
 
-    connection.connect();
-    connection.query('SELECT codigo, tipo from tb_usuario'+
-    ' where usuario=? and senha=?',[usu, sen], function(err, rows, fields) {
-        if (!err){
-            if (rows.length>0){
-                req.session.UserCod = rows[0].codigo;
-                req.session.UserNom = usu;
-                req.session.UserTip = rows[0].tipo;
-            }
-            res.json({dados: rows})
-        }
-        else
-            console.log('Error while performing Query.')
-    });
-    connection.end();
+  connection.connect();
+  connection.query('SELECT codigo, tipo from tb_usuario'+
+  ' where usuario=? and senha=?',[usu, sen], function(err, rows, fields) {
+    if (!err){
+      if (rows.length>0){
+        req.session.UserCod = rows[0].codigo;
+        req.session.UserNom = usu;
+        req.session.UserTip = rows[0].tipo;
+      }
+      res.json({dados: rows})
+    }
+    else
+      console.log('Error while performing Query.')
+  });
+  connection.end();
 }
 
 exports.gravar = function (req, res) {
-    var connection = mysql.createConnection(settings.dbConect);
-    var data = req.body;
+  var connection = mysql.createConnection(settings.dbConect);
+  var data = req.body;
 
-    connection.connect();
-    if (data.codigo==0) {
-        connection.query('insert into tb_usuario (tipo, usuario, senha, '+ 
-        'pessoa, cadastro) values (?, ?, ?, ?, now());', 
-        [data.tipo, data.usuario, data.senha, data.pessoa],
-        function(err, rows) {
-            if (!err)
-                res.json({codigo: rows.insertId})            
-            else
-                console.log('Error while performing Query: '+err)
-        })
-    }   
-    else {
-        connection.query('update tb_usuario set tipo=?, usuario=?, senha=?, '+
-        'pessoa=? where codigo=?',[data.tipo, data.usuario, data.senha, data.pessoa, data.codigo],
-        function(err, rows) {
-            if (!err)
-                res.json({codigo: data.codigo})
-            else
-                console.log('Error while performing Query.')
-        })
-    }         
-    connection.end();
+  connection.connect();
+  if (data.codigo==0) {
+    connection.query('insert into tb_usuario (tipo, usuario, senha, '+ 
+    'pessoa, cadastro) values (?, ?, ?, ?, now());', 
+    [data.tipo, data.usuario, data.senha, data.pessoa],
+    function(err, rows) {
+      if (!err)
+        res.json({codigo: rows.insertId})      
+      else
+        console.log('Error while performing Query: '+err)
+    })
+  }   
+  else {
+    connection.query('update tb_usuario set tipo=?, usuario=?, senha=?, '+
+    'pessoa=? where codigo=?',[data.tipo, data.usuario, data.senha, data.pessoa, data.codigo],
+    function(err, rows) {
+      if (!err)
+        res.json({codigo: data.codigo})
+      else
+        console.log('Error while performing Query.')
+    })
+  }     
+  connection.end();
 }
 
 exports.codigo = function (req, res) {
-    var connection = mysql.createConnection(settings.dbConect);
-    var cod = req.body.cod;
+  var connection = mysql.createConnection(settings.dbConect);
+  var cod = req.body.cod;
 
-    connection.connect();
-    connection.query('SELECT u.*, p.nome as pessoa_ from tb_usuario u'+
-    ' left join tb_pessoa p on u.pessoa=p.codigo'+
-    ' where u.codigo='+cod, function(err, rows, fields) {
-        if (!err)
-            res.json({dados: rows})
-        else
-            console.log('Error while performing Query.')
-    });
-    connection.end();
+  connection.connect();
+  connection.query('SELECT u.*, p.nome as pessoa_ from tb_usuario u'+
+  ' left join tb_pessoa p on u.pessoa=p.codigo'+
+  ' where u.codigo='+cod, function(err, rows, fields) {
+    if (!err)
+      res.json({dados: rows})
+    else
+      console.log('Error while performing Query.')
+  });
+  connection.end();
 }
 
 exports.localizar = function (req, res) {
-    var connection = mysql.createConnection(settings.dbConect);
-    var data = req.body;
-    var sql = '';
+  var connection = mysql.createConnection(settings.dbConect);
+  var data = req.body;
+  var sql = '';
 
-    sql += "SELECT u.codigo, u.usuario, p.nome as pessoa,";
-    sql += " case when u.tipo=1 then 'Admin' else 'Operac' end as tipo";
-    sql += " FROM tb_usuario u left join tb_pessoa p on p.codigo=u.pessoa";
-    sql += " Where";
+  sql += "SELECT u.codigo, u.usuario, p.nome as pessoa,";
+  sql += " case when u.tipo=1 then 'Admin' else 'Operac' end as tipo";
+  sql += " FROM tb_usuario u left join tb_pessoa p on p.codigo=u.pessoa";
+  sql += " Where";
 
-    if (data.camp=="usuario"){
-        sql += " usuario like '%"+data.text+"%'"
-    }
+  if (data.camp=="usuario"){
+    sql += " usuario like '%"+data.text+"%'"
+  }
 
-    connection.connect();
-    connection.query(sql, function(err, rows, fields) {
-        if (!err)
-            res.json({dados: rows})
-        else
-            console.log('Error while performing Query.')
-    });
+  connection.connect();
+  connection.query(sql, function(err, rows, fields) {
+    if (!err)
+      res.json({dados: rows})
+    else
+      console.log('Error while performing Query.')
+  });
 
-    connection.end();
+  connection.end();
 }
 
 exports.dlg_localizar = function (req, res) {
-    res.render('usuario_dlg_localizar');
+  res.render('usuario_dlg_localizar');
 };
 
 exports.dlg_apagar = function (req, res) {
-    res.render('usuario_dlg_apagar');
+  res.render('usuario_dlg_apagar');
 };
+
+exports.pessoa_nome = function (req, res) {
+  var connection = mysql.createConnection(settings.dbConect);
+  var txt = req.query.txt;
+
+  connection.connect();
+  connection.query("select codigo, nome from tb_pessoa"+
+  " where nome like '"+txt+"%' and codigo in(select pessoa FROM tb_usuario)"+
+  " order by nome LIMIT 20", function(err, rows) {
+    if (!err)
+      return res.json(rows)
+    else
+      console.log('Error while performing Query.')
+  });
+  connection.end();
+}
