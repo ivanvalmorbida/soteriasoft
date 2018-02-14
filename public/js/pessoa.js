@@ -57,16 +57,10 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     success(function (data, status, headers, config) {
       $scope.codigo = data.codigo;
 
-      $http.post('/pessoa_email/apagar', {pessoa: $scope.codigo}).
-      success(function (data, status, headers, config) {
-        $http.post('/pessoa_email/gravar', {pessoa: $scope.codigo, emails: $scope.emails}); 
-      });
+      $http.post('/pessoa_email/gravar', {pessoa: $scope.codigo, emails: $scope.emails})
 
-      $http.post('/pessoa_fone/apagar', {pessoa: $scope.codigo}).
-      success(function (data, status, headers, config) {
-        $http.post('/pessoa_fone/gravar', {pessoa: $scope.codigo, fones: $scope.fones}); 
-      });
-
+      $http.post('/pessoa_fone/gravar', {pessoa: $scope.codigo, fones: $scope.fones})
+      
       if ($scope.tipo==1){
         if($scope.ufnasc==null){ufnasc=0} else{ufnasc=$scope.ufnasc.codigo}
         if($scope.cidadenasc==null){cidadenasc=0} else{cidadenasc=$scope.cidadenasc.codigo}

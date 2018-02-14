@@ -13,12 +13,10 @@ function render_index(req, res) {
 };
 
 exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
 
-  data.cep = data.cep.replace("-", "");
-
-  connection.connect();
+  connection.connect()
   if (data.codigo==0) {
     connection.query('insert into tb_cliente_imovel (pessoa, interesse, renda,'+
     ' origem, responsavel, cadastro) values (?, ?, ?, ?, ?, now());', 
@@ -58,17 +56,17 @@ exports.codigo = function (req, res) {
 }
 
 exports.pessoa = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT codigo from tb_cliente_imovel where pessoa='+cod, function(err, rows, fields) {
     if (!err)
       if (rows.length==0){res.json({codigo: 0})} else{res.json({codigo: rows[0].codigo})}
     else
       console.log('Error while performing Query.')
   });
-  connection.end();
+  connection.end()
 }
 
 exports.localizar = function (req, res) {

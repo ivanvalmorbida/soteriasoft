@@ -5,43 +5,12 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }  
 
   $scope.Apagar = function(ev) {
-    $mdDialog.show({
-      controller: ApagarController,
-      templateUrl: './imovel/dlg/apagar',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose: true,
-      locals: { inscricao_incra: $scope.inscricao_incra }
-    })
-    .then(function(answer) {
-      $http.post('/imovel/apagar', {cod: $scope.codigo}).
-      success(function (data, status, headers, config) {
-        $scope.Limpar();
-      }).error(function (data, status, headers, config) {
-        //
-      });        
-      console.dir('You said the information was "' + answer + '".');
-    }, function() {
-      console.dir('You cancelled the dialog.');
-    });
+    console.dir($scope.pessoa_)
   };
   
-  function ApagarController($scope, $mdDialog, inscricao_incra) {
-    $scope.inscricao_incra = inscricao_incra;
-
-    $scope.Cancel = function() {
-      $mdDialog.cancel();
-    };
-
-    $scope.Efetivar = function(answer) {
-      $mdDialog.hide(answer);
-    };
-  }
-    
   $scope.Limpar = function() {
     $scope.codigo = 0
     $scope.pessoa = null
-    $scope.cpf = ''
     $scope.fones = []
     $scope.emails = []
     $scope.interesse = 0
@@ -91,12 +60,13 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }
 
   $scope.Gravar = function() {
-    if($scope.proprietario==null){proprietario=0} else{proprietario=$scope.proprietario.codigo}
+    if($scope.pessoa==null){pessoa=0} else{pessoa=$scope.pessoa.codigo}
+    pessoa_= $('#pessoa_').html()
+    if($scope.pessoa==null){pessoa=0} else{pessoa=$scope.pessoa.codigo}
 
-    $http.post('/imovel/gravar', {codigo: $scope.codigo, tipo: $scope.tipo, 
-      proprietario: proprietario, documentacao: $scope.documentacao,
-      inscricao_incra: $scope.inscricao_incra, lote_unidade: $scope.lote_unidade,
-      quadra_bloco: $scope.quadra_bloco}).
+    $http.post('/cliente_imovel/gravar', {codigo: $scope.codigo, pessoa: pessoa, 
+      fones$scop: e.fones, emails: $scope.emails, interesse: $scope.interesse, 
+      renda: $scope.renda, origem: scope.origem, responsavel : responsavel}).
     success(function (data, status, headers, config) {
       $scope.codigo = data.codigo;
 
@@ -154,26 +124,25 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }  
 
   $scope.BuscarCliente = function() {
-    if ($scope.cliente.codigo!=null){
+    if ($scope.cliente!=null){
       $http.post('/pessoa_email/pessoa', {cod: $scope.cliente.codigo}).
       success(function (data, status, headers, config) {
         for (i = 0; i < data.dados.length; i++) {
-          $scope.emails.push(data.dados[i].email);
+          $scope.emails.push(data.dados[i].email)
         }
-        console.dir($scope.emails)
+      })
+
+      $http.post('/pessoa_fone/pessoa', {cod: $scope.cliente.codigo}).
+      success(function (data, status, headers, config) {
+        for (i = 0; i < data.dados.length; i++) {
+          $scope.fones.push(data.dados[i].fone)
+        }
       })
 
       $http.post('/pessoa/codigo', {cod: $scope.cliente.codigo}).
       success(function (data, status, headers, config) {
         if (data.dados.length>0){
 
-
-          $http.post('/pessoa_fone/pessoa', {cod: $scope.cliente.codigo}).
-          success(function (data, status, headers, config) {
-            for (i = 0; i < data.dados.length; i++) {
-              $scope.fones.push(data.dados[i].fone);
-            }
-          })
         }
       })
 
@@ -186,6 +155,10 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       }).error(function (data, status, headers, config) {
         //
       })
+    }
+    else {
+      $scope.emails = []
+      $scope.fones = []
     }        
   }
 
@@ -296,6 +269,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }
   
   $scope.PessoaNome = function(StrSearch) {
+    $scope.pessoa_ = StrSearch
     return $http.get('/pessoa/pessoa_nome', {
     params: {
       txt: StrSearch

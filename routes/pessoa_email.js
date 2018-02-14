@@ -8,14 +8,18 @@ exports.gravar = function (req, res) {
   var data = req.body;
 
   connection.connect();
-  for (i = 0; i < data.emails.length; i++) {
-    connection.query('insert into tb_pessoa_email (pessoa, email) values (?, ?)',
-    [data.pessoa, data.emails[i]], function(err, rows) {
-      if (err)
-        console.log('Error while performing Query.')
-    });        
-  }
-  connection.end();
+  connection.query('delete from tb_pessoa_email where pessoa=?', [data.pessoa], 
+  function(err, rows) {
+    if (!err) {
+      for (i = 0; i < data.emails.length; i++) {
+        connection.query('insert into tb_pessoa_email (pessoa, email) values (?, ?)',
+        [data.pessoa, data.emails[i]], function(err, rows) {
+          if (err)
+            console.log('Error while performing Query.')
+        })
+      }
+    }
+  })
 }
 
 exports.apagar = function (req, res) {

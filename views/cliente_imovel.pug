@@ -18,8 +18,24 @@ block content
           md-tab(label='Contato')
             md-content
               div(layout-gt-sm='row')
-                div(layout="row", layout-sm="column", flex="")
-                  md-autocomplete(flex='', md-selected-item-change='BuscarCliente()', 
+                div(flex="15")
+                  md-input-container
+                    label Interesse
+                    md-select(ng-model='interesse')
+                      md-option(value=1) Comprar
+                      md-option(value=2) Vender
+
+                div(flex="15")
+                  md-input-container
+                    label Origem
+                    md-select(ng-model='origem')
+                      md-option(value=1) Presencial
+                      md-option(value=2) Telefone
+                      md-option(value=3) E-mail
+                      md-option(value=4) Portal
+
+                div(layout="row", layout-sm="column", flex="70")
+                  md-autocomplete(id='pessoa_', flex='', md-selected-item-change='BuscarCliente()', 
                     md-selected-item='cliente',
                     md-min-length='3', 
                     md-search-text='SearchCli', 
@@ -36,10 +52,6 @@ block content
                   md-button.md-icon-button.launch(ng-click='', 
                   style='margin-top: 20px;margin-left: -10px;', title="Cadastrar outra pessoa")
                     md-icon(md-svg-icon="img/adicionar.svg")
-
-                md-input-container.md-block(flex-gt-sm='')
-                  label CPF
-                  input(ng-model='cpf', ui-mask="999.999.999-99")
 
               div(layout-gt-sm='row', style='margin-top: -30px')               
                 md-input-container(flex='')
@@ -65,29 +77,13 @@ block content
                     md-chips(ng-model="emails", readonly='true', md-removable='true')
 
               div(layout-gt-sm='row')
-                div(flex="")
-                  md-input-container
-                    label Interesse
-                    md-select(ng-model='interesse')
-                      md-option(value=1) Comprar
-                      md-option(value=2) Vender
 
-                div(flex="")
+                div(flex="20")
                   md-input-container
                     label Renda
                     input(ng-model='renda', type='number')    
 
-                div(flex="")
-                  md-input-container
-                    label Origem
-                    md-select(ng-model='origem')
-                      md-option(value=1) Presencial
-                      md-option(value=2) Telefone
-                      md-option(value=3) E-mail
-                      md-option(value=4) Portal
-
-              div(layout-gt-sm='row', style='margin-top: -30px')
-                div(layout="row", layout-sm="column", flex="")
+                div(layout="row", layout-sm="column", flex="80")
                   md-autocomplete(flex='',
                     md-selected-item='responsavel',
                     md-min-length='1', 
@@ -340,6 +336,5 @@ block content
           md-button.md-raised(ng-click='Limpar()') Novo
           md-button.md-raised.md-primary(ng-click='Gravar()',
           ng-disabled='nome==undefined || tipo==undefined') Gravar
-          md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()',
-          ng-disabled='codigo==undefined || codigo==0') Apagar
+          md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()') Apagar
           md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar
