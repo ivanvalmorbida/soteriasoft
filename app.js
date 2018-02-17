@@ -31,8 +31,6 @@ var routes = require('./routes/index'),
   atividade_economica = require('./routes/atividade_economica'),
 
   pessoa = require('./routes/pessoa'),
-  pessoa_email = require('./routes/pessoa_email'),
-  pessoa_fone = require('./routes/pessoa_fone'),  
   pessoa_fisica = require('./routes/pessoa_fisica'),  
   pessoa_juridica = require('./routes/pessoa_juridica'),
 
@@ -137,6 +135,9 @@ app.get('/google/auth/callback',
   function(req, res) {res.redirect('/');}
 );
 
+app.use(require('./routes/pessoa_email'))
+app.use(require('./routes/pessoa_fone')) 
+
 app.get('/cep', cep.index);
 app.get('/cep/dlg/localizar', cep.dlg_localizar);
 app.get('/cep/dlg/apagar', cep.dlg_apagar);
@@ -185,14 +186,6 @@ app.post('/cep/apagar', cep.apagar);
 app.post('/pessoa/gravar', pessoa.gravar);
 app.post('/pessoa/codigo', pessoa.codigo);
 app.post('/pessoa/localizar', pessoa.localizar);
-
-app.post('/pessoa_email/apagar', pessoa_email.apagar);
-app.post('/pessoa_email/gravar', pessoa_email.gravar);
-app.post('/pessoa_email/pessoa', pessoa_email.pessoa);
-
-app.post('/pessoa_fone/apagar', pessoa_fone.apagar);
-app.post('/pessoa_fone/gravar', pessoa_fone.gravar);
-app.post('/pessoa_fone/pessoa', pessoa_fone.pessoa);
 
 app.post('/pessoa_fisica/gravar', pessoa_fisica.gravar);
 app.post('/pessoa_fisica/pessoa', pessoa_fisica.pessoa);

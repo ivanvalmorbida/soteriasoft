@@ -1,5 +1,13 @@
 angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 .controller('Soteriasoft.Control', function($http, $scope, $mdDialog) {
+  
+  $scope.newLoc = function(chip) {
+    return {
+      name: chip,
+      type: 'unknown'
+    }
+  }
+  
   $scope.format = function(mask, number) {
     return format(mask, number);
   }  
@@ -11,6 +19,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   $scope.Limpar = function() {
     $scope.codigo = 0
     $scope.pessoa = null
+    $scope.pessoa_ = ''
     $scope.fones = []
     $scope.emails = []
     $scope.interesse = 0
@@ -21,7 +30,23 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.estado = null
     $scope.cidade = null
     $scope.bairro = null
-    $scope.localizacoes = []
+    $scope.localizacoes = [
+      {
+        'estado' : 'SC',
+        'cidade' : 'Joinville',
+        'bairro' : 'Centro'
+      },
+      {
+        'estado' : 'SC',
+        'cidade' : 'Joinille',
+        'bairro' : 'Anita Garibaldi'
+      },
+      {
+        'estado' : 'SC',
+        'cidade' : 'Joinville',
+        'bairro' : 'Floresta'
+      }
+    ]
     $scope.area_terreno = 0
     $scope.frente = 0
     $scope.fundo = 0
@@ -61,19 +86,18 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 
   $scope.Gravar = function() {
     if($scope.pessoa==null){pessoa=0} else{pessoa=$scope.pessoa.codigo}
-    pessoa_= $('#pessoa_').html()
-    if($scope.pessoa==null){pessoa=0} else{pessoa=$scope.pessoa.codigo}
+    if($scope.responsavel==null){responsavel=0} else{responsavel=$scope.responsavel.codigo}
 
     $http.post('/cliente_imovel/gravar', {codigo: $scope.codigo, pessoa: pessoa, 
-      fones$scop: e.fones, emails: $scope.emails, interesse: $scope.interesse, 
-      renda: $scope.renda, origem: scope.origem, responsavel : responsavel}).
+      pessoa_: $scope.pessoa_, fones: $scope.fones, emails: $scope.emails, 
+      interesse: $scope.interesse, renda: $scope.renda, origem: scope.origem, 
+      responsavel : responsavel}).
     success(function (data, status, headers, config) {
       $scope.codigo = data.codigo;
 
       if($scope.estado==null){estado=0} else{estado=$scope.estado.codigo}
       if($scope.cidade==null){cidade=0} else{cidade=$scope.cidade.codigo}
       if($scope.bairro==null){bairro=0} else{bairro=$scope.bairro.codigo}
-      if($scope.endereco==null){endereco=0} else{endereco=$scope.endereco.codigo}
       
       if ($scope.esquina==false) {esquina=0} else {esquina=1};
         

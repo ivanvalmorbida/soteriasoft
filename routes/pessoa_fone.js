@@ -1,13 +1,18 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
 
-exports.gravar = function (req, res) {
+router.post('/pessoa_fone/apagar', apagar)
+router.post('/pessoa_fone/gravar', gravar)
+router.post('/pessoa_fone/pessoa', pessoa)
+router.post('/pessoa_fone/fone', fone)
+
+function gravar(req, res) {
   var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+  var data = req.body
 
-  connection.connect();
+  connection.connect()
   connection.query('delete from tb_pessoa_fone where pessoa=?', 
   [data.pessoa], function(err, rows) {
     if (!err) {
@@ -22,11 +27,11 @@ exports.gravar = function (req, res) {
   })
 }
 
-exports.apagar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+function apagar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
 
-  connection.connect();
+  connection.connect()
   connection.query('delete from tb_pessoa_fone where pessoa=?', 
   [data.pessoa], function(err, rows) {
     if (!err) {
@@ -35,19 +40,36 @@ exports.apagar = function (req, res) {
     else
       console.log('Error while performing Query.')
   })
-  connection.end();
+  connection.end()
 }
 
-exports.pessoa = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function pessoa(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
   
-  connection.connect();
-  connection.query('SELECT * from tb_pessoa_fone where pessoa='+cod, function(err, rows, fields) {
+  connection.connect()
+  connection.query('SELECT * from tb_pessoa_fone where pessoa='+cod, function(err, rows) {
     if (!err)
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+function fone(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var fone = req.body.fone
+  
+  connection.connect()
+  connection.query('SELECT * from tb_pessoa_fone where fone=?', [fone], 
+  function(err, rows) {
+    if (!err)
+      res.json({dados: rows})
+    else
+      console.log('Error while performing Query.')
+  })
+  connection.end()
+}
+
+module.exports = router

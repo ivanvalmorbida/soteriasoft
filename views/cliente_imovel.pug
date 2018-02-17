@@ -17,7 +17,7 @@ block content
         md-tabs(md-dynamic-height='', md-border-bottom='')
           md-tab(label='Contato')
             md-content
-              div(layout-gt-sm='row')
+              div(layout-gt-sm='row', style='margin-top: 10px')
                 div(flex="15")
                   md-input-container
                     label Interesse
@@ -76,7 +76,7 @@ block content
                         md-icon(md-svg-icon="img/email-add.svg")
                     md-chips(ng-model="emails", readonly='true', md-removable='true')
 
-              div(layout-gt-sm='row')
+              div(layout-gt-sm='row', style='margin-top: -10px')
 
                 div(flex="20")
                   md-input-container
@@ -133,9 +133,13 @@ block content
                     span(md-highlight-text='SearchBai') {{item.nome}}
 
               div(layout-gt-sm='row', style='margin-top: -30px')
-                md-chips(ng-model="localizacoes", readonly='true', md-removable='true')
+                md-chips.custom-chips(ng-model="localizacoes", readonly="true", 
+                md-transform-chip="newLoc($chip)", md-removable="true")
+                  md-chip-template
+                    span
+                      | {{$chip.estado}} - {{$chip.cidade}} - {{$chip.bairro}}
 
-              div(layout-gt-sm='row')
+              div(layout-gt-sm='row', style='margin-top: 10px')
                 div(flex="")
                   md-input-container
                     label Area m²
