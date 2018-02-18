@@ -25,7 +25,6 @@ var routes = require('./routes/index'),
   bairro = require('./routes/bairro'),
   endereco = require('./routes/endereco'),
   
-  nacionalidade = require('./routes/nacionalidade'),
   estado_civil = require('./routes/estado_civil'),
   cbo = require('./routes/cbo'),
   atividade_economica = require('./routes/atividade_economica'),
@@ -137,6 +136,8 @@ app.use(require('./routes/pessoa_email'))
 app.use(require('./routes/pessoa_fone')) 
 app.use(require('./routes/cliente_imovel_localizacao'))
 app.use(require('./routes/cliente_imovel_tipo'))
+app.use(require('./routes/nacionalidade'))
+app.use(require('./routes/imovel_tipo'))
 
 app.get('/cep', cep.index);
 app.get('/cep/dlg/localizar', cep.dlg_localizar);
@@ -155,7 +156,6 @@ app.get('/endereco/endereco_nome', endereco.endereco_nome);
 app.get('/endereco/endereco_cidade_nome', endereco.endereco_cidade_nome);
 
 app.get('/estado/estado_todos', estado.estado_todos);
-app.get('/nacionalidade/nacionalidade_pais', nacionalidade.nacionalidade_pais);
 app.get('/estado_civil/estado_civil_descricao', estado_civil.estado_civil_descricao);
 app.get('/cbo/cbo_descricao', cbo.cbo_descricao);
 app.get('/atividade_economica/atividade_economica_descricao', atividade_economica.atividade_economica_descricao);

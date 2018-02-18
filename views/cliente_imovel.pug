@@ -182,7 +182,10 @@ block content
                   label Tipo
                   div(layout='row')
                     div
-                      input(ng-model='tipo', ui-telefone)
+                      md-select(ng-model='tipo')
+                        md-option(value=1) Ceramico
+                        md-option(value=2) Porcelanato
+                        md-option(value=3) Madeira    
                     div
                       md-button.md-icon-button.launch(ng-click='addTipo()', 
                       title="Adicionar Tipo de imóvel", target="_blank")

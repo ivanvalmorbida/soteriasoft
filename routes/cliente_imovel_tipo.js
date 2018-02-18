@@ -31,9 +31,9 @@ function cliente(req, res) {
   var cod = req.body.cod
 
   connection.connect();
-  connection.query("SELECT case when tipo=4 then 'Geminado' when tipo=3 then 'Apartamento'"+
-  " when tipo=2 then 'Casa padrão' when tipo=1 then 'Terreno' when tipo=5 then 'Rural' end as tipo_"+ 
-  " from tb_cliente_imovel_tipo as c where cliente="+cod, 
+  connection.query("SELECT c.tipo, t.descricao as tipo_"+ 
+  " from tb_cliente_imovel_tipo as c"+
+  " left join tb_imovel_tipo t on t.codigo=c.tipo where cliente="+cod, 
   function(err, rows, fields) {
     if (!err)
       res.json({dados: rows})
