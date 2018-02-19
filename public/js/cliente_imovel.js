@@ -1,6 +1,16 @@
 angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 .controller('Soteriasoft.Control', function($http, $scope, $mdDialog) {
   
+  $scope.addTipo = function() {
+    console.dir($scope.tipo)
+    $scope.tipos.push({'codigo': $scope.tipo.codigo, 'descricao': $scope.tipo.descricao})
+    $scope.tipo = null
+  }
+
+  $http.get('/imovel_tipo/todos').then(function(res) {
+    $scope.tipo_imovel = res.data.tipo_todos
+  })
+
   $scope.newLoc = function(chip) {
     return {
       name: chip,
@@ -9,7 +19,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }
   
   $scope.format = function(mask, number) {
-    return format(mask, number);
+    return format(mask, number)
   }  
 
   $scope.Apagar = function(ev) {
@@ -55,7 +65,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.gabarito = 0
     $scope.esquina = 0
     
-    $scope.tipos = []
+    $scope.tipos = [{codigo: 1, descricao: 'apto'}]
     $scope.ano_construcao = 0
     $scope.area_total = 0
     $scope.area_privativa = 0

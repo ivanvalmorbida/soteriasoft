@@ -132,6 +132,10 @@ block content
                   md-item-template
                     span(md-highlight-text='SearchBai') {{item.nome}}
 
+                md-button.md-icon-button.launch(ng-click='addLocal()', style='margin-top: 15px', 
+                title="Adicionar Localização de imóvel", target="_blank")
+                  md-icon(md-svg-icon="img/seta-direita.svg")
+                    
               div(layout-gt-sm='row', style='margin-top: -30px')
                 md-chips.custom-chips(ng-model="localizacoes", readonly="true", 
                 md-transform-chip="newLoc($chip)", md-removable="true")
@@ -181,18 +185,21 @@ block content
                 md-input-container(flex='')
                   label Tipo
                   div(layout='row')
-                    div
+                    div(style='margin-top: -15px')
                       md-select(ng-model='tipo')
-                        md-option(value=1) Ceramico
-                        md-option(value=2) Porcelanato
-                        md-option(value=3) Madeira    
+                        md-option(ng-repeat="t in tipo_imovel", ng-value="t") {{t.descricao}} 
                     div
                       md-button.md-icon-button.launch(ng-click='addTipo()', 
                       title="Adicionar Tipo de imóvel", target="_blank")
                         md-icon(md-svg-icon="img/seta-direita.svg")
-                        
-                    md-chips(ng-model="tipos", readonly='true', md-removable='true')
               
+                    md-chips.custom-chips(ng-model="tipos", readonly="true", 
+                    md-transform-chip="newLoc($chip)", md-removable="true")
+                      md-chip-template
+                        span
+                          | {{$chip.descricao}}
+
+
               div(layout-gt-sm='row', style='margin-top: -30px')
                 div(flex="")
                   md-input-container
