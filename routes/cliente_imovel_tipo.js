@@ -14,9 +14,9 @@ function gravar(req, res) {
   connection.query('delete from tb_cliente_imovel_tipo where cliente=?', [data.cliente], 
   function(err, rows) {
     if (!err) {
-      for (i = 0; i < data.local.length; i++) {
+      for (i = 0; i < data.tipo.length; i++) {
         connection.query('insert into tb_cliente_imovel_tipo (cliente, tipo) values (?, ?);', 
-        [data.cliente, data.local[i].tipo], function(err, rows) {
+        [data.cliente, data.tipo[i].tipo], function(err, rows) {
           if (err)
             console.log('Error while performing Query.')
         })        

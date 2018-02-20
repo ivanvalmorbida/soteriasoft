@@ -2,9 +2,17 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 .controller('Soteriasoft.Control', function($http, $scope, $mdDialog) {
   
   $scope.addTipo = function() {
-    console.dir($scope.tipo)
     $scope.tipos.push({'codigo': $scope.tipo.codigo, 'descricao': $scope.tipo.descricao})
     $scope.tipo = null
+  }
+
+  $scope.addLocal = function() {
+    $scope.localizacoes.push({
+      'estado': $scope.estado.codigo, 'estado_': $scope.estado.sigla,
+      'cidade': $scope.cidade.codigo, 'cidade_': $scope.cidade.nome, 
+      'bairro': $scope.bairro.codigo, 'bairro_': $scope.bairro.nome, 
+    })
+    $scope.bairro = null
   }
 
   $http.get('/imovel_tipo/todos').then(function(res) {
@@ -40,23 +48,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.estado = null
     $scope.cidade = null
     $scope.bairro = null
-    $scope.localizacoes = [
-      {
-        'estado' : 'SC',
-        'cidade' : 'Joinville',
-        'bairro' : 'Centro'
-      },
-      {
-        'estado' : 'SC',
-        'cidade' : 'Joinille',
-        'bairro' : 'Anita Garibaldi'
-      },
-      {
-        'estado' : 'SC',
-        'cidade' : 'Joinville',
-        'bairro' : 'Floresta'
-      }
-    ]
+    $scope.localizacoes = []
     $scope.area_terreno = 0
     $scope.frente = 0
     $scope.fundo = 0
@@ -65,7 +57,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.gabarito = 0
     $scope.esquina = 0
     
-    $scope.tipos = [{codigo: 1, descricao: 'apto'}]
+    $scope.tipos = []
     $scope.ano_construcao = 0
     $scope.area_total = 0
     $scope.area_privativa = 0
@@ -103,49 +95,44 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       interesse: $scope.interesse, renda: $scope.renda, origem: scope.origem, 
       responsavel : responsavel}).
     success(function (data, status, headers, config) {
-      $scope.codigo = data.codigo;
-
-      if($scope.estado==null){estado=0} else{estado=$scope.estado.codigo}
-      if($scope.cidade==null){cidade=0} else{cidade=$scope.cidade.codigo}
-      if($scope.bairro==null){bairro=0} else{bairro=$scope.bairro.codigo}
+      $scope.codigo = data.codigo
       
-      if ($scope.esquina==false) {esquina=0} else {esquina=1};
+      $http.post('/cliente_imovel_localizacao/gravar', {cliente: $scope.codigo, 
+        local: $scope.localizacoes})
+  
+      if ($scope.esquina==false) {esquina=0} else {esquina=1}
         
-      if ($scope.mobiliada==false) {mobiliada=0} else {mobiliada=1};  
-      if ($scope.churrasqueira==false) {churrasqueira=0} else {churrasqueira=1};  
-      if ($scope.infra_ar_cond==false) {infra_ar_cond=0} else {infra_ar_cond=1};  
-      if ($scope.reboco==false) {reboco=0} else {reboco=1};   
-      if ($scope.murro==false) {murro=0} else {murro=1};  
-      if ($scope.portao==false) {portao=0} else {portao=1};   
-
-      if ($scope.mcmv==false) {mcmv=0} else {mcmv=1};   
-      if ($scope.financia==false) {financia=0} else {financia=1};   
-      if ($scope.permuta==false) {permuta=0} else {permuta=1};   
-      if ($scope.carro==false) {carro=0} else {carro=1};   
-      if ($scope.fgts==false) {fgts=0} else {fgts=1};   
-   
-      $http.post('/imovel_terreno/gravar', {imovel: $scope.codigo, 
-        cep: $scope.cep, estado: estado, cidade: cidade, bairro: bairro, 
-        endereco: endereco, numero: $scope.numero, complemento: $scope.complemento, 
+      $http.post('/cliente_imovel_terreno/gravar', {cliente: $scope.codigo, 
         area_terreno: $scope.area_terreno, frente: $scope.frente, fundo: $scope.fundo, 
         lateral1: $scope.lateral1, lateral2: $scope.lateral2, gabarito: $scope.gabarito, 
-        esquina: esquina});      
+        esquina: esquina})
+        
+      if ($scope.mobiliada==false) {mobiliada=0} else {mobiliada=1}
+      if ($scope.churrasqueira==false) {churrasqueira=0} else {churrasqueira=1}
+      if ($scope.infra_ar_cond==false) {infra_ar_cond=0} else {infra_ar_cond=1}
+      if ($scope.reboco==false) {reboco=0} else {reboco=1}
+      if ($scope.murro==false) {murro=0} else {murro=1}
+      if ($scope.portao==false) {portao=0} else {portao=1}
  
-      $http.post('/imovel_construcao/gravar', {imovel: $scope.codigo, 
-        entrega: $scope.entrega, ano_construcao: $scope.ano_construcao,
-        area_total: $scope.area_total, area_privativa: $scope.area_privativa, 
-        quartos: $scope.quartos, suites: $scope.suites, garagens: $scope.garagens, 
-        mobiliada: mobiliada, churrasqueira: churrasqueira, infra_ar_cond: infra_ar_cond, 
-        piso: $scope.piso, teto: $scope.teto, reboco: reboco, murro: murro, portao: portao, 
-        quintal_larg: $scope.quintal_larg, quintal_comp: $scope.quintal_comp,
-        andar: $scope.andar}); 
+      $http.post('/cliente_imovel_tipo/gravar', {cliente: $scope.codigo, tipo: $scope.tipos})
+  
+      $http.post('/cliente_imovel_construcao/gravar', {cliente: $scope.codigo, 
+        ano_construcao: $scope.ano_construcao, area_total: $scope.area_total, 
+        area_privativa: $scope.area_privativa, quartos: $scope.quartos, suites: $scope.suites, 
+        garagens: $scope.garagens, mobiliada: mobiliada, churrasqueira: churrasqueira, 
+        infra_ar_cond: infra_ar_cond, piso: $scope.piso, teto: $scope.teto, reboco: reboco, 
+        murro: murro, portao: portao, quintal_larg: $scope.quintal_larg, 
+        quintal_comp: $scope.quintal_comp, andar: $scope.andar})
 
-      $http.post('/imovel_financeiro/gravar', {imovel: $scope.codigo, 
+      if ($scope.mcmv==false) {mcmv=0} else {mcmv=1}
+      if ($scope.financia==false) {financia=0} else {financia=1}
+   
+      $http.post('/cliente_imovel_financeiro/gravar', {cliente: $scope.codigo, 
         valor: $scope.valor, mcmv: mcmv, financia: financia, 
         entrada: $scope.entrada, permuta: permuta, carro: carro,
-        fgts: fgts, condominio: $scope.condominio, captador: $scope.captador}); 
+        fgts: fgts, condominio: $scope.condominio})
             
-      alert('Informações salvas com sucesso!');
+      alert('Informações salvas com sucesso!')
     });  
   }
   

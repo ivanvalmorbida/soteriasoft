@@ -101,7 +101,7 @@ block content
           md-tab(label='Localização e Terreno')
             md-content
 
-              div(layout-gt-sm='row')
+              div(layout-gt-sm='row', style='margin-top: 10px')
                 md-autocomplete(flex='',
                   md-selected-item='estado',
                   md-min-length='1', 
@@ -141,7 +141,7 @@ block content
                 md-transform-chip="newLoc($chip)", md-removable="true")
                   md-chip-template
                     span
-                      | {{$chip.estado}} - {{$chip.cidade}} - {{$chip.bairro}}
+                      | {{$chip.estado_}} - {{$chip.cidade_}} - {{$chip.bairro_}}
 
               div(layout-gt-sm='row', style='margin-top: 10px')
                 div(flex="")
@@ -326,18 +326,18 @@ block content
               div(layout-gt-sm='row', style='margin-top: -30px')
                 div(flex="")
                   md-input-container
-                    md-checkbox.md-primary(ng-model="permuta")
-                      | Permuta
+                    label Permuta
+                    input(ng-model='permuta', type='number')
 
                 div(flex="")
                   md-input-container
-                    md-checkbox.md-primary(ng-model="carro")
-                      | Carro                  
+                    label Carro
+                    input(ng-model='carro', type='number')             
             
                 div(flex="")
                   md-input-container    
-                    md-checkbox.md-primary(ng-model="fgts")
-                      | FGTS                        
+                    label FGTS
+                    input(ng-model='fgts', type='number')                     
                 
               div(layout-gt-sm='row', style='margin-top: -30px')
               
