@@ -1,6 +1,29 @@
 angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 .controller('Soteriasoft.Control', function($http, $scope, $mdDialog) {
   
+  $scope.addEmail = function() {
+    $http.post('/pessoa_email/email', {email: $scope.email})
+    .success(function(data) {
+      if(data.dados.length==0){
+        $scope.emails.push($scope.email)
+        $scope.email = ''  
+      }
+      else {
+        var r = confirm("Este e-mail já está cadastrado! Deseja usar esse cadastro?")
+        if (r == true) {
+          alert('ok')
+        } else {
+          alert('nao')
+        }
+      }
+    })
+  }
+
+  $scope.addFone = function() {
+    $scope.fones.push($scope.fone);
+    $scope.fone = '';
+  }
+ 
   $scope.addTipo = function() {
     $scope.tipos.push({'codigo': $scope.tipo.codigo, 'descricao': $scope.tipo.descricao})
     $scope.tipo = null
@@ -15,8 +38,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.bairro = null
   }
 
-  $http.get('/imovel_tipo/todos').then(function(res) {
-    $scope.tipo_imovel = res.data.tipo_todos
+  $http.get('/imovel_tipo/todos').success(function(res) {
+    $scope.tipo_imovel = res.tipo_todos
   })
 
   $scope.newLoc = function(chip) {
@@ -257,7 +280,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       targetEvent: ev,
       clickOutsideToClose: true
     })
-    .then(function(answer) {
+    .success(function(answer) {
       if (answer>0){
         $scope.codigo=answer;
         $scope.BuscarCodigo();
@@ -295,7 +318,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     params: {
       txt: StrSearch
     }
-    }).then(function(data) {
+    }).success(function(data) {
       return data.data
     });
   };
@@ -305,7 +328,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     params: {
       txt: StrSearch
     }
-    }).then(function(data) {
+    }).success(function(data) {
       return data.data
     });
   };
@@ -316,7 +339,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       txt: StrSearch,
       est: $scope.estado.codigo
     }
-    }).then(function(data) {
+    }).success(function(data) {
       return data.data;
     });
   };
@@ -328,7 +351,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       est: $scope.estado.codigo,
       cid: $scope.cidade.codigo
     }
-    }).then(function(data) {
+    }).success(function(data) {
       return data.data
     })
   }
