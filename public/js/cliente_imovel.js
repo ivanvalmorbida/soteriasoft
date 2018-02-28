@@ -4,24 +4,37 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   $scope.addEmail = function() {
     $http.post('/pessoa_email/email', {email: $scope.email})
     .success(function(data) {
-      if(data.dados.length==0){
+      var p = data.dados
+      if(p.length==0){
         $scope.emails.push($scope.email)
         $scope.email = ''  
       }
       else {
-        var r = confirm("Este e-mail já está cadastrado! Deseja usar esse cadastro?")
-        if (r == true) {
-          alert('ok')
-        } else {
-          alert('nao')
+        if (confirm("Este e-mail já está cadastrado! Deseja usar esse cadastro?") == true) {
+          $scope.emails = []
+          $scope.fones = []
+          $scope.cliente = {codigo: p[0].pessoa, nome: p[0].pessoa_}
         }
       }
     })
   }
 
   $scope.addFone = function() {
-    $scope.fones.push($scope.fone);
-    $scope.fone = '';
+    $http.post('/pessoa_fone/fone', {fone: $scope.fone})
+    .success(function(data) {
+      var p = data.dados
+      if(p.length==0){
+        $scope.fones.push($scope.fone)
+        $scope.fone = ''  
+      }
+      else {
+        if (confirm("Este telefone já está cadastrado! Deseja usar esse cadastro?") == true) {
+          $scope.emails = []
+          $scope.fones = []
+          $scope.cliente = {codigo: p[0].pessoa, nome: p[0].pessoa_}
+        }
+      }
+    })
   }
  
   $scope.addTipo = function() {
@@ -42,7 +55,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.tipo_imovel = res.tipo_todos
   })
 
-  $scope.newLoc = function(chip) {
+  $scope.newChip = function(chip) {
     return {
       name: chip,
       type: 'unknown'
@@ -183,12 +196,12 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         }
       })
 
-      $http.post('/pessoa/codigo', {cod: $scope.cliente.codigo}).
+      /*$http.post('/pessoa/codigo', {cod: $scope.cliente.codigo}).
       success(function (data, status, headers, config) {
         if (data.dados.length>0){
-
+          $scope.cliente = {'codigo': $scope.cliente.codigo, 'nome': data.dados[0].nome}
         }
-      })
+      })*/
 
       $http.post('/cliente_imovel/pessoa', {cod: $scope.cliente.codigo}).
       success(function (data, status, headers, config) {
@@ -355,6 +368,18 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       return data.data
     })
   }
+
+
+  $scope.PessoaNome = function(StrSearch) {
+    return $http.get('/pessoa/pessoa_nome', {
+    params: {
+      txt: StrSearch
+    }
+    }).then(function(data) {
+      return data.data
+    });
+  };
+  
 
   var url = new URL(location.href)
   var cod = url.searchParams.get("codigo")

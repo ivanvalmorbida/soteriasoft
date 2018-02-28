@@ -62,7 +62,8 @@ function fone(req, res) {
   var fone = req.body.fone
   
   connection.connect()
-  connection.query('SELECT * from tb_pessoa_fone where fone=?', [fone], 
+  connection.query('SELECT f.pessoa, p.nome as pessoa_ from tb_pessoa_fone f'+
+  ' left join tb_pessoa p on p.codigo=f.pessoa where f.fone=?', [fone], 
   function(err, rows) {
     if (!err)
       res.json({dados: rows})

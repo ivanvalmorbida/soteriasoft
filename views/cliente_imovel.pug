@@ -18,23 +18,14 @@ block content
           md-tab(label='Contato')
             md-content
               div(layout-gt-sm='row', style='margin-top: 10px')
-                div(flex="15")
+                div(flex="20")
                   md-input-container
                     label Interesse
                     md-select(ng-model='interesse')
                       md-option(value=1) Comprar
                       md-option(value=2) Vender
 
-                div(flex="15")
-                  md-input-container
-                    label Origem
-                    md-select(ng-model='origem')
-                      md-option(value=1) Presencial
-                      md-option(value=2) Telefone
-                      md-option(value=3) E-mail
-                      md-option(value=4) Portal
-
-                div(layout="row", layout-sm="column", flex="70")
+                div(layout="row", layout-sm="column", flex="80")
                   md-autocomplete(id='pessoa_', flex='', md-selected-item-change='BuscarCliente()', 
                     md-selected-item='cliente',
                     md-min-length='3', 
@@ -80,8 +71,12 @@ block content
 
                 div(flex="20")
                   md-input-container
-                    label Renda
-                    input(ng-model='renda', type='number')    
+                    label Origem
+                    md-select(ng-model='origem')
+                      md-option(value=1) Presencial
+                      md-option(value=2) Telefone
+                      md-option(value=3) E-mail
+                      md-option(value=4) Portal
 
                 div(layout="row", layout-sm="column", flex="80")
                   md-autocomplete(flex='',
@@ -89,7 +84,7 @@ block content
                     md-min-length='1', 
                     md-search-text='SearchRes', 
                     md-items='item in PessoaNome(SearchRes)',
-                    md-floating-label='Responsável',
+                    md-floating-label='Corretor Responsável',
                     md-item-text='item.nome')
                     md-item-template
                       span(md-highlight-text='SearchRes') {{item.nome}}
@@ -138,7 +133,7 @@ block content
                     
               div(layout-gt-sm='row', style='margin-top: -30px')
                 md-chips.custom-chips(ng-model="localizacoes", readonly="true", 
-                md-transform-chip="newLoc($chip)", md-removable="true")
+                md-transform-chip="newChip($chip)", md-removable="true")
                   md-chip-template
                     span
                       | {{$chip.estado_}} - {{$chip.cidade_}} - {{$chip.bairro_}}
@@ -194,7 +189,7 @@ block content
                         md-icon(md-svg-icon="img/seta-direita.svg")
               
                     md-chips.custom-chips(ng-model="tipos", readonly="true", 
-                    md-transform-chip="newLoc($chip)", md-removable="true")
+                    md-transform-chip="newChip($chip)", md-removable="true")
                       md-chip-template
                         span
                           | {{$chip.descricao}}
@@ -345,7 +340,12 @@ block content
                   md-input-container
                     label Condominio
                     input(ng-model='condominio', type='number')
-              
+
+                div(flex="20")
+                  md-input-container
+                    label Renda
+                    input(ng-model='renda', type='number')    
+
         div(layout-gt-sm='row', layout-align='start', flex='')
           md-button.md-raised(ng-click='Limpar()') Novo
           md-button.md-raised.md-primary(ng-click='Gravar()',
