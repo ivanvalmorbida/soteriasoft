@@ -29,7 +29,6 @@ var routes = require('./routes/index'),
   cbo = require('./routes/cbo'),
   atividade_economica = require('./routes/atividade_economica'),
 
-  pessoa = require('./routes/pessoa'),
   pessoa_fisica = require('./routes/pessoa_fisica'),  
   pessoa_juridica = require('./routes/pessoa_juridica'),
 
@@ -138,6 +137,7 @@ app.use(require('./routes/cliente_imovel_localizacao'))
 app.use(require('./routes/cliente_imovel_tipo'))
 app.use(require('./routes/nacionalidade'))
 app.use(require('./routes/imovel_tipo'))
+app.use(require('./routes/pessoa'))
 
 app.get('/cep', cep.index);
 app.get('/cep/dlg/localizar', cep.dlg_localizar);
@@ -160,11 +160,6 @@ app.get('/estado_civil/estado_civil_descricao', estado_civil.estado_civil_descri
 app.get('/cbo/cbo_descricao', cbo.cbo_descricao);
 app.get('/atividade_economica/atividade_economica_descricao', atividade_economica.atividade_economica_descricao);
 
-app.get('/pessoa', pessoa.index);
-app.get('/pessoa/pessoa_nome', pessoa.pessoa_nome);
-app.get('/pessoa/dlg/apagar', pessoa.dlg_apagar);
-app.get('/pessoa/dlg/localizar', pessoa.dlg_localizar);
-
 app.get('/imovel', imovel.index);
 app.get('/imovel/dlg/apagar', imovel.dlg_apagar);
 app.get('/imovel/dlg/localizar', imovel.dlg_localizar);
@@ -182,10 +177,6 @@ app.post('/cep/cep', cep.cep);
 app.post('/cep/endereco', cep.endereco);
 app.post('/cep/gravar', cep.gravar);
 app.post('/cep/apagar', cep.apagar);
-
-app.post('/pessoa/gravar', pessoa.gravar);
-app.post('/pessoa/codigo', pessoa.codigo);
-app.post('/pessoa/localizar', pessoa.localizar);
 
 app.post('/pessoa_fisica/gravar', pessoa_fisica.gravar);
 app.post('/pessoa_fisica/pessoa', pessoa_fisica.pessoa);

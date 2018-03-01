@@ -61,7 +61,7 @@ function email(req, res) {
   var connection = mysql.createConnection(settings.dbConect)
   var email = req.body.email
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT e.pessoa, p.nome as pessoa_ from tb_pessoa_email e'+
   ' left join tb_pessoa p on p.codigo=e.pessoa where e.email=?', [email], 
   function(err, rows) {

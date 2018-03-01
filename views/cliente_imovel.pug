@@ -35,12 +35,16 @@ block content
                     md-item-text='item.nome')
                     md-item-template
                       span(md-highlight-text='SearchCli') {{item.nome}}
+                      span
+                        |, Fone: {{item.fone}}                       
+                      span
+                        |, Email: {{item.email}}
 
                   md-button.md-icon-button.launch(href="pessoa?codigo={{cliente.codigo}}", style='margin-top: 20px',
                   title="Abrir cadastro de pessoas", target="_blank")
                     md-icon(md-svg-icon="img/people.svg")
                   
-                  md-button.md-icon-button.launch(ng-click='', 
+                  md-button.md-icon-button.launch(ng-click='addPessoa()', 
                   style='margin-top: 20px;margin-left: -10px;', title="Cadastrar outra pessoa")
                     md-icon(md-svg-icon="img/adicionar.svg")
 

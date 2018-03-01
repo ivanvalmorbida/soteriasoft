@@ -37,6 +37,12 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     })
   }
  
+  $scope.addPessoa = function() {
+    console.dir($scope.cliente.codigo)
+    $scope.cliente = {codigo: 0, nome: $scope.cliente.nome}
+    console.dir($scope.cliente.codigo)
+  }
+  
   $scope.addTipo = function() {
     $scope.tipos.push({'codigo': $scope.tipo.codigo, 'descricao': $scope.tipo.descricao})
     $scope.tipo = null
@@ -325,6 +331,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     };
   }
   
+  /*
   $scope.PessoaNome = function(StrSearch) {
     $scope.pessoa_ = StrSearch
     return $http.get('/pessoa/pessoa_nome', {
@@ -335,7 +342,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       return data.data
     });
   };
-  
+  */
+
   $scope.EstadoNome = function(StrSearch) {
     return $http.get('/estado/estado_nome', {
     params: {
@@ -371,15 +379,15 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 
 
   $scope.PessoaNome = function(StrSearch) {
-    return $http.get('/pessoa/pessoa_nome', {
+    $scope.pessoa_ = StrSearch
+    return $http.get('/pessoa/pessoa_nome_contato', {
     params: {
       txt: StrSearch
     }
     }).then(function(data) {
       return data.data
-    });
-  };
-  
+    })
+  }
 
   var url = new URL(location.href)
   var cod = url.searchParams.get("codigo")

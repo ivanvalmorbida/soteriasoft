@@ -1,24 +1,33 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
-var auth = require('../authetication');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
+var auth = require('../authetication')
 
-exports.index = function (req, res) {
+router.get('/pessoa', index)
+router.get('/pessoa/pessoa_nome', pessoa_nome)
+router.get('/pessoa/pessoa_nome_contato', pessoa_nome_contato)
+router.get('/pessoa/dlg/apagar', dlg_apagar)
+router.get('/pessoa/dlg/localizar', dlg_localizar)
+router.post('/pessoa/gravar', gravar)
+router.post('/pessoa/codigo', codigo)
+router.post('/pessoa/localizar', localizar)
+
+function index(req, res) {
   auth.active_user(req, res, render_index)
 }
 
 function render_index(req, res) {
-  res.render('pessoa', {empresa: settings.empresa});
-};
+  res.render('pessoa', {empresa: settings.empresa})
+}
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
 
-  data.cep = data.cep.replace("-", "");
+  data.cep = data.cep.replace("-", "")
 
-  connection.connect();
+  connection.connect()
   if (data.codigo==0) {
     connection.query('insert into tb_pessoa (tipo, nome, cep, estado, cidade,'+
     ' bairro, endereco, numero, complemento, obs, cadastro)'+
@@ -42,14 +51,14 @@ exports.gravar = function (req, res) {
         console.log('Error while performing Query.')
     })
   }     
-  connection.end();
+  connection.end()
 }
 
-exports.codigo = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function codigo(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query("SELECT p.*, u.nome as estado_, m.nome as cidade_,"+
   ' b.nome as bairro_, e.nome as endereco_ from tb_pessoa p'+
   ' left join tb_estado u on u.codigo=p.estado'+
@@ -61,42 +70,59 @@ exports.codigo = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
 
-exports.pessoa_todas = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
+function pessoa_todas(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT * from tb_pessoa order by nome', function(err, rows, fields) {
     if (!err)
       res.json({pessoa_todas: rows})
     else
       console.log('Error while performing Query.')
   });
-  connection.end();
+  connection.end()
 }
 
-exports.pessoa_nome = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var txt = req.query.txt;
+function pessoa_nome(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var txt = req.query.txt
 
-  connection.connect();
+  connection.connect()
   connection.query("select codigo, nome from tb_pessoa"+
   " where nome like '"+txt+"%' order by nome LIMIT 20", function(err, rows) {
     if (!err)
       return res.json(rows)
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
 
-exports.localizar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
-  var sql = '', par = [];
+function pessoa_nome_contato(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var txt = req.query.txt
+
+  connection.connect()
+  connection.query("select p.codigo, p.nome, (select email from tb_pessoa_email"+
+  " where pessoa=p.codigo limit 1) as email, (select fone from tb_pessoa_fone" +
+  " where pessoa=p.codigo limit 1) as fone from tb_pessoa as p"+
+  " where p.nome like '"+txt+"%' order by p.nome LIMIT 20", function(err, rows) {
+    if (!err)
+      return res.json(rows)
+    else
+      console.log('Error while performing Query.')
+  })
+  connection.end()
+}
+
+function localizar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
+  var sql = '', par = []
 
   sql += "SELECT p.codigo, p.nome, case when p.tipo=1 then 'Fis' else 'Jur' end as tipo,";
   sql += " case when p.tipo=1 then f.cpf else j.cnpj end as cpf_cnpj"; 
@@ -115,13 +141,15 @@ exports.localizar = function (req, res) {
       console.log('Error while performing Query.')
   });
 
-  connection.end();
+  connection.end()
 }
 
-exports.dlg_localizar = function (req, res) {
-  res.render('pessoa_dlg_localizar');
-};
+function dlg_localizar(req, res) {
+  res.render('pessoa_dlg_localizar')
+}
 
-exports.dlg_apagar = function (req, res) {
-  res.render('pessoa_dlg_apagar');
-};
+function dlg_apagar(req, res) {
+  res.render('pessoa_dlg_apagar')
+}
+
+module.exports = router
