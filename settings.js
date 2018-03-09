@@ -23,6 +23,7 @@ exports.httpMsgsFormat = "HTML";
 exports.webservice = function (modulo) {
     return "http://172.16.171.251/webservice/" + modulo + ".asmx?wsdl"
 };
+
 // git config --global credential.helper wincred
 // git config --global user.email "ivanvalmorbida@gmail.com"
 // git config --global user.name "ivanvalmorbida"
