@@ -353,6 +353,7 @@ block content
         div(layout-gt-sm='row', layout-align='start', flex='')
           md-button.md-raised(ng-click='Limpar()') Novo
           md-button.md-raised.md-primary(ng-click='Gravar()',
-          ng-disabled='nome==undefined || tipo==undefined') Gravar
-          md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()') Apagar
+          ng-disabled="pessoa_==''") Gravar
+          md-button.md-raised.md-warn.md-hue-1(ng-click='Apagar()', 
+          ng-disabled="codigo==undefined") Apagar
           md-button.md-raised.md-primary.md-hue-3(ng-click='Localizar()') Localizar

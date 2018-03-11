@@ -294,7 +294,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     console.dir($scope.mcmv)
     $mdDialog.show({
       controller: LocalizarController,
-      templateUrl: './imovel/dlg/localizar',
+      templateUrl: './cliente_imovel/dlg/localizar',
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true
@@ -311,14 +311,14 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   };
   
   function LocalizarController($scope, $mdDialog) {
-    $scope.campopesq = 'prop';
+    $scope.campopesq = 'clie';
 
     $scope.Cancel = function() {
       $mdDialog.cancel();
     };
 
     $scope.LocalizarExe = function(camp, text) {
-      $http.post('/imovel/localizar', {camp: camp, text: text}).
+      $http.post('/cliente_imovel/localizar', {camp: camp, text: text}).
       success(function (data, status, headers, config) {
         $scope.l_dados = data.dados;
       }).error(function (data, status, headers, config) {

@@ -39,7 +39,6 @@ var routes = require('./routes/index'),
   imovel_imagem = require('./routes/imovel_imagem'),
   imovel_busca = require('./routes/imovel_busca'),
   
-  cliente_imovel = require('./routes/cliente_imovel'),
   cliente_imovel_cons = require('./routes/cliente_imovel_construcao'),
   cliente_imovel_fina = require('./routes/cliente_imovel_financeiro'),
   cliente_imovel_terr = require('./routes/cliente_imovel_terreno');
@@ -138,6 +137,7 @@ app.use(require('./routes/cliente_imovel_tipo'))
 app.use(require('./routes/nacionalidade'))
 app.use(require('./routes/imovel_tipo'))
 app.use(require('./routes/pessoa'))
+app.use(require('./routes/cliente_imovel'))
 
 app.get('/cep', cep.index);
 app.get('/cep/dlg/localizar', cep.dlg_localizar);
@@ -170,8 +170,6 @@ app.get('/usuario/dlg/localizar', usuario.dlg_localizar);
 app.get('/usuario/pessoa_nome', usuario.pessoa_nome);
 
 app.get('/imovel_busca', imovel_busca.index);
-
-app.get('/cliente_imovel', cliente_imovel.index);
 
 app.post('/cep/cep', cep.cep);
 app.post('/cep/endereco', cep.endereco);
@@ -209,9 +207,6 @@ app.post('/usuario/gravar', usuario.gravar);
 app.post('/usuario/codigo', usuario.codigo);
 app.post('/usuario/localizar', usuario.localizar);
 app.post('/usuario/login', usuario.login);
-
-app.post('/cliente_imovel/codigo', cliente_imovel.codigo);
-app.post('/cliente_imovel/pessoa', cliente_imovel.pessoa);
 
 app.post('/cliente_imovel_cons/gravar', cliente_imovel_cons.gravar);
 app.post('/cliente_imovel_cons/cliente', cliente_imovel_cons.cliente);

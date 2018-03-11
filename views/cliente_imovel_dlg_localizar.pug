@@ -1,0 +1,40 @@
+md-dialog(aria-label="Localizar Cliente Imóvel",flex='80')
+  form(ng-cloak="")
+    md-toolbar
+      .md-toolbar-tools
+        h2 Localizar Cliente Imóvel    
+        span(flex="")
+        md-button.md-icon-button(ng-click="Cancel()")
+          md-icon(md-svg-src="img/fechar.svg", aria-label="Fechar diálogo")
+    md-dialog-content
+      .md-dialog-content
+        div(layout='row')
+          md-input-container.md-block(style='margin-top: 10px;')
+            label campo
+            md-select(ng-model='campopesq')
+              md-option(value='clie') Cliente
+              md-option(value='fone') Fone
+              md-option(value='emai') E-mail
+            
+          md-input-container.md-block(flex='',style='margin-top: 10px;')
+            label localizar
+            input(ng-model='txtpesquisa')
+
+          #btLocalizarExe.md-button.md-raised.md-primary.md-hue-3(
+            ng-click='LocalizarExe(campopesq, txtpesquisa)', style='height: 10px;',
+            ng-disabled='txtpesquisa==undefined') Executar
+
+        div(layout='row')
+          div(flex="") Cliente
+          div(flex="") Fone
+          div(flex="") E-mail
+
+        div(layout='row', ng-repeat="d in l_dados")
+          div(flex="") 
+            a(ng-click="ExibirCliente(d.codigo)") {{d.cliente}}
+          div(flex="") {{d.fone}}
+          div(flex="") {{d.email}}
+
+    md-dialog-actions(layout="row")
+      span(flex="")
+      md-button.md-raised(type='button', ng-click="Cancel()") Fechar
