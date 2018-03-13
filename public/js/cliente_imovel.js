@@ -74,7 +74,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 
   $scope.Apagar = function(ev) {
     console.dir($scope.pessoa_)
-  };
+  }
   
   $scope.Limpar = function() {
     $scope.codigo = 0
@@ -134,8 +134,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 
     $http.post('/cliente_imovel/gravar', {codigo: $scope.codigo, pessoa: pessoa, 
       pessoa_: $scope.pessoa_, fones: $scope.fones, emails: $scope.emails, 
-      interesse: $scope.interesse, renda: $scope.renda, origem: scope.origem, 
-      responsavel : responsavel}).
+      interesse: $scope.interesse, origem: scope.origem, responsavel : responsavel}).
     success(function (data, status, headers, config) {
       $scope.codigo = data.codigo
       
@@ -172,18 +171,18 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       $http.post('/cliente_imovel_financeiro/gravar', {cliente: $scope.codigo, 
         valor: $scope.valor, mcmv: mcmv, financia: financia, 
         entrada: $scope.entrada, permuta: permuta, carro: carro,
-        fgts: fgts, condominio: $scope.condominio})
+        fgts: fgts, condominio: $scope.condominio, renda: $scope.renda})
             
       alert('Informações salvas com sucesso!')
-    });  
+    })  
   }
   
   function format(mask, number) {
-    var s = ''+number, r = '';
+    var s = ''+number, r = ''
     for (var im=0, is = 0; im<mask.length && is<s.length; im++) {
-      r += mask.charAt(im)=='#' ? s.charAt(is++) : mask.charAt(im);
+      r += mask.charAt(im)=='#' ? s.charAt(is++) : mask.charAt(im)
     }
-    return r;
+    return r
   }  
 
   $scope.BuscarCliente = function() {
@@ -228,66 +227,66 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   $scope.BuscarCodigo = function() {
     $http.post('/cliente_imovel/codigo', {cod: $scope.codigo}).
     success(function (data, status, headers, config) {
-      $scope.Limpar();
+      $scope.Limpar()
       if (data.dados.length>0){
-        $scope.interesse = data.dados[0].interesse;
-        $scope.renda = data.dados[0].renda;
-        $scope.origem = data.dados[0].origem;
-        if(data.dados[0].responsavel>0){$scope.responsavel = {codigo: data.dados[0].responsavel, nome: data.dados[0].responsavel_}};
+        $scope.interesse = data.dados[0].interesse
+        $scope.renda = data.dados[0].renda
+        $scope.origem = data.dados[0].origem
+        if(data.dados[0].responsavel>0){$scope.responsavel = {codigo: data.dados[0].responsavel, nome: data.dados[0].responsavel_}}
         
         $http.post('/cliente_imovel_terreno/imovel', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
-            $scope.area_terreno = data.dados[0].area_terreno;
-            $scope.frente = data.dados[0].frente;
-            $scope.fundo = data.dados[0].fundo;
-            $scope.lateral1 = data.dados[0].lateral1;
-            $scope.lateral2 = data.dados[0].lateral2;
-            $scope.gabarito = data.dados[0].gabarito;
-            $scope.esquina = (data.dados[0].esquina==1);    
+            $scope.area_terreno = data.dados[0].area_terreno
+            $scope.frente = data.dados[0].frente
+            $scope.fundo = data.dados[0].fundo
+            $scope.lateral1 = data.dados[0].lateral1
+            $scope.lateral2 = data.dados[0].lateral2
+            $scope.gabarito = data.dados[0].gabarito
+            $scope.esquina = (data.dados[0].esquina==1)    
           }
-        });
+        })
 
         $http.post('/cliente_imovel_construcao/imovel', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
-            $scope.ano_construcao = data.dados[0].ano_construcao;
-            $scope.area_total = data.dados[0].area_total;
-            $scope.area_privativa = data.dados[0].area_privativa;
-            $scope.quartos = data.dados[0].quartos;
-            $scope.suites = data.dados[0].suites;
-            $scope.garagens = data.dados[0].garagens;
-            $scope.mobiliada = (data.dados[0].mobiliada==1);
-            $scope.churrasqueira = (data.dados[0].churrasqueira==1);
-            $scope.infra_ar_cond = (data.dados[0].infra_ar_cond==1);
-            $scope.piso = data.dados[0].piso;
-            $scope.teto = data.dados[0].teto;
-            $scope.reboco = (data.dados[0].reboco==1);
-            $scope.murro = (data.dados[0].murro==1);
-            $scope.portao = (data.dados[0].portao==1);
-            $scope.quintal_larg = data.dados[0].quintal_larg;
-            $scope.quintal_comp = data.dados[0].quintal_comp;
-            $scope.andar = data.dados[0].andar;
+            $scope.ano_construcao = data.dados[0].ano_construcao
+            $scope.area_total = data.dados[0].area_total
+            $scope.area_privativa = data.dados[0].area_privativa
+            $scope.quartos = data.dados[0].quartos
+            $scope.suites = data.dados[0].suites
+            $scope.garagens = data.dados[0].garagens
+            $scope.mobiliada = (data.dados[0].mobiliada==1)
+            $scope.churrasqueira = (data.dados[0].churrasqueira==1)
+            $scope.infra_ar_cond = (data.dados[0].infra_ar_cond==1)
+            $scope.piso = data.dados[0].piso
+            $scope.teto = data.dados[0].teto
+            $scope.reboco = (data.dados[0].reboco==1)
+            $scope.murro = (data.dados[0].murro==1)
+            $scope.portao = (data.dados[0].portao==1)
+            $scope.quintal_larg = data.dados[0].quintal_larg
+            $scope.quintal_comp = data.dados[0].quintal_comp
+            $scope.andar = data.dados[0].andar
           }
-        });
+        })
     
         $http.post('/cliente_imovel_financeiro/imovel', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
-            $scope.valor = data.dados[0].valor;
-            $scope.mcmv = (data.dados[0].mcmv==1);
-            $scope.financia = (data.dados[0].financia==1);
-            $scope.entrada = data.dados[0].entrada;
-            $scope.permuta = (data.dados[0].permuta==1);
-            $scope.carro = (data.dados[0].carro==1);
-            $scope.fgts = (data.dados[0].fgts==1);
-            $scope.condominio = data.dados[0].condominio;        
+            $scope.valor = data.dados[0].valor
+            $scope.mcmv = (data.dados[0].mcmv==1)
+            $scope.financia = (data.dados[0].financia==1)
+            $scope.entrada = data.dados[0].entrada
+            $scope.permuta = (data.dados[0].permuta==1)
+            $scope.carro = (data.dados[0].carro==1)
+            $scope.fgts = (data.dados[0].fgts==1)
+            $scope.condominio = data.dados[0].condominio        
           }
-        });
+        })
       }
     }).error(function (data, status, headers, config) {
-      $scope.Limpar();
-    });     
+      $scope.Limpar()
+    })     
   }
 
   $scope.Localizar = function(ev) {
@@ -301,34 +300,33 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     })
     .success(function(answer) {
       if (answer>0){
-        $scope.codigo=answer;
-        $scope.BuscarCodigo();
+        $scope.codigo=answer
+        $scope.BuscarCodigo()
       }      
-      //console.dir('You said the information was "' + answer + '".');
     }, function() {
-      console.dir('You cancelled the dialog.');
-    });
-  };
+      console.dir('You cancelled the dialog.')
+    })
+  }
   
   function LocalizarController($scope, $mdDialog) {
-    $scope.campopesq = 'clie';
+    $scope.campopesq = 'clie'
 
     $scope.Cancel = function() {
-      $mdDialog.cancel();
-    };
+      $mdDialog.cancel()
+    }
 
     $scope.LocalizarExe = function(camp, text) {
       $http.post('/cliente_imovel/localizar', {camp: camp, text: text}).
       success(function (data, status, headers, config) {
-        $scope.l_dados = data.dados;
+        $scope.l_dados = data.dados
       }).error(function (data, status, headers, config) {
         //
-      });      
-    };
+      })      
+    }
 
     $scope.ExibirImovel = function(answer) {
-      $mdDialog.hide(answer);
-    };
+      $mdDialog.hide(answer)
+    }
   }
   
   /*
@@ -340,8 +338,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     }
     }).success(function(data) {
       return data.data
-    });
-  };
+    })
+  }
   */
 
   $scope.EstadoNome = function(StrSearch) {
@@ -351,8 +349,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     }
     }).success(function(data) {
       return data.data
-    });
-  };
+    })
+  }
 
   $scope.CidadeEstadoNome = function(StrSearch) {
     return $http.get('/cidade/cidade_estado_nome', {
@@ -361,9 +359,9 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       est: $scope.estado.codigo
     }
     }).success(function(data) {
-      return data.data;
-    });
-  };
+      return data.data
+    })
+  }
   
   $scope.BairroCidadeNome = function(StrSearch) {
     return $http.get('/bairro/bairro_cidade_nome', {

@@ -25,10 +25,11 @@ function gravar(req, res) {
   var data = req.body
 
   connection.connect()
+  
   if (data.codigo==0) {
-    connection.query('insert into tb_cliente_imovel (pessoa, interesse, renda,'+
+    connection.query('insert into tb_cliente_imovel (pessoa, interesse,'+
     ' origem, responsavel, cadastro) values (?, ?, ?, ?, ?, now());', 
-    [data.pessoa, data.interesse, data.renda, data.origem, data.responsavel], function(err, rows) {
+    [data.pessoa, data.interesse, data.origem, data.responsavel], function(err, rows) {
       if (!err)
         res.json({codigo: rows.insertId})      
       else
@@ -36,8 +37,8 @@ function gravar(req, res) {
     })
   }   
   else {
-    connection.query('update tb_cliente_imovel set pessoa=?, interesse=?, renda=?,'+
-    ' origem=?, responsavel=? where codigo=?', [data.pessoa, data.interesse, data.renda, 
+    connection.query('update tb_cliente_imovel set pessoa=?, interesse=?,'+
+    ' origem=?, responsavel=? where codigo=?', [data.pessoa, data.interesse,
     data.origem, data.responsavel, data.codigo], function(err, rows) {
       if (!err)
         res.json({codigo: data.codigo})

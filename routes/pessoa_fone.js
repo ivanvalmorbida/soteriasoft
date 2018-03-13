@@ -13,6 +13,28 @@ function gravar(req, res) {
   var data = req.body
 
   connection.connect()
+  var fone = data.fones.toString()
+  fone="'"+fone.replace(',',"','")+"'"
+  connection.query('delete from tb_pessoa_fone where pessoa='+data.pessoa+' and fone not in('+
+  fone+')', function(err, rows) {
+    for (i = 0; i < data.fones.length; i++) {
+      connection.query('SELECT pessoa from tb_pessoa_fone where pessoa=? and fone=?', 
+      [data.pessoa, data.fones[i]], function(err, rows) {
+        if (!err)
+          if (rows.count==0) {
+            connection.query('insert into tb_pessoa_fone (pessoa, fone) values (?, ?)',
+            [data.pessoa, data.fones[i]], function(err, rows) {
+              if (err)
+                console.log('Error while performing Query.')
+            })          
+          }
+        else
+          console.log('Error while performing Query.')
+      })
+    }
+  })
+ 
+  /*connection.connect()
   connection.query('delete from tb_pessoa_fone where pessoa=?', 
   [data.pessoa], function(err, rows) {
     if (!err) {
@@ -24,7 +46,7 @@ function gravar(req, res) {
         })    
       }
     }
-  })
+  })*/
 }
 
 function apagar(req, res) {
