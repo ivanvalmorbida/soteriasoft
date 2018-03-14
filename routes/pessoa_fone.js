@@ -34,18 +34,9 @@ function gravar(req, res) {
 function add_fone(pessoa, fone, cb){
   var connection = mysql.createConnection(settings.dbConect);
   connection.connect()
-  connection.query('SELECT pessoa from tb_pessoa_fone where pessoa=? and fone=?', 
+  connection.query('CALL sp_pessoa_fone_add(?, ?)', 
   [pessoa, fone], function(err, rows) {
-    if (!err){
-      if (rows.count==0) {
-        connection.query('insert into tb_pessoa_fone (pessoa, fone) values (?, ?)',
-        [pessoa, fone], function(err, rows) {
-          if (err){
-            console.log('Error while performing Query.')
-          }
-        })          
-      }
-    }else{
+    if (err){
       console.log('Error while performing Query.')
     }
     cb()
