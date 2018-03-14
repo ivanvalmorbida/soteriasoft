@@ -11,42 +11,45 @@ router.post('/pessoa_fone/fone', fone)
 function gravar(req, res) {
   var connection = mysql.createConnection(settings.dbConect);
   var data = req.body
+  var fones = data.fones.toString()
+  var fone = data.fones
 
   connection.connect()
-  var fone = data.fones.toString()
-  fone="'"+fone.replace(',',"','")+"'"
+  fones="'"+fones.replace(',',"','")+"'"
   connection.query('delete from tb_pessoa_fone where pessoa='+data.pessoa+' and fone not in('+
-  fone+')', function(err, rows) {
-    for (i = 0; i < data.fones.length; i++) {
-      connection.query('SELECT pessoa from tb_pessoa_fone where pessoa=? and fone=?', 
-      [data.pessoa, data.fones[i]], function(err, rows) {
-        if (!err)
-          if (rows.count==0) {
-            connection.query('insert into tb_pessoa_fone (pessoa, fone) values (?, ?)',
-            [data.pessoa, data.fones[i]], function(err, rows) {
-              if (err)
-                console.log('Error while performing Query.')
-            })          
-          }
-        else
-          console.log('Error while performing Query.')
+  fones+')', function(err, rows) {
+    var loop = function(fone, i) {
+      add_fone(data.pessoa, fone[i], function() {
+        if (++i < fone.length) {
+          loop(fone, i)
+        } else {
+          res.send({gravar: true})
+        }
       })
     }
+    loop(fone, 0)
   })
- 
-  /*connection.connect()
-  connection.query('delete from tb_pessoa_fone where pessoa=?', 
-  [data.pessoa], function(err, rows) {
-    if (!err) {
-      for (i = 0; i < data.fones.length; i++) {
+}
+
+function add_fone(pessoa, fone, cb){
+  var connection = mysql.createConnection(settings.dbConect);
+  connection.connect()
+  connection.query('SELECT pessoa from tb_pessoa_fone where pessoa=? and fone=?', 
+  [pessoa, fone], function(err, rows) {
+    if (!err){
+      if (rows.count==0) {
         connection.query('insert into tb_pessoa_fone (pessoa, fone) values (?, ?)',
-        [data.pessoa, data.fones[i]], function(err, rows) {
-          if (err)
+        [pessoa, fone], function(err, rows) {
+          if (err){
             console.log('Error while performing Query.')
-        })    
+          }
+        })          
       }
+    }else{
+      console.log('Error while performing Query.')
     }
-  })*/
+    cb()
+  })
 }
 
 function apagar(req, res) {
