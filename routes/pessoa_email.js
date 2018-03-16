@@ -9,21 +9,37 @@ router.post('/pessoa_email/pessoa', pessoa)
 router.post('/pessoa_email/email', email)
 
 function gravar(req, res) {
-  var connection = mysql.createConnection(settings.dbConect)
+  var connection = mysql.createConnection(settings.dbConect);
   var data = req.body
+  var emails = data.emails.toString()
+  var email = data.emails
 
   connection.connect()
-  connection.query('delete from tb_pessoa_email where pessoa=?', [data.pessoa], 
-  function(err, rows) {
-    if (!err) {
-      for (i = 0; i < data.emails.length; i++) {
-        connection.query('insert into tb_pessoa_email (pessoa, email) values (?, ?)',
-        [data.pessoa, data.emails[i]], function(err, rows) {
-          if (err)
-            console.log('Error while performing Query.')
-        })
-      }
+  emails="'"+emails.replace(',',"','")+"'"
+  connection.query('delete from tb_pessoa_email where pessoa='+data.pessoa+' and email not in('+
+  emails+')', function(err, rows) {
+    var loop = function(email, i) {
+      add_email(data.pessoa, email[i], function() {
+        if (++i < email.length) {
+          loop(email, i)
+        } else {
+          res.send({gravar: true})
+        }
+      })
     }
+    loop(email, 0)
+  })
+}
+
+function add_email(pessoa, email, cb){
+  var connection = mysql.createConnection(settings.dbConect);
+  connection.connect()
+  connection.query('CALL sp_pessoa_email_add(?, ?)', 
+  [pessoa, email], function(err, rows) {
+    if (err){
+      console.log('Error while performing Query.')
+    }
+    cb()
   })
 }
 
