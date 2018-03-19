@@ -28,7 +28,7 @@ function gravar(req, res) {
   
   if (data.codigo==0) {
     connection.query('insert into tb_cliente_imovel (pessoa, interesse,'+
-    ' origem, responsavel, cadastro) values (?, ?, ?, ?, ?, now());', 
+    ' origem, responsavel, cadastro) values (?, ?, ?, ?, now());', 
     [data.pessoa, data.interesse, data.origem, data.responsavel], function(err, rows) {
       if (!err)
         res.json({codigo: rows.insertId})      

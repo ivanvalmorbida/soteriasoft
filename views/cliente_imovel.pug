@@ -27,7 +27,7 @@ block content
 
                 div(layout="row", layout-sm="column", flex="80")
                   md-autocomplete(id='pessoa_', flex='', md-selected-item-change='BuscarCliente()', 
-                    md-selected-item='cliente',
+                    md-selected-item='pessoa',
                     md-min-length='3', 
                     md-search-text='SearchCli', 
                     md-items='item in PessoaNome(SearchCli)',
@@ -36,11 +36,11 @@ block content
                     md-item-template
                       span(md-highlight-text='SearchCli') {{item.nome}}
                       span
-                        |, Fone: {{item.fone}}                       
+                        |, Fone: {{item.fone}}
                       span
                         |, Email: {{item.email}}
 
-                  md-button.md-icon-button.launch(href="pessoa?codigo={{cliente.codigo}}", style='margin-top: 20px',
+                  md-button.md-icon-button.launch(href="pessoa?codigo={{pessoa.codigo}}", style='margin-top: 20px',
                   title="Abrir cadastro de pessoas", target="_blank")
                     md-icon(md-svg-icon="img/people.svg")
                   

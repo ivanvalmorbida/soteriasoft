@@ -38,9 +38,9 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }
  
   $scope.addPessoa = function() {
-    console.dir($scope.cliente.codigo)
-    $scope.cliente = {codigo: 0, nome: $scope.cliente.nome}
-    console.dir($scope.cliente.codigo)
+    console.dir($scope.pessoa.codigo)
+    $scope.pessoa = {codigo: 0, nome: $scope.pessoa.nome}
+    console.dir($scope.pessoa.codigo)
   }
   
   $scope.addTipo = function() {
@@ -72,14 +72,14 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     return format(mask, number)
   }  
 
-  $scope.Apagar = function(ev) {
-    console.dir($scope.pessoa_)
+  $scope.Apagar = function() {
+    alert($scope.pes_nom)
   }
   
   $scope.Limpar = function() {
     $scope.codigo = 0
     $scope.pessoa = null
-    $scope.pessoa_ = ''
+    $scope.pes_nom = ''
     $scope.fones = []
     $scope.emails = []
     $scope.interesse = 0
@@ -128,53 +128,70 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     $scope.condominio = 0
   }
 
+  function verify_pessoa(pessoa, nome, cb){
+    if(pessoa==0){
+      $http.post('/pessoa/gravar', {codigo: 0, tipo: 1, nome: nome, cep: '', estado: 0, 
+        cidade: 0, bairro: 0, endereco: 0, numero: '', complemento: '', obs: ''}).
+        success(function (data, status, headers, config) {
+          cb(data.codigo)
+        })
+    }else {
+      cb(pessoa)
+    }
+  }
+  
   $scope.Gravar = function() {
     if($scope.pessoa==null){pessoa=0} else{pessoa=$scope.pessoa.codigo}
     if($scope.responsavel==null){responsavel=0} else{responsavel=$scope.responsavel.codigo}
 
-    $http.post('/cliente_imovel/gravar', {codigo: $scope.codigo, pessoa: pessoa, 
-      pessoa_: $scope.pessoa_, fones: $scope.fones, emails: $scope.emails, 
-      interesse: $scope.interesse, origem: scope.origem, responsavel : responsavel}).
-    success(function (data, status, headers, config) {
-      $scope.codigo = data.codigo
-      
-      $http.post('/cliente_imovel_localizacao/gravar', {cliente: $scope.codigo, 
-        local: $scope.localizacoes})
-  
-      if ($scope.esquina==false) {esquina=0} else {esquina=1}
-        
-      $http.post('/cliente_imovel_terreno/gravar', {cliente: $scope.codigo, 
-        area_terreno: $scope.area_terreno, frente: $scope.frente, fundo: $scope.fundo, 
-        lateral1: $scope.lateral1, lateral2: $scope.lateral2, gabarito: $scope.gabarito, 
-        esquina: esquina})
-        
-      if ($scope.mobiliada==false) {mobiliada=0} else {mobiliada=1}
-      if ($scope.churrasqueira==false) {churrasqueira=0} else {churrasqueira=1}
-      if ($scope.infra_ar_cond==false) {infra_ar_cond=0} else {infra_ar_cond=1}
-      if ($scope.reboco==false) {reboco=0} else {reboco=1}
-      if ($scope.murro==false) {murro=0} else {murro=1}
-      if ($scope.portao==false) {portao=0} else {portao=1}
- 
-      $http.post('/cliente_imovel_tipo/gravar', {cliente: $scope.codigo, tipo: $scope.tipos})
-  
-      $http.post('/cliente_imovel_construcao/gravar', {cliente: $scope.codigo, 
-        ano_construcao: $scope.ano_construcao, area_total: $scope.area_total, 
-        area_privativa: $scope.area_privativa, quartos: $scope.quartos, suites: $scope.suites, 
-        garagens: $scope.garagens, mobiliada: mobiliada, churrasqueira: churrasqueira, 
-        infra_ar_cond: infra_ar_cond, piso: $scope.piso, teto: $scope.teto, reboco: reboco, 
-        murro: murro, portao: portao, quintal_larg: $scope.quintal_larg, 
-        quintal_comp: $scope.quintal_comp, andar: $scope.andar})
+    verify_pessoa(pessoa, $scope.pes_nom, function(pes_cod){
+      $http.post('/pessoa_email/gravar', {pessoa: pes_cod, emails: $scope.emails})
 
-      if ($scope.mcmv==false) {mcmv=0} else {mcmv=1}
-      if ($scope.financia==false) {financia=0} else {financia=1}
+      $http.post('/pessoa_fone/gravar', {pessoa: pes_cod, fones: $scope.fones})
+
+      $http.post('/cliente_imovel/gravar', {codigo: $scope.codigo, pessoa: pes_cod, 
+        interesse: $scope.interesse, origem: $scope.origem, responsavel : responsavel}).
+      success(function (data, status, headers, config) {
+        $scope.codigo = data.codigo
+        
+        $http.post('/cliente_imovel_localizacao/gravar', {cliente: $scope.codigo, 
+          local: $scope.localizacoes})
+    
+        if ($scope.esquina==false) {esquina=0} else {esquina=1}
+          
+        $http.post('/cliente_imovel_terreno/gravar', {cliente: $scope.codigo, 
+          area_terreno: $scope.area_terreno, frente: $scope.frente, fundo: $scope.fundo, 
+          lateral1: $scope.lateral1, lateral2: $scope.lateral2, gabarito: $scope.gabarito, 
+          esquina: esquina})
+          
+        if ($scope.mobiliada==false) {mobiliada=0} else {mobiliada=1}
+        if ($scope.churrasqueira==false) {churrasqueira=0} else {churrasqueira=1}
+        if ($scope.infra_ar_cond==false) {infra_ar_cond=0} else {infra_ar_cond=1}
+        if ($scope.reboco==false) {reboco=0} else {reboco=1}
+        if ($scope.murro==false) {murro=0} else {murro=1}
+        if ($scope.portao==false) {portao=0} else {portao=1}
    
-      $http.post('/cliente_imovel_financeiro/gravar', {cliente: $scope.codigo, 
-        valor: $scope.valor, mcmv: mcmv, financia: financia, 
-        entrada: $scope.entrada, permuta: permuta, carro: carro,
-        fgts: fgts, condominio: $scope.condominio, renda: $scope.renda})
-            
-      alert('Informações salvas com sucesso!')
-    })  
+        $http.post('/cliente_imovel_tipo/gravar', {cliente: $scope.codigo, tipo: $scope.tipos})
+    
+        $http.post('/cliente_imovel_construcao/gravar', {cliente: $scope.codigo, 
+          ano_construcao: $scope.ano_construcao, area_total: $scope.area_total, 
+          area_privativa: $scope.area_privativa, quartos: $scope.quartos, suites: $scope.suites, 
+          garagens: $scope.garagens, mobiliada: mobiliada, churrasqueira: churrasqueira, 
+          infra_ar_cond: infra_ar_cond, piso: $scope.piso, teto: $scope.teto, reboco: reboco, 
+          murro: murro, portao: portao, quintal_larg: $scope.quintal_larg, 
+          quintal_comp: $scope.quintal_comp, andar: $scope.andar})
+  
+        if ($scope.mcmv==false) {mcmv=0} else {mcmv=1}
+        if ($scope.financia==false) {financia=0} else {financia=1}
+     
+        $http.post('/cliente_imovel_financeiro/gravar', {cliente: $scope.codigo, 
+          valor: $scope.valor, mcmv: mcmv, financia: financia, 
+          entrada: $scope.entrada, permuta: permuta, carro: carro,
+          fgts: fgts, condominio: $scope.condominio, renda: $scope.renda})
+              
+        alert('Informações salvas com sucesso!')
+      })  
+    })
   }
   
   function format(mask, number) {
@@ -186,29 +203,22 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }  
 
   $scope.BuscarCliente = function() {
-    if ($scope.cliente!=null){
-      $http.post('/pessoa_email/pessoa', {cod: $scope.cliente.codigo}).
+    if ($scope.pessoa!=null){
+      $http.post('/pessoa_email/pessoa', {cod: $scope.pessoa.codigo}).
       success(function (data, status, headers, config) {
         for (i = 0; i < data.dados.length; i++) {
           $scope.emails.push(data.dados[i].email)
         }
       })
 
-      $http.post('/pessoa_fone/pessoa', {cod: $scope.cliente.codigo}).
+      $http.post('/pessoa_fone/pessoa', {cod: $scope.pessoa.codigo}).
       success(function (data, status, headers, config) {
         for (i = 0; i < data.dados.length; i++) {
           $scope.fones.push(data.dados[i].fone)
         }
       })
 
-      /*$http.post('/pessoa/codigo', {cod: $scope.cliente.codigo}).
-      success(function (data, status, headers, config) {
-        if (data.dados.length>0){
-          $scope.cliente = {'codigo': $scope.cliente.codigo, 'nome': data.dados[0].nome}
-        }
-      })*/
-
-      $http.post('/cliente_imovel/pessoa', {cod: $scope.cliente.codigo}).
+      $http.post('/cliente_imovel/pessoa', {cod: $scope.pessoa.codigo}).
       success(function (data, status, headers, config) {
         if (data.codigo>0){
           $scope.codigo = data.codigo
@@ -328,19 +338,6 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       $mdDialog.hide(answer)
     }
   }
-  
-  /*
-  $scope.PessoaNome = function(StrSearch) {
-    $scope.pessoa_ = StrSearch
-    return $http.get('/pessoa/pessoa_nome', {
-    params: {
-      txt: StrSearch
-    }
-    }).success(function(data) {
-      return data.data
-    })
-  }
-  */
 
   $scope.EstadoNome = function(StrSearch) {
     return $http.get('/estado/estado_nome', {
@@ -377,7 +374,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
 
 
   $scope.PessoaNome = function(StrSearch) {
-    $scope.pessoa_ = StrSearch
+    $scope.pes_nom = StrSearch
     return $http.get('/pessoa/pessoa_nome_contato', {
     params: {
       txt: StrSearch
