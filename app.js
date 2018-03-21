@@ -19,9 +19,6 @@ var server = http.createServer(app),
 	io = require('socket.io').listen(server);
 
 var routes = require('./routes/index'),
-  estado = require('./routes/estado'),
-  endereco = require('./routes/endereco'),
-  estado_civil = require('./routes/estado_civil'),
   pessoa_fisica = require('./routes/pessoa_fisica'),  
   pessoa_juridica = require('./routes/pessoa_juridica'),
   imovel = require('./routes/imovel'),  
@@ -123,28 +120,20 @@ app.use(require('./routes/bairro'))
 app.use(require('./routes/cbo'))
 app.use(require('./routes/cep'))
 app.use(require('./routes/cidade'))
-app.use(require('./routes/pessoa_email'))
-app.use(require('./routes/pessoa_fone')) 
-app.use(require('./routes/cliente_imovel_localizacao'))
-app.use(require('./routes/cliente_imovel_tipo'))
-app.use(require('./routes/nacionalidade'))
-app.use(require('./routes/imovel_tipo'))
-app.use(require('./routes/pessoa'))
 app.use(require('./routes/cliente_imovel'))
 app.use(require('./routes/cliente_imovel_construcao'))
 app.use(require('./routes/cliente_imovel_financeiro'))
 app.use(require('./routes/cliente_imovel_terreno'))
 app.use(require('./routes/cliente_imovel_localizacao'))
 app.use(require('./routes/cliente_imovel_tipo'))
-
-app.get('/estado/estado_nome', estado.estado_nome);
-app.get('/estado/estado_sigla', estado.estado_sigla);
-
-app.get('/endereco/endereco_nome', endereco.endereco_nome);
-app.get('/endereco/endereco_cidade_nome', endereco.endereco_cidade_nome);
-
-app.get('/estado/estado_todos', estado.estado_todos);
-app.get('/estado_civil/estado_civil_descricao', estado_civil.estado_civil_descricao);
+app.use(require('./routes/endereco'))
+app.use(require('./routes/estado_civil'))
+app.use(require('./routes/estado'))
+app.use(require('./routes/pessoa_email'))
+app.use(require('./routes/pessoa_fone')) 
+app.use(require('./routes/nacionalidade'))
+app.use(require('./routes/imovel_tipo'))
+app.use(require('./routes/pessoa'))
 
 app.get('/imovel', imovel.index);
 app.get('/imovel/dlg/apagar', imovel.dlg_apagar);
