@@ -242,9 +242,10 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         $scope.interesse = data.dados[0].interesse
         $scope.renda = data.dados[0].renda
         $scope.origem = data.dados[0].origem
+        if(data.dados[0].pessoa>0){$scope.pessoa = {codigo: data.dados[0].pessoa, nome: data.dados[0].pessoa_}}
         if(data.dados[0].responsavel>0){$scope.responsavel = {codigo: data.dados[0].responsavel, nome: data.dados[0].responsavel_}}
         
-        $http.post('/cliente_imovel_terreno/imovel', {cod: $scope.codigo}).
+        $http.post('/cliente_imovel_terr/cliente', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
             $scope.area_terreno = data.dados[0].area_terreno
@@ -257,7 +258,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           }
         })
 
-        $http.post('/cliente_imovel_construcao/imovel', {cod: $scope.codigo}).
+        $http.post('/cliente_imovel_cons/cliente', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
             $scope.ano_construcao = data.dados[0].ano_construcao
@@ -280,7 +281,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           }
         })
     
-        $http.post('/cliente_imovel_financeiro/imovel', {cod: $scope.codigo}).
+        $http.post('/cliente_imovel_fina/cliente', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
             $scope.valor = data.dados[0].valor

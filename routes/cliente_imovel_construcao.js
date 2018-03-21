@@ -1,14 +1,17 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
-var auth = require('../authetication');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
+var auth = require('../authetication')
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+router.post('/cliente_imovel_cons/gravar', gravar)
+router.post('/cliente_imovel_cons/cliente', cliente)
 
-  connection.connect();
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
+
+  connection.connect()
   connection.query('select imovel from tb_cliente_imovel_construcao where cliente=?', [data.cliente], 
   function(err, rows) {
     if (!err) {
@@ -37,9 +40,9 @@ exports.gravar = function (req, res) {
   })
 }
 
-exports.cliente = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function cliente(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
   connection.connect();
   connection.query("SELECT * from tb_cliente_imovel_construcao where cliente="+cod, 
@@ -48,6 +51,8 @@ exports.cliente = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router

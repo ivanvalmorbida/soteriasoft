@@ -1,24 +1,32 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
-var auth = require('../authetication');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
+var auth = require('../authetication')
 
-exports.index = function (req, res) {
+router.get('/cep', index)
+router.get('/cep/dlg/localizar', dlg_localizar)
+router.get('/cep/dlg/apagar', dlg_apagar)
+router.post('/cep/cep', cep)
+router.post('/cep/endereco', endereco)
+router.post('/cep/gravar', gravar)
+router.post('/cep/apagar', apagar)
+
+function index(req, res) {
   auth.active_user(req, res, render_index)
 }
 
 function render_index(req, res) {
-  res.render('ceps', {empresa: settings.empresa});
-};
+  res.render('ceps', {empresa: settings.empresa})
+}
 
-exports.apagar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+function apagar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
 
-  data.cep = data.cep.replace("-", "");
+  data.cep = data.cep.replace("-", "")
 
-  connection.connect();
+  connection.connect()
   connection.query('delete from tb_cep where cep=?', [data.cep], 
   function(err, rows) {
     if (!err) {
@@ -27,16 +35,16 @@ exports.apagar = function (req, res) {
     else
       console.log('Error while performing Query.')
   })
-  connection.end();
+  connection.end()
 }
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
 
-  data.cep = data.cep.replace("-", "");
+  data.cep = data.cep.replace("-", "")
 
-  connection.connect();
+  connection.connect()
   connection.query('select cep from tb_cep where cep=?', [data.cep], 
   function(err, rows) {
     if (!err) {
@@ -64,16 +72,16 @@ exports.gravar = function (req, res) {
     else
       console.log('Error while performing Query.')
   })
-  connection.end();
+  connection.end()
 }
 
-exports.cep = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+function cep(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
   
-  data.cep = data.cep.replace("-", "");
+  data.cep = data.cep.replace("-", "")
 
-  connection.connect();
+  connection.connect()
 
   connection.query('SELECT c.*, (select nome from tb_estado where codigo=c.estado) as estado_,'+
   ' (select nome from tb_cidade where codigo=c.cidade) as cidade_,'+
@@ -86,14 +94,14 @@ exports.cep = function (req, res) {
     else
       console.log('Error while performing Query.')
   })
-  connection.end();
+  connection.end()
 }
 
-exports.endereco = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;         
+function endereco(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
 
-  connection.connect();
+  connection.connect()
 
   connection.query('SELECT c.*, (select nome from tb_estado where codigo=c.estado) as estado_,'+
   ' (select nome from tb_cidade where codigo=c.cidade) as cidade_,'+
@@ -107,13 +115,15 @@ exports.endereco = function (req, res) {
     else
       console.log(err)
   })
-  connection.end();
+  connection.end()
 }
 
-exports.dlg_localizar = function (req, res) {
-  res.render('cep_dlg_localizar');
-};
+function dlg_localizar(req, res) {
+  res.render('cep_dlg_localizar')
+}
 
-exports.dlg_apagar = function (req, res) {
-  res.render('cep_dlg_apagar');
-};
+function dlg_apagar(req, res) {
+  res.render('cep_dlg_apagar')
+}
+
+module.exports = router

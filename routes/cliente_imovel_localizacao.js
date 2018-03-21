@@ -7,6 +7,44 @@ router.post('/cliente_imovel_loca/gravar', gravar)
 router.post('/cliente_imovel_loca/cliente', cliente)
 
 function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect);
+  var data = req.body
+  var local = data.local
+
+  connection.connect()
+  connection.query('update tb_cliente_imovel_localizacao set excluir=1 where cliente=?', 
+  [data.cliente], function(err, rows) {
+    var loop = function(local, i) {
+      add_fone(data.cliente, local[i], function() {
+        if (++i < local.length) {
+          loop(local, i)
+        } else {
+          connection.query('delete from tb_cliente_imovel_localizacao where excluir=1 and cliente=?', 
+          [data.cliente], function(err, rows) {
+            res.send({gravar: true})
+          })
+        }
+      })
+    }
+    loop(local, 0)
+  })
+}
+
+function add_local(cliente, local, cb){
+  var connection = mysql.createConnection(settings.dbConect);
+  connection.connect()
+  connection.query('CALL sp_cliente_imovel_loca_add(?, ?, ?, ?)', 
+  [cliente, local.estado, local.cidade, local.bairro], function(err, rows) {
+    if (err){
+      console.log('Error while performing Query.')
+    }
+    cb()
+  })
+}
+
+
+
+/*
   var connection = mysql.createConnection(settings.dbConect)
   var data = req.body
 
@@ -26,6 +64,7 @@ function gravar(req, res) {
     } 
   })
 }
+*/
 
 function cliente(req, res) {
   var connection = mysql.createConnection(settings.dbConect);

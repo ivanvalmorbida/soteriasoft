@@ -54,7 +54,8 @@ function codigo(req, res) {
   var cod = req.body.cod
 
   connection.connect()
-  connection.query('SELECT c.*, p.nome as pessoa_ from tb_cliente_imovel c'+
+  connection.query('SELECT c.*, p.nome as pessoa_, r.nome as responsavel_'+
+  ' from tb_cliente_imovel c left join tb_pessoa r on r.codigo=c.responsavel'+
   ' left join tb_pessoa p on p.codigo=c.pessoa where c.codigo='+cod, function(err, rows, fields) {
     if (!err)
       res.json({dados: rows})

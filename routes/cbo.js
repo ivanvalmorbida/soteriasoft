@@ -1,32 +1,37 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
 
-exports.cbo_todos = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
+router.get('/cbo/cbo_descricao', cbo_descricao)
+router.get('/cbo/cbo_todos', cbo_todos)
 
-  connection.connect();
+function cbo_todos(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+
+  connection.connect()
   connection.query('SELECT * from tb_cbo order by descricao', function(err, rows, fields) {
     if (!err)
       res.json({cbo_todos: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
 
-exports.cbo_descricao = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var txt = req.query.txt;
+function cbo_descricao(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var txt = req.query.txt
 
-  connection.connect();
+  connection.connect()
   connection.query("select cbo, descricao from tb_cbo"+
   " where descricao like '"+txt+"%' order by descricao LIMIT 20", function(err, rows) {
     if (!err)
       return res.json(rows)
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router

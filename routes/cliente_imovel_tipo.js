@@ -7,22 +7,37 @@ router.post('/cliente_imovel_tipo/gravar', gravar)
 router.post('/cliente_imovel_tipo/cliente', cliente)
 
 function gravar(req, res) {
-  var connection = mysql.createConnection(settings.dbConect)
+  var connection = mysql.createConnection(settings.dbConect);
   var data = req.body
+  var tipos = data.tipos.toString()
+  var tipo = data.tipos
 
   connection.connect()
-  connection.query('delete from tb_cliente_imovel_tipo where cliente=?', [data.cliente], 
-  function(err, rows) {
-    if (!err) {
-      for (i = 0; i < data.tipo.length; i++) {
-        connection.query('insert into tb_cliente_imovel_tipo (cliente, tipo) values (?, ?);', 
-        [data.cliente, data.tipo[i].tipo], function(err, rows) {
-          if (err)
-            console.log('Error while performing Query.')
-        })        
-      }
-      connection.end()
-    } 
+  tipos="'"+tipos.replace(',',"','")+"'"
+  connection.query('delete from tb_cliente_imovel_tipo where cliente='+data.cliente+' and tipo not in('+
+  tipos+')', function(err, rows) {
+    var loop = function(tipo, i) {
+      add_fone(data.cliente, tipo[i], function() {
+        if (++i < tipo.length) {
+          loop(tipo, i)
+        } else {
+          res.send({gravar: true})
+        }
+      })
+    }
+    loop(tipo, 0)
+  })
+}
+
+function add_tipo(cliente, tipo, cb){
+  var connection = mysql.createConnection(settings.dbConect);
+  connection.connect()
+  connection.query('CALL sp_cliente_imovel_tipo_add(?, ?)', 
+  [cliente, tipo], function(err, rows) {
+    if (err){
+      console.log('Error while performing Query.')
+    }
+    cb()
   })
 }
 

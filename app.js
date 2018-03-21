@@ -19,29 +19,17 @@ var server = http.createServer(app),
 	io = require('socket.io').listen(server);
 
 var routes = require('./routes/index'),
-  cep = require('./routes/cep'),
   estado = require('./routes/estado'),
-  cidade = require('./routes/cidade'),
-  bairro = require('./routes/bairro'),
   endereco = require('./routes/endereco'),
-  
   estado_civil = require('./routes/estado_civil'),
-  cbo = require('./routes/cbo'),
-  atividade_economica = require('./routes/atividade_economica'),
-
   pessoa_fisica = require('./routes/pessoa_fisica'),  
   pessoa_juridica = require('./routes/pessoa_juridica'),
-
   imovel = require('./routes/imovel'),  
   imovel_construcao = require('./routes/imovel_construcao'),    
   imovel_financeiro = require('./routes/imovel_financeiro'),    
   imovel_terreno = require('./routes/imovel_terreno'),
   imovel_imagem = require('./routes/imovel_imagem'),
-  imovel_busca = require('./routes/imovel_busca'),
-  
-  cliente_imovel_cons = require('./routes/cliente_imovel_construcao'),
-  cliente_imovel_fina = require('./routes/cliente_imovel_financeiro'),
-  cliente_imovel_terr = require('./routes/cliente_imovel_terreno');
+  imovel_busca = require('./routes/imovel_busca');
   
 var index = require('./routes/index');
 var usuario = require('./routes/usuario');
@@ -117,19 +105,24 @@ function ensureAuthenticated(req, res, next) {
 }
 // Fim passport
 
-app.use('/', index);
+app.use('/', index)
 
-app.get('/facebook/auth', passport.authenticate('facebook',{scope:'email'}));
+app.get('/facebook/auth', passport.authenticate('facebook',{scope:'email'}))
 app.get('/facebook/auth/callback',
   passport.authenticate('facebook', { successRedirect : '/', failureRedirect: '/' }),
-  function(req, res) {res.redirect('/');}
+  function(req, res) {res.redirect('/')}
 );
-app.get('/google/auth', passport.authenticate('google', { scope : ['profile', 'email'] }));
+app.get('/google/auth', passport.authenticate('google', { scope : ['profile', 'email'] }))
 app.get('/google/auth/callback',
   passport.authenticate('google', { successRedirect : '/', failureRedirect : '/'}),
-  function(req, res) {res.redirect('/');}
-);
+  function(req, res) {res.redirect('/')}
+)
 
+app.use(require('./routes/atividade_economica'))
+app.use(require('./routes/bairro'))
+app.use(require('./routes/cbo'))
+app.use(require('./routes/cep'))
+app.use(require('./routes/cidade'))
 app.use(require('./routes/pessoa_email'))
 app.use(require('./routes/pessoa_fone')) 
 app.use(require('./routes/cliente_imovel_localizacao'))
@@ -138,27 +131,20 @@ app.use(require('./routes/nacionalidade'))
 app.use(require('./routes/imovel_tipo'))
 app.use(require('./routes/pessoa'))
 app.use(require('./routes/cliente_imovel'))
-
-app.get('/cep', cep.index);
-app.get('/cep/dlg/localizar', cep.dlg_localizar);
-app.get('/cep/dlg/apagar', cep.dlg_apagar);
+app.use(require('./routes/cliente_imovel_construcao'))
+app.use(require('./routes/cliente_imovel_financeiro'))
+app.use(require('./routes/cliente_imovel_terreno'))
+app.use(require('./routes/cliente_imovel_localizacao'))
+app.use(require('./routes/cliente_imovel_tipo'))
 
 app.get('/estado/estado_nome', estado.estado_nome);
 app.get('/estado/estado_sigla', estado.estado_sigla);
-
-app.get('/cidade/cidade_nome', cidade.cidade_nome);
-app.get('/cidade/cidade_estado_nome', cidade.cidade_estado_nome);
-
-app.get('/bairro/bairro_nome', bairro.bairro_nome);
-app.get('/bairro/bairro_cidade_nome', bairro.bairro_cidade_nome);
 
 app.get('/endereco/endereco_nome', endereco.endereco_nome);
 app.get('/endereco/endereco_cidade_nome', endereco.endereco_cidade_nome);
 
 app.get('/estado/estado_todos', estado.estado_todos);
 app.get('/estado_civil/estado_civil_descricao', estado_civil.estado_civil_descricao);
-app.get('/cbo/cbo_descricao', cbo.cbo_descricao);
-app.get('/atividade_economica/atividade_economica_descricao', atividade_economica.atividade_economica_descricao);
 
 app.get('/imovel', imovel.index);
 app.get('/imovel/dlg/apagar', imovel.dlg_apagar);
@@ -170,11 +156,6 @@ app.get('/usuario/dlg/localizar', usuario.dlg_localizar);
 app.get('/usuario/pessoa_nome', usuario.pessoa_nome);
 
 app.get('/imovel_busca', imovel_busca.index);
-
-app.post('/cep/cep', cep.cep);
-app.post('/cep/endereco', cep.endereco);
-app.post('/cep/gravar', cep.gravar);
-app.post('/cep/apagar', cep.apagar);
 
 app.post('/pessoa_fisica/gravar', pessoa_fisica.gravar);
 app.post('/pessoa_fisica/pessoa', pessoa_fisica.pessoa);
@@ -207,15 +188,6 @@ app.post('/usuario/gravar', usuario.gravar);
 app.post('/usuario/codigo', usuario.codigo);
 app.post('/usuario/localizar', usuario.localizar);
 app.post('/usuario/login', usuario.login);
-
-app.post('/cliente_imovel_cons/gravar', cliente_imovel_cons.gravar);
-app.post('/cliente_imovel_cons/cliente', cliente_imovel_cons.cliente);
-
-app.post('/cliente_imovel_fina/gravar', cliente_imovel_fina.gravar);
-app.post('/cliente_imovel_fina/cliente', cliente_imovel_fina.cliente);
-
-app.post('/cliente_imovel_terr/gravar', cliente_imovel_terr.gravar);
-app.post('/cliente_imovel_terr/cliente', cliente_imovel_terr.cliente);
 
 app.get('*', routes);
 
