@@ -1,9 +1,9 @@
 /* global angular, CPF, CNPJ */
 (function(window){
 
-  'use strict';
+  'use strict'
 
-  var module = angular.module('ngCpfCnpj', []);
+  var module = angular.module('ngCpfCnpj', [])
 
   function applyValidator(validator, validatorName, ctrl) {
 
@@ -11,19 +11,19 @@
 
       // Angular >= 1.3
       ctrl.$validators[validatorName] = function(modelValue, viewValue) {
-        var value = modelValue || viewValue;
-        return (validator.isValid(value) || !value);
-      };
+        var value = modelValue || viewValue
+        return (validator.isValid(value) || !value)
+      }
 
     } else {
 
       // Angular <= 1.2
       ctrl.$parsers.unshift(function (viewValue) {
-        var value = viewValue.replace(/\D/g, "");
-        var valid = validator.isValid(value) || !value;
-        ctrl.$setValidity(validatorName, valid);
-        return (valid ? viewValue : undefined);
-      });
+        var value = viewValue.replace(/\D/g, "")
+        var valid = validator.isValid(value) || !value
+        ctrl.$setValidity(validatorName, valid)
+        return (valid ? viewValue : undefined)
+      })
 
     }
   }
@@ -38,11 +38,11 @@
         require: 'ngModel',
 
         link: function(scope, elm, attrs, ctrl) {
-          applyValidator(CPF, "cpf", ctrl);
+          applyValidator(CPF, "cpf", ctrl)
         }
 
-      };
-    });
+      }
+    })
   }
 
   if( window.CNPJ ) {
@@ -55,11 +55,11 @@
         require: 'ngModel',
 
         link: function(scope, elm, attrs, ctrl) {
-          applyValidator(CNPJ, "cnpj", ctrl);
+          applyValidator(CNPJ, "cnpj", ctrl)
         }
 
-      };
-    });
+      }
+    })
   }
 
-})(this);
+})(this)

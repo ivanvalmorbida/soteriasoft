@@ -1,4 +1,4 @@
-;(function(commonjs){
+(function(commonjs){
   // Blacklist common values.
   var BLACKLIST = [
     "00000000000000",
@@ -11,73 +11,73 @@
     "77777777777777",
     "88888888888888",
     "99999999999999"
-  ];
+  ]
 
-  var STRICT_STRIP_REGEX = /[-\/.]/g;
-  var LOOSE_STRIP_REGEX = /[^\d]/g;
+  var STRICT_STRIP_REGEX = /[-\/.]/g
+  var LOOSE_STRIP_REGEX = /[^\d]/g
 
   var verifierDigit = function(numbers) {
-    var index = 2;
+    var index = 2
     var reverse = numbers.split("").reduce(function(buffer, number) {
-      return [parseInt(number, 10)].concat(buffer);
-    }, []);
+      return [parseInt(number, 10)].concat(buffer)
+    }, [])
 
     var sum = reverse.reduce(function(buffer, number) {
-      buffer += number * index;
-      index = (index === 9 ? 2 : index + 1);
-      return buffer;
-    }, 0);
+      buffer += number * index
+      index = (index === 9 ? 2 : index + 1)
+      return buffer
+    }, 0)
 
-    var mod = sum % 11;
-    return (mod < 2 ? 0 : 11 - mod);
-  };
+    var mod = sum % 11
+    return (mod < 2 ? 0 : 11 - mod)
+  }
 
-  var CNPJ = {};
+  var CNPJ = {}
 
   CNPJ.format = function(number) {
-    return this.strip(number).replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
-  };
+    return this.strip(number).replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5")
+  }
 
   CNPJ.strip = function(number, strict) {
-    var regex = strict ? STRICT_STRIP_REGEX : LOOSE_STRIP_REGEX;
-    return (number || "").toString().replace(regex, "");
-  };
+    var regex = strict ? STRICT_STRIP_REGEX : LOOSE_STRIP_REGEX
+    return (number || "").toString().replace(regex, "")
+  }
 
   CNPJ.isValid = function(number, strict) {
-    var stripped = this.strip(number, strict);
+    var stripped = this.strip(number, strict)
 
     // CNPJ must be defined
-    if (!stripped) { return false; }
+    if (!stripped) { return false }
 
     // CNPJ must have 14 chars
-    if (stripped.length !== 14) { return false; }
+    if (stripped.length !== 14) { return false }
 
     // CNPJ can't be blacklisted
-    if (BLACKLIST.indexOf(stripped) >= 0) { return false; }
+    if (BLACKLIST.indexOf(stripped) >= 0) { return false }
 
-    var numbers = stripped.substr(0, 12);
-    numbers += verifierDigit(numbers);
-    numbers += verifierDigit(numbers);
+    var numbers = stripped.substr(0, 12)
+    numbers += verifierDigit(numbers)
+    numbers += verifierDigit(numbers)
 
-    return numbers.substr(-2) === stripped.substr(-2);
-  };
+    return numbers.substr(-2) === stripped.substr(-2)
+  }
 
   CNPJ.generate = function(formatted) {
-    var numbers = "";
+    var numbers = ""
 
     for (var i = 0; i < 12; i++) {
-      numbers += Math.floor(Math.random() * 9);
+      numbers += Math.floor(Math.random() * 9)
     }
 
-    numbers += verifierDigit(numbers);
-    numbers += verifierDigit(numbers);
+    numbers += verifierDigit(numbers)
+    numbers += verifierDigit(numbers)
 
-    return (formatted ? this.format(numbers) : numbers);
-  };
+    return (formatted ? this.format(numbers) : numbers)
+  }
 
   if (commonjs) {
-    module.exports = CNPJ;
+    module.exports = CNPJ
   } else {
-    window.CNPJ = CNPJ;
+    window.CNPJ = CNPJ
   }
-})(typeof(exports) !== "undefined");
+})(typeof(exports) !== "undefined")

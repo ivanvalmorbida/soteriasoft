@@ -12,60 +12,60 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     .then(function(answer) {
       $http.post('/usuario/apagar', {cod: $scope.codigo}).
       success(function (data, status, headers, config) {
-        $scope.Limpar();
+        $scope.Limpar()
       }).error(function (data, status, headers, config) {
         //
-      });        
-      console.dir('You said the information was "' + answer + '".');
+      })        
+      console.dir('You said the information was "' + answer + '".')
     }, function() {
-      console.dir('You cancelled the dialog.');
-    });
-  };
+      console.dir('You cancelled the dialog.')
+    })
+  }
   
   function ApagarController($scope, $mdDialog, usuario) {
-    $scope.usuario = usuario;
+    $scope.usuario = usuario
 
     $scope.Cancel = function() {
-      $mdDialog.cancel();
-    };
+      $mdDialog.cancel()
+    }
 
     $scope.Efetivar = function(answer) {
-      $mdDialog.hide(answer);
-    };
+      $mdDialog.hide(answer)
+    }
   }
     
   $scope.Limpar = function() {
-    $scope.codigo   = 0;
-    $scope.tipo   = 0;
-    $scope.pessoa   = 0;
-    $scope.usuario  = '';
-    $scope.senha  = '';
+    $scope.codigo   = 0
+    $scope.tipo   = 0
+    $scope.pessoa   = 0
+    $scope.usuario  = ''
+    $scope.senha  = ''
   }
 
   $scope.Gravar = function() {
     $http.post('/usuario/gravar', {codigo: $scope.codigo, tipo: $scope.tipo, 
       pessoa: $scope.pessoa.codigo, senha: $scope.senha, usuario: $scope.usuario}).
     success(function (data, status, headers, config) {
-      $scope.codigo = data.codigo;
-      alert('Informações salvas com sucesso!');
-    });  
+      $scope.codigo = data.codigo
+      alert('Informações salvas com sucesso!')
+    })  
   }
   
   $scope.BuscarCodigo = function() {
     $http.post('/usuario/codigo', {cod: $scope.codigo}).
     success(function (data, status, headers, config) {
-      $scope.Limpar();
+      $scope.Limpar()
       if (data.dados.length>0){
-        $scope.codigo = data.dados[0].codigo;
-        $scope.tipo = data.dados[0].tipo;
-        if(data.dados[0].pessoa>0){$scope.pessoa = {codigo: data.dados[0].pessoa, nome: data.dados[0].pessoa_}};
-        $scope.usuario = data.dados[0].usuario;
-        $scope.senha = data.dados[0].senha;
-        $scope.csenha = data.dados[0].senha;
+        $scope.codigo = data.dados[0].codigo
+        $scope.tipo = data.dados[0].tipo
+        if(data.dados[0].pessoa>0){$scope.pessoa = {codigo: data.dados[0].pessoa, nome: data.dados[0].pessoa_}}
+        $scope.usuario = data.dados[0].usuario
+        $scope.senha = data.dados[0].senha
+        $scope.csenha = data.dados[0].senha
       }
     }).error(function (data, status, headers, config) {
-      $scope.Limpar();
-    });     
+      $scope.Limpar()
+    })     
   }
 
   $scope.Localizar = function(ev) {
@@ -79,34 +79,34 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     })
     .then(function(answer) {
       if (answer>0){
-        $scope.codigo=answer;
-        $scope.BuscarCodigo();
+        $scope.codigo=answer
+        $scope.BuscarCodigo()
       }      
-      //console.dir('You said the information was "' + answer + '".');
+      //console.dir('You said the information was "' + answer + '".')
     }, function() {
-      console.dir('You cancelled the dialog.');
-    });
-  };
+      console.dir('You cancelled the dialog.')
+    })
+  }
   
   function LocalizarController($scope, $mdDialog) {
-    $scope.campopesq = 'usuario';
+    $scope.campopesq = 'usuario'
 
     $scope.Cancel = function() {
-      $mdDialog.cancel();
-    };
+      $mdDialog.cancel()
+    }
 
     $scope.LocalizarExe = function(camp, text) {
       $http.post('/usuario/localizar', {camp: camp, text: text}).
       success(function (data, status, headers, config) {
-        $scope.l_dados = data.dados;
+        $scope.l_dados = data.dados
       }).error(function (data, status, headers, config) {
         //
-      });      
-    };
+      })      
+    }
 
     $scope.ExibirUsuario = function(answer) {
-      $mdDialog.hide(answer);
-    };
+      $mdDialog.hide(answer)
+    }
   }
   
   $scope.PessoaNome = function(StrSearch) {
@@ -116,16 +116,16 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
     }
     }).then(function(data) {
       return data.data
-    });
-  };
+    })
+  }
 
-  var url = new URL(location.href);
-  var cod = url.searchParams.get("codigo");  
+  var url = new URL(location.href)
+  var cod = url.searchParams.get("codigo")  
   if (cod!=undefined){
-    $scope.codigo = cod;
-    $scope.BuscarCodigo();
+    $scope.codigo = cod
+    $scope.BuscarCodigo()
   }
   else{
-    $scope.Limpar();     
+    $scope.Limpar()     
   }
-});
+})
