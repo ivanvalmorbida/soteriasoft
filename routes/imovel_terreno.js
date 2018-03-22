@@ -1,20 +1,25 @@
-var settings = require("../settings");
-var mysql   = require('mysql');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+router.post('/imovel_terreno/gravar', gravar)
+router.post('/imovel_terreno/imovel', imovel)
+
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
   
-  data.cep = data.cep.replace("-", "");
+  data.cep = data.cep.replace("-", "")
 
-  connection.connect();
+  connection.connect()
   connection.query('select imovel from tb_imovel_terreno where imovel=?', [data.imovel], 
   function(err, rows) {
     if (!err) {
-      if (data.estado==undefined){data.estado=0};
-      if (data.cidade==undefined){data.cidade=0};
-      if (data.bairro==undefined){data.bairro=0};
-      if (data.endereco==undefined){data.endereco=0};
+      if (data.estado==undefined){data.estado=0}
+      if (data.cidade==undefined){data.cidade=0}
+      if (data.bairro==undefined){data.bairro=0}
+      if (data.endereco==undefined){data.endereco=0}
       if (rows.length == 0) {
         connection.query('insert into tb_imovel_terreno (imovel, cep, estado, cidade, bairro,'+
         ' endereco, numero, complemento, area_terreno, frente, fundo, lateral1, lateral2,'+
@@ -27,8 +32,8 @@ exports.gravar = function (req, res) {
           else
             console.log('Error while performing Query: '+err)
           
-          connection.end();
-        });
+          connection.end()
+        })
       }   
       else {
         connection.query('update tb_imovel_terreno set cep=?, estado=?, cidade=?, bairro=?,'+
@@ -42,7 +47,7 @@ exports.gravar = function (req, res) {
           else
             console.log('Error while performing Query.')
               
-          connection.end();
+          connection.end()
         })
       }   
     }
@@ -51,11 +56,11 @@ exports.gravar = function (req, res) {
   })          
 }
 
-exports.imovel = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function imovel(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query("SELECT i.*, u.nome as estado_, m.nome as cidade_,"+
   ' b.nome as bairro_, e.nome as endereco_ from tb_imovel_terreno i'+
   ' left join tb_estado u on u.codigo=i.estado'+
@@ -67,6 +72,8 @@ exports.imovel = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router

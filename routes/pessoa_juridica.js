@@ -1,13 +1,16 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+router.post('/pessoa_juridica/gravar', gravar)
+router.post('/pessoa_juridica/pessoa', pessoa)
 
-  connection.connect();
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
+
+  connection.connect()
   connection.query('select pessoa from tb_pessoa_juridica where pessoa=?', [data.pessoa], 
   function(err, rows) {
     if (!err) {
@@ -40,11 +43,11 @@ exports.gravar = function (req, res) {
   })
 }
 
-exports.pessoa = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function pessoa(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query('select p.*, a.descricao as atividade_, r.nome as representante_'+
   ' from tb_pessoa_juridica p'+
   ' left join tb_atividade_economica a on a.codigo=p.atividade'+
@@ -54,6 +57,8 @@ exports.pessoa = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router

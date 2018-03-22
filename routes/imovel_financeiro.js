@@ -1,11 +1,16 @@
-var settings = require("../settings");
-var mysql   = require('mysql');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+router.post('/imovel_financeiro/gravar', gravar)
+router.post('/imovel_financeiro/imovel', imovel)
 
-  connection.connect();
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
+
+  connection.connect()
   connection.query('select imovel from tb_imovel_financeiro where imovel=?', [data.imovel], 
   function(err, rows) {
     if (!err) {
@@ -20,8 +25,8 @@ exports.gravar = function (req, res) {
           else
             console.log('Error while performing Query: '+err)
 
-          connection.end();
-        });
+          connection.end()
+        })
       }   
       else {
         connection.query('update tb_imovel_financeiro set valor=?, mcmv=?, financia=?,'+
@@ -34,7 +39,7 @@ exports.gravar = function (req, res) {
           else
             console.log('Error while performing Query.')
           
-          connection.end();
+          connection.end()
         })
       }     
     }
@@ -43,11 +48,11 @@ exports.gravar = function (req, res) {
   })          
 }
 
-exports.imovel = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function imovel(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT i.*, p.nome as captador_ from tb_imovel_financeiro i'+
   ' left join tb_pessoa p on p.codigo=i.captador'+
   ' where i.imovel='+cod, function(err, rows, fields) {
@@ -55,6 +60,8 @@ exports.imovel = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router

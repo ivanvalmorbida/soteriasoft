@@ -1,30 +1,37 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
-var auth = require('../authetication');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
+var auth = require('../authetication')
 
-exports.index = function (req, res) {
+router.get('/imovel', index)
+router.get('/imovel/dlg/apagar', dlg_apagar)
+router.get('/imovel/dlg/localizar', dlg_localizar)
+router.post('/imovel/gravar', gravar)
+router.post('/imovel/codigo', codigo)
+router.post('/imovel/localizar', localizar)
+
+function index(req, res) {
   auth.active_user(req, res, render_index)
 }
 
 function render_index(req, res) {
-  res.render('imovel', {empresa: settings.empresa});
-};
+  res.render('imovel', {empresa: settings.empresa})
+}
 
-exports.dlg_apagar = function (req, res) {
-  res.render('imovel_dlg_apagar');
-};
+function dlg_apagar(req, res) {
+  res.render('imovel_dlg_apagar')
+}
 
-exports.dlg_localizar = function (req, res) {
-  res.render('imovel_dlg_localizar');
-};
+function dlg_localizar(req, res) {
+  res.render('imovel_dlg_localizar')
+}
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
 
-  connection.connect();
+  connection.connect()
   if (data.codigo==0) {
     connection.query('insert into tb_imovel (tipo, proprietario, documentacao, inscricao_incra,'+
     'lote_unidade, quadra_bloco, cadastro) values (?, ?, ?, ?, ?, ?, now());', 
@@ -34,7 +41,7 @@ exports.gravar = function (req, res) {
         res.json({codigo: rows.insertId})      
       else
         console.log('Error while performing Query: '+err)
-    });
+    })
   }   
   else {
     connection.query('update tb_imovel set tipo=?, proprietario=?, documentacao=?,'+
@@ -47,14 +54,14 @@ exports.gravar = function (req, res) {
         console.log('Error while performing Query.')
     })
   }     
-  connection.end();
+  connection.end()
 }
 
-exports.codigo = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function codigo(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT i.*, p.nome as proprietario_ from tb_imovel i'+
   ' left join tb_pessoa p on p.codigo=i.proprietario'+
   ' where i.codigo='+cod, function(err, rows, fields) {
@@ -62,14 +69,14 @@ exports.codigo = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
 
-exports.localizar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
-  var sql = '';
+function localizar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
+  var sql = ''
 
   sql += "SELECT i.codigo, p.nome as proprietario, i.inscricao_incra,"
   sql += " t.descricao as tipo, i.lote_unidade, i.quadra_bloco"; 
@@ -83,12 +90,14 @@ exports.localizar = function (req, res) {
     sql += " i.inscricao_incra like '%"+data.text+"%'"
   }
 
-  connection.connect();
+  connection.connect()
   connection.query(sql, function(err, rows, fields) {
     if (!err)
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router

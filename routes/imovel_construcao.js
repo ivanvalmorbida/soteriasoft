@@ -1,16 +1,21 @@
-var settings = require("../settings");
-var mysql   = require('mysql');
-var dateFormat = require('dateformat');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
+var dateFormat = require('dateformat')
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+router.post('/imovel_construcao/gravar', gravar)
+router.post('/imovel_construcao/imovel', imovel)
 
-  connection.connect();
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
+
+  connection.connect()
   connection.query('select imovel from tb_imovel_construcao where imovel=?', [data.imovel], 
   function(err, rows) {
     if (!err) {
-      data.entrega = dateFormat(data.entrega, "yyyy-mm-dd hh:MM:ss");
+      data.entrega = dateFormat(data.entrega, "yyyy-mm-dd hh:MM:ss")
       if (rows.length == 0) {
         connection.query('insert into tb_imovel_construcao (imovel, entrega, ano_construcao,'+
         ' area_total, area_privativa, quartos, suites, garagens, mobiliada, churrasqueira,'+
@@ -25,8 +30,8 @@ exports.gravar = function (req, res) {
           else
             console.log('Error while performing Query: '+err)
             
-          connection.end();
-        });
+          connection.end()
+        })
       }   
       else {
         connection.query('update tb_imovel_construcao set entrega=?, ano_construcao=?,'+
@@ -42,7 +47,7 @@ exports.gravar = function (req, res) {
           else
             console.log('Error while performing Query.')
 
-          connection.end();
+          connection.end()
         })
       }     
     }
@@ -51,17 +56,19 @@ exports.gravar = function (req, res) {
   })          
 }
 
-exports.imovel = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function imovel(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT i.* from tb_imovel_construcao i'+
   ' where i.imovel='+cod, function(err, rows, fields) {
     if (!err)
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router

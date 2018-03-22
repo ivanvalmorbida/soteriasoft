@@ -1,44 +1,53 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
-var auth = require('../authetication');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
+var auth = require('../authetication')
 
-exports.index = function (req, res) {
+router.get('/usuario', index)
+router.get('/usuario/dlg/apagar', dlg_apagar)
+router.get('/usuario/dlg/localizar', dlg_localizar)
+router.get('/usuario/pessoa_nome', pessoa_nome)
+router.post('/usuario/gravar', gravar)
+router.post('/usuario/codigo', codigo)
+router.post('/usuario/localizar', localizar)
+router.post('/usuario/login', login)
+
+function index(req, res) {
   auth.active_user(req, res, render_index)
 }
 
 function render_index(req, res) {
-  res.render('usuario', {empresa: settings.empresa});
-};
+  res.render('usuario', {empresa: settings.empresa})
+}
 
-exports.login = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var usu = req.body.usu;
-  var sen = req.body.sen;
+function login(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var usu = req.body.usu
+  var sen = req.body.sen
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT codigo, tipo from tb_usuario'+
   ' where usuario=? and senha=?',[usu, sen], function(err, rows, fields) {
     if (!err){
       if (rows.length>0){
-        req.session.UserCod = rows[0].codigo;
-        req.session.UserNom = usu;
-        req.session.UserTip = rows[0].tipo;
+        req.session.UserCod = rows[0].codigo
+        req.session.UserNom = usu
+        req.session.UserTip = rows[0].tipo
       }
       res.json({dados: rows})
     }
     else
       console.log('Error while performing Query.')
   });
-  connection.end();
+  connection.end()
 }
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
 
-  connection.connect();
+  connection.connect()
   if (data.codigo==0) {
     connection.query('insert into tb_usuario (tipo, usuario, senha, '+ 
     'pessoa, cadastro) values (?, ?, ?, ?, now());', 
@@ -60,14 +69,14 @@ exports.gravar = function (req, res) {
         console.log('Error while performing Query.')
     })
   }     
-  connection.end();
+  connection.end()
 }
 
-exports.codigo = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function codigo(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT u.*, p.nome as pessoa_ from tb_usuario u'+
   ' left join tb_pessoa p on u.pessoa=p.codigo'+
   ' where u.codigo='+cod, function(err, rows, fields) {
@@ -75,19 +84,19 @@ exports.codigo = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
 
-exports.localizar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
-  var sql = '';
+function localizar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
+  var sql = ''
 
-  sql += "SELECT u.codigo, u.usuario, p.nome as pessoa,";
-  sql += " case when u.tipo=1 then 'Admin' else 'Operac' end as tipo";
-  sql += " FROM tb_usuario u left join tb_pessoa p on p.codigo=u.pessoa";
-  sql += " Where";
+  sql += "SELECT u.codigo, u.usuario, p.nome as pessoa,"
+  sql += " case when u.tipo=1 then 'Admin' else 'Operac' end as tipo"
+  sql += " FROM tb_usuario u left join tb_pessoa p on p.codigo=u.pessoa"
+  sql += " Where"
 
   if (data.camp=="usuario"){
     sql += " usuario like '%"+data.text+"%'"
@@ -99,24 +108,24 @@ exports.localizar = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
+  })
 
-  connection.end();
+  connection.end()
 }
 
-exports.dlg_localizar = function (req, res) {
-  res.render('usuario_dlg_localizar');
-};
+function dlg_localizar(req, res) {
+  res.render('usuario_dlg_localizar')
+}
 
-exports.dlg_apagar = function (req, res) {
-  res.render('usuario_dlg_apagar');
-};
+function dlg_apagar(req, res) {
+  res.render('usuario_dlg_apagar')
+}
 
-exports.pessoa_nome = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var txt = req.query.txt;
+function pessoa_nome(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var txt = req.query.txt
 
-  connection.connect();
+  connection.connect()
   connection.query("select codigo, nome from tb_pessoa"+
   " where nome like '"+txt+"%' and codigo in(select pessoa FROM tb_usuario)"+
   " order by nome LIMIT 20", function(err, rows) {
@@ -124,6 +133,8 @@ exports.pessoa_nome = function (req, res) {
       return res.json(rows)
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router

@@ -1,18 +1,21 @@
-var express = require('express');
-var router  = express.Router();
-var settings = require("../settings");
-var mysql   = require('mysql');
-var dateFormat = require('dateformat');
+var express = require('express')
+var router  = express.Router()
+var settings = require("../settings")
+var mysql   = require('mysql')
+var dateFormat = require('dateformat')
 
-exports.gravar = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var data = req.body;
+router.post('/pessoa_fisica/gravar', gravar)
+router.post('/pessoa_fisica/pessoa', pessoa)
 
-  connection.connect();
+function gravar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var data = req.body
+
+  connection.connect()
   connection.query('select pessoa from tb_pessoa_fisica where pessoa=?', [data.pessoa], 
   function(err, rows) {
     if (!err) {
-      data.nascimento = dateFormat(data.nascimento, "yyyy-mm-dd h:MM:ss");
+      data.nascimento = dateFormat(data.nascimento, "yyyy-mm-dd h:MM:ss")
       if (rows.length == 0) {        
         connection.query('insert into tb_pessoa_fisica (pessoa, nascimento, cidadenasc,'+
         'ufnasc, nacionalidade, sexo, cpf, identidade, orgaoidentidade, ufidentidade,'+
@@ -46,11 +49,11 @@ exports.gravar = function (req, res) {
   })
 }
 
-exports.pessoa = function (req, res) {
-  var connection = mysql.createConnection(settings.dbConect);
-  var cod = req.body.cod;
+function pessoa(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+  var cod = req.body.cod
 
-  connection.connect();
+  connection.connect()
   connection.query('SELECT p.*, un.nome as ufnasc_, mn.Nome as cidadenasc_,'+
   ' n.pais as nacionalidade_, ui.nome as ufidentidade_,e.Descricao as estadocivil_,'+
   ' c.nome as conjuge_, pr.Descricao as profissao_ FROM tb_pessoa_fisica p'+
@@ -66,6 +69,8 @@ exports.pessoa = function (req, res) {
       res.json({dados: rows})
     else
       console.log('Error while performing Query.')
-  });
-  connection.end();
+  })
+  connection.end()
 }
+
+module.exports = router
