@@ -11,23 +11,25 @@ function gravar(req, res) {
   var data = req.body
   var local = data.local
 
-  connection.connect()
-  connection.query('update tb_cliente_imovel_localizacao set excluir=1 where cliente=?', 
-  [data.cliente], function(err, rows) {
-    var loop = function(local, i) {
-      add_fone(data.cliente, local[i], function() {
-        if (++i < local.length) {
-          loop(local, i)
-        } else {
-          connection.query('delete from tb_cliente_imovel_localizacao where excluir=1 and cliente=?', 
-          [data.cliente], function(err, rows) {
-            res.send({gravar: true})
-          })
-        }
-      })
-    }
-    loop(local, 0)
-  })
+  if(local.length>0){
+    connection.connect()
+    connection.query('update tb_cliente_imovel_localizacao set excluir=1 where cliente=?', 
+    [data.cliente], function(err, rows) {
+      var loop = function(local, i) {
+        add_local(data.cliente, local[i], function() {
+          if (++i < local.length) {
+            loop(local, i)
+          } else {
+            connection.query('delete from tb_cliente_imovel_localizacao where excluir=1 and cliente=?', 
+            [data.cliente], function(err, rows) {
+              res.send({gravar: true})
+            })
+          }
+        })
+      }
+      loop(local, 0)
+    })
+  }
 }
 
 function add_local(cliente, local, cb){

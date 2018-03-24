@@ -12,24 +12,32 @@ function gravar(req, res) {
   var data = req.body
 
   connection.connect()
-  connection.query('select imovel from tb_cliente_imovel_construcao where cliente=?', [data.cliente], 
+  connection.query('select cliente from tb_cliente_imovel_construcao where cliente=?', [data.cliente], 
   function(err, rows) {
     if (!err) {
       if (rows.length == 0) {
-        connection.query('insert into tb_cliente_imovel_construcao (cliente, area_terreno, frente,'+ 
-        ' fundo, lateral1, lateral2, gabarito, esquina) values (?, ?, ?, ?, ?, ?, ?, ?);', 
-        [data.cliente, data.area_terreno, data.frente, data.fundo, data.lateral1, data.lateral2, 
-        data.gabarito, data.esquina], function(err, rows) {
+
+        connection.query('insert into tb_cliente_imovel_construcao (cliente, ano_construcao,'+ 
+        'area_total, area_privativa, quartos, suites, garagens, mobiliada, churrasqueira,'+ 
+        'infra_ar_cond, piso, teto, reboco, murro, portao, quintal_larg, quintal_comp, andar'+ 
+        ') values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', 
+        [data.cliente, data.ano_construcao, data.area_total, data.area_privativa, data.quartos, 
+        data.suites, data.garagens, data.mobiliada, data.churrasqueira, data.infra_ar_cond,
+        data.piso, data.teto, data.reboco, data.murro, data.portao, data.quintal_larg, 
+        data.andar], function(err, rows) {
           if (!err)
             res.json({dados: rows})      
           else
             console.log('Error while performing Query: '+err)
         })
       }else {
-        connection.query('update tb_cliente_imovel_construcao set area_terreno=?, frente=?,'+ 
-        ' fundo=?, lateral1=?, lateral2=?, gabarito=?, esquina=? where cliente=?;', 
-        [data.area_terreno, data.frente, data.fundo, data.lateral1, data.lateral2, 
-        data.gabarito, data.esquina, data.cliente], function(err, rows) {
+        connection.query('update tb_cliente_imovel_construcao set ano_construcao=?, area_total=?,'+ 
+        ' area_privativa=?, quartos=?, suites=?, garagens=?, mobiliada=?, churrasqueira=?,'+ 
+        ' infra_ar_cond=?, piso=?, teto=?, reboco=?, murro=?, portao=?, quintal_larg=?,'+
+        ' quintal_comp=?, andar=? where cliente=?', [data.cliente, data.ano_construcao, data.area_total, 
+          data.area_privativa, data.quartos, data.suites, data.garagens, data.mobiliada, 
+          data.churrasqueira, data.infra_ar_cond, data.piso, data.teto, data.reboco, data.murro, 
+          data.portao, data.quintal_larg, data.andar], function(err, rows) {
           if (!err)
             res.json({dados: rows})      
           else

@@ -73,7 +73,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   }  
 
   $scope.Apagar = function() {
-    alert($scope.pes_nom)
+    alert($scope.codigo)
   }
   
   $scope.Limpar = function() {
@@ -154,12 +154,12 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       success(function (data, status, headers, config) {
         $scope.codigo = data.codigo
         
-        $http.post('/cliente_imovel_localizacao/gravar', {cliente: $scope.codigo, 
+        $http.post('/cliente_imovel_loca/gravar', {cliente: $scope.codigo, 
           local: $scope.localizacoes})
     
         if ($scope.esquina==false) {esquina=0} else {esquina=1}
           
-        $http.post('/cliente_imovel_terreno/gravar', {cliente: $scope.codigo, 
+        $http.post('/cliente_imovel_terr/gravar', {cliente: $scope.codigo, 
           area_terreno: $scope.area_terreno, frente: $scope.frente, fundo: $scope.fundo, 
           lateral1: $scope.lateral1, lateral2: $scope.lateral2, gabarito: $scope.gabarito, 
           esquina: esquina})
@@ -173,7 +173,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
    
         $http.post('/cliente_imovel_tipo/gravar', {cliente: $scope.codigo, tipo: $scope.tipos})
     
-        $http.post('/cliente_imovel_construcao/gravar', {cliente: $scope.codigo, 
+        $http.post('/cliente_imovel_cons/gravar', {cliente: $scope.codigo, 
           ano_construcao: $scope.ano_construcao, area_total: $scope.area_total, 
           area_privativa: $scope.area_privativa, quartos: $scope.quartos, suites: $scope.suites, 
           garagens: $scope.garagens, mobiliada: mobiliada, churrasqueira: churrasqueira, 
@@ -184,7 +184,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         if ($scope.mcmv==false) {mcmv=0} else {mcmv=1}
         if ($scope.financia==false) {financia=0} else {financia=1}
      
-        $http.post('/cliente_imovel_financeiro/gravar', {cliente: $scope.codigo, 
+        $http.post('/cliente_imovel_fina/gravar', {cliente: $scope.codigo, 
           valor: $scope.valor, mcmv: mcmv, financia: financia, 
           entrada: $scope.entrada, permuta: permuta, carro: carro,
           fgts: fgts, condominio: $scope.condominio, renda: $scope.renda})
@@ -202,7 +202,10 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     return r
   }  
 
-  $scope.BuscarCliente = function() {
+  $scope.DadosPessoa = function() {
+    $scope.emails = []
+    $scope.fones = []
+
     if ($scope.pessoa!=null){
       $http.post('/pessoa_email/pessoa', {cod: $scope.pessoa.codigo}).
       success(function (data, status, headers, config) {
@@ -217,6 +220,12 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           $scope.fones.push(data.dados[i].fone)
         }
       })
+    }
+  }
+
+  $scope.BuscarCliente = function() {
+    if ($scope.pessoa!=null){
+      $scope.DadosPessoa()
 
       $http.post('/cliente_imovel/pessoa', {cod: $scope.pessoa.codigo}).
       success(function (data, status, headers, config) {
@@ -228,23 +237,19 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         //
       })
     }
-    else {
-      $scope.emails = []
-      $scope.fones = []
-    }        
   }
 
   $scope.BuscarCodigo = function() {
     $http.post('/cliente_imovel/codigo', {cod: $scope.codigo}).
     success(function (data, status, headers, config) {
-      $scope.Limpar()
       if (data.dados.length>0){
         $scope.interesse = data.dados[0].interesse
         $scope.renda = data.dados[0].renda
         $scope.origem = data.dados[0].origem
         if(data.dados[0].pessoa>0){$scope.pessoa = {codigo: data.dados[0].pessoa, nome: data.dados[0].pessoa_}}
         if(data.dados[0].responsavel>0){$scope.responsavel = {codigo: data.dados[0].responsavel, nome: data.dados[0].responsavel_}}
-        
+        $scope.DadosPessoa()
+
         $http.post('/cliente_imovel_terr/cliente', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
@@ -294,6 +299,9 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
             $scope.condominio = data.dados[0].condominio        
           }
         })
+      }
+      else {
+        $scope.Limpar()
       }
     }).error(function (data, status, headers, config) {
       $scope.Limpar()

@@ -12,21 +12,23 @@ function gravar(req, res) {
   var tipos = data.tipos.toString()
   var tipo = data.tipos
 
-  connection.connect()
-  tipos="'"+tipos.replace(',',"','")+"'"
-  connection.query('delete from tb_cliente_imovel_tipo where cliente='+data.cliente+' and tipo not in('+
-  tipos+')', function(err, rows) {
-    var loop = function(tipo, i) {
-      add_fone(data.cliente, tipo[i], function() {
-        if (++i < tipo.length) {
-          loop(tipo, i)
-        } else {
-          res.send({gravar: true})
-        }
-      })
-    }
-    loop(tipo, 0)
-  })
+  if(tipo.length>0){
+    connection.connect()
+    tipos="'"+tipos.replace(',',"','")+"'"
+    connection.query('delete from tb_cliente_imovel_tipo where cliente='+data.cliente+' and tipo not in('+
+    tipos+')', function(err, rows) {
+      var loop = function(tipo, i) {
+        add_fone(data.cliente, tipo[i], function() {
+          if (++i < tipo.length) {
+            loop(tipo, i)
+          } else {
+            res.send({gravar: true})
+          }
+        })
+      }
+      loop(tipo, 0)
+    })
+  }
 }
 
 function add_tipo(cliente, tipo, cb){
