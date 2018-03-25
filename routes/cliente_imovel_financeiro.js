@@ -16,20 +16,20 @@ function gravar(req, res) {
   function(err, rows) {
     if (!err) {
       if (rows.length == 0) {
-        connection.query('insert into tb_cliente_imovel_financeiro (cliente, area_terreno, frente,'+ 
-        ' fundo, lateral1, lateral2, gabarito, esquina) values (?, ?, ?, ?, ?, ?, ?, ?);', 
-        [data.cliente, data.area_terreno, data.frente, data.fundo, data.lateral1, data.lateral2, 
-        data.gabarito, data.esquina], function(err, rows) {
+        connection.query('insert into tb_cliente_imovel_financeiro (cliente, mcmv, valor_avista,'+
+        ' valor_financiado, carro, fgts, permuta, condominio, renda) values (?, ?, ?, ?, ?, ?, ?, ?, ?);', 
+        [data.cliente, data.mcmv, data.valor_avista, data.valor_financiado, data.carro, data.fgts, 
+        data.permuta, data.condominio, data.renda], function(err, rows) {
           if (!err)
             res.json({dados: rows})      
           else
             console.log('Error while performing Query: '+err)
         })
       }else {
-        connection.query('update tb_cliente_imovel_financeiro set area_terreno=?, frente=?,'+ 
-        ' fundo=?, lateral1=?, lateral2=?, gabarito=?, esquina=? where cliente=?;', 
-        [data.area_terreno, data.frente, data.fundo, data.lateral1, data.lateral2, 
-        data.gabarito, data.esquina, data.cliente], function(err, rows) {
+        connection.query('update tb_cliente_imovel_financeiro set mcmv=?, valor_avista=?,'+
+        ' valor_financiado=?, carro=?, fgts=?, permuta=?, condominio=?, renda=? where cliente=?;', 
+        [data.mcmv, data.valor_avista, data.valor_financiado, data.carro, data.fgts, 
+        data.permuta, data.condominio, data.renda, data.cliente], function(err, rows) {
           if (!err)
             res.json({dados: rows})      
           else

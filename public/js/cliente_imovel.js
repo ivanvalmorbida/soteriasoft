@@ -171,7 +171,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         if ($scope.murro==false) {murro=0} else {murro=1}
         if ($scope.portao==false) {portao=0} else {portao=1}
    
-        $http.post('/cliente_imovel_tipo/gravar', {cliente: $scope.codigo, tipo: $scope.tipos})
+        $http.post('/cliente_imovel_tipo/gravar', {cliente: $scope.codigo, tipos: $scope.tipos})
     
         $http.post('/cliente_imovel_cons/gravar', {cliente: $scope.codigo, 
           ano_construcao: $scope.ano_construcao, area_total: $scope.area_total, 
@@ -186,8 +186,8 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
      
         $http.post('/cliente_imovel_fina/gravar', {cliente: $scope.codigo, 
           valor: $scope.valor, mcmv: mcmv, financia: financia, 
-          entrada: $scope.entrada, permuta: permuta, carro: carro,
-          fgts: fgts, condominio: $scope.condominio, renda: $scope.renda})
+          entrada: $scope.entrada, permuta: $scope.permuta, carro: $scope.carro,
+          fgts: $scope.fgts, condominio: $scope.condominio, renda: $scope.renda})
               
         alert('Informações salvas com sucesso!')
       })  
@@ -248,7 +248,6 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         $scope.origem = data.dados[0].origem
         if(data.dados[0].pessoa>0){$scope.pessoa = {codigo: data.dados[0].pessoa, nome: data.dados[0].pessoa_}}
         if(data.dados[0].responsavel>0){$scope.responsavel = {codigo: data.dados[0].responsavel, nome: data.dados[0].responsavel_}}
-        $scope.DadosPessoa()
 
         $http.post('/cliente_imovel_terr/cliente', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
@@ -286,6 +285,13 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           }
         })
     
+        $http.post('/cliente_imovel_tipo/cliente', {cod: $scope.codigo}).
+        success(function (data, status, headers, config) {
+          for (i = 0; i < data.dados.length; i++) {
+            $scope.tipos.push({'codigo': data.dados[i].tipo, 'descricao': data.dados[i].tipo_})
+          }
+        })
+  
         $http.post('/cliente_imovel_fina/cliente', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
@@ -293,10 +299,11 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
             $scope.mcmv = (data.dados[0].mcmv==1)
             $scope.financia = (data.dados[0].financia==1)
             $scope.entrada = data.dados[0].entrada
-            $scope.permuta = (data.dados[0].permuta==1)
-            $scope.carro = (data.dados[0].carro==1)
-            $scope.fgts = (data.dados[0].fgts==1)
+            $scope.permuta = data.dados[0].permuta
+            $scope.carro = data.dados[0].carro
+            $scope.fgts = data.dados[0].fgts
             $scope.condominio = data.dados[0].condominio        
+            $scope.renda = data.dados[0].renda     
           }
         })
       }
@@ -396,6 +403,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   var url = new URL(location.href)
   var cod = url.searchParams.get("codigo")
   if (cod!=undefined){
+    $scope.Limpar()
     $scope.codigo = cod
     $scope.BuscarCodigo()
   }

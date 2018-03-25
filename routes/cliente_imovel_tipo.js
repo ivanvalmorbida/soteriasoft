@@ -18,7 +18,7 @@ function gravar(req, res) {
     connection.query('delete from tb_cliente_imovel_tipo where cliente='+data.cliente+' and tipo not in('+
     tipos+')', function(err, rows) {
       var loop = function(tipo, i) {
-        add_fone(data.cliente, tipo[i], function() {
+        add_tipo(data.cliente, tipo[i].codigo, function() {
           if (++i < tipo.length) {
             loop(tipo, i)
           } else {

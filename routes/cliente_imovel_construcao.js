@@ -16,7 +16,6 @@ function gravar(req, res) {
   function(err, rows) {
     if (!err) {
       if (rows.length == 0) {
-
         connection.query('insert into tb_cliente_imovel_construcao (cliente, ano_construcao,'+ 
         'area_total, area_privativa, quartos, suites, garagens, mobiliada, churrasqueira,'+ 
         'infra_ar_cond, piso, teto, reboco, murro, portao, quintal_larg, quintal_comp, andar'+ 
@@ -24,20 +23,21 @@ function gravar(req, res) {
         [data.cliente, data.ano_construcao, data.area_total, data.area_privativa, data.quartos, 
         data.suites, data.garagens, data.mobiliada, data.churrasqueira, data.infra_ar_cond,
         data.piso, data.teto, data.reboco, data.murro, data.portao, data.quintal_larg, 
-        data.andar], function(err, rows) {
+        data.quintal_comp, data.andar], function(err, rows) {
           if (!err)
             res.json({dados: rows})      
           else
             console.log('Error while performing Query: '+err)
         })
       }else {
-        connection.query('update tb_cliente_imovel_construcao set ano_construcao=?, area_total=?,'+ 
+        connection.query('update tb_cliente_imovel_construcao set ano_construcao=?, area_total=?,'+
         ' area_privativa=?, quartos=?, suites=?, garagens=?, mobiliada=?, churrasqueira=?,'+ 
         ' infra_ar_cond=?, piso=?, teto=?, reboco=?, murro=?, portao=?, quintal_larg=?,'+
-        ' quintal_comp=?, andar=? where cliente=?', [data.cliente, data.ano_construcao, data.area_total, 
-          data.area_privativa, data.quartos, data.suites, data.garagens, data.mobiliada, 
-          data.churrasqueira, data.infra_ar_cond, data.piso, data.teto, data.reboco, data.murro, 
-          data.portao, data.quintal_larg, data.andar], function(err, rows) {
+        ' quintal_comp=?, andar=? where cliente=?', 
+        [data.ano_construcao, data.area_total, data.area_privativa, data.quartos, data.suites, 
+          data.garagens, data.mobiliada, data.churrasqueira, data.infra_ar_cond, data.piso, data.teto, 
+          data.reboco, data.murro, data.portao, data.quintal_larg, data.quintal_comp, data.andar, 
+          data.cliente], function(err, rows) {
           if (!err)
             res.json({dados: rows})      
           else

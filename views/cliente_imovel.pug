@@ -97,6 +97,17 @@ block content
                   title="Abrir cadastro de pessoas", target="_blank")
                     md-icon(md-svg-icon="img/people.svg")
 
+                div(layout="row", layout-sm="column", flex="80")
+                  md-autocomplete(flex='',
+                    md-selected-item='estado',
+                    md-min-length='1', 
+                    md-search-text='SearchEst', 
+                    md-items='item in EstadoNome(SearchEst)',
+                    md-floating-label='Estado',
+                    md-item-text='item.nome')
+                    md-item-template
+                      span(md-highlight-text='SearchEst') {{item.nome}}                    
+
           md-tab(label='Localização e Terreno')
             md-content
 
