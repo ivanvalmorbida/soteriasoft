@@ -6,10 +6,9 @@
 	"onDidUpdateBookmarkEmitter": {},
 	"bookmarks": [
 		{
-			"fsPath": "$ROOTPATH$/public/js/cliente_imovel.js",
+			"fsPath": "$ROOTPATH$/views/cliente_imovel.pug",
 			"bookmarks": [
-				46,
-				290
+				103
 			]
 		}
 	]

@@ -13,6 +13,7 @@ block content
       md-card-title
         md-card-title-text
           span.md-headline Cliente para imóvel
+    
       md-card-content
         md-tabs(md-dynamic-height='', md-border-bottom='')
           md-tab(label='Contato')
@@ -95,18 +96,7 @@ block content
 
                   md-button.md-icon-button.launch(href="pessoa?codigo={{proprietario.codigo}}", style='margin-top: 20px',
                   title="Abrir cadastro de pessoas", target="_blank")
-                    md-icon(md-svg-icon="img/people.svg")
-
-                div(layout="row", layout-sm="column", flex="80")
-                  md-autocomplete(flex='',
-                    md-selected-item='estado',
-                    md-min-length='1', 
-                    md-search-text='SearchEst', 
-                    md-items='item in EstadoNome(SearchEst)',
-                    md-floating-label='Estado',
-                    md-item-text='item.nome')
-                    md-item-template
-                      span(md-highlight-text='SearchEst') {{item.nome}}                    
+                    md-icon(md-svg-icon="img/people.svg")              
 
           md-tab(label='Localização e Terreno')
             md-content
@@ -134,7 +124,7 @@ block content
 
                 md-autocomplete(flex='',
                   md-selected-item='bairro',
-                  md-min-length='3', 
+                  md-min-length='2', 
                   md-search-text='SearchBai', 
                   md-items='item in BairroCidadeNome(SearchBai)',
                   md-floating-label='Bairro',

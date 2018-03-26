@@ -44,30 +44,6 @@ function add_local(cliente, local, cb){
   })
 }
 
-
-
-/*
-  var connection = mysql.createConnection(settings.dbConect)
-  var data = req.body
-
-  connection.connect()
-  connection.query('delete from tb_cliente_imovel_localizacao where cliente=?', [data.cliente], 
-  function(err, rows) {
-    if (!err) {
-      for (i = 0; i < data.local.length; i++) {
-        connection.query('insert into tb_cliente_imovel_localizacao (cliente, estado, cidade,'+ 
-        ' bairro) values (?, ?, ?, ?);', [data.cliente, data.local[i].estado, data.local[i].cidade, 
-        data.local[i].bairro], function(err, rows) {
-          if (err)
-            console.log('Error while performing Query.')
-        });        
-      }
-      connection.end()
-    } 
-  })
-}
-*/
-
 function cliente(req, res) {
   var connection = mysql.createConnection(settings.dbConect);
   var cod = req.body.cod

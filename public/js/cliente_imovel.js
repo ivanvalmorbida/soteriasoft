@@ -262,6 +262,17 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           }
         })
 
+        $http.post('/cliente_imovel_loca/cliente', {cod: $scope.codigo}).
+        success(function (data, status, headers, config) {
+          for (i = 0; i < data.dados.length; i++) {
+            $scope.localizacoes.push({
+              'estado': data.dados[i].estado, 'estado_': data.dados[i].estado_,
+              'cidade': data.dados[i].cidade, 'cidade_': data.dados[i].cidade_, 
+              'bairro': data.dados[i].bairro, 'bairro_': data.dados[i].bairro_, 
+            })
+          }
+        })
+
         $http.post('/cliente_imovel_cons/cliente', {cod: $scope.codigo}).
         success(function (data, status, headers, config) {
           if (data.dados.length>0){
@@ -360,7 +371,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
     params: {
       txt: StrSearch
     }
-    }).success(function(data) {
+    }).then(function(data) {
       return data.data
     })
   }
@@ -371,7 +382,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       txt: StrSearch,
       est: $scope.estado.codigo
     }
-    }).success(function(data) {
+    }).then(function(data) {
       return data.data
     })
   }
@@ -383,11 +394,10 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
       est: $scope.estado.codigo,
       cid: $scope.cidade.codigo
     }
-    }).success(function(data) {
+    }).then(function(data) {
       return data.data
     })
-  }
-
+  }  
 
   $scope.PessoaNome = function(StrSearch) {
     $scope.pes_nom = StrSearch

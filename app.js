@@ -51,7 +51,6 @@ app.use(require('./routes/imovel_imagem'))
 app.use(require('./routes/imovel_terreno'))
 app.use(require('./routes/imovel_tipo'))
 app.use(require('./routes/imovel'))
-app.use(require('./routes/index'))
 app.use(require('./routes/nacionalidade'))
 app.use(require('./routes/pessoa_email'))
 app.use(require('./routes/pessoa_fisica'))
@@ -59,6 +58,8 @@ app.use(require('./routes/pessoa_fone'))
 app.use(require('./routes/pessoa_juridica'))
 app.use(require('./routes/pessoa'))
 app.use(require('./routes/usuario'))
+
+app.use(require('./routes/index'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
