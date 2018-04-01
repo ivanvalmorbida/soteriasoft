@@ -87,7 +87,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
         atividade: atividade, homepage: $scope.homepage, representante: representante})
       } 
 
-      alert('Informações salvas com sucesso!')
+      ShowSnackBar('Informações salvas com sucesso!')
     })  
   }
 

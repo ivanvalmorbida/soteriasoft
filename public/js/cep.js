@@ -46,7 +46,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
       bairro: bairro, endereco: endereco, complemento: $scope.complemento}).
     success(function (data, status, headers, config) {
       if (data.dados.length>0){
-        alert('Informações salvas com sucesso!')
+        ShowSnackBar('Informações salvas com sucesso!')
       }
     }).error(function (data, status, headers, config) {
       //

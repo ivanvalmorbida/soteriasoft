@@ -47,7 +47,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'Soteriasoft.Comum'])
       pessoa: $scope.pessoa.codigo, senha: $scope.senha, usuario: $scope.usuario}).
     success(function (data, status, headers, config) {
       $scope.codigo = data.codigo
-      alert('Informações salvas com sucesso!')
+      ShowSnackBar('Informações salvas com sucesso!')
     })  
   }
   

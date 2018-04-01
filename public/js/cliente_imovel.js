@@ -189,7 +189,7 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
           entrada: $scope.entrada, permuta: $scope.permuta, carro: $scope.carro,
           fgts: $scope.fgts, condominio: $scope.condominio, renda: $scope.renda})
               
-        alert('Informações salvas com sucesso!')
+          ShowSnackBar('Informações salvas com sucesso!')
       })  
     })
   }
