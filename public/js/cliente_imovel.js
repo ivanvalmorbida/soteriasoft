@@ -71,11 +71,25 @@ angular.module('Soteriasoft', ['ngMaterial', 'ui.mask', 'Soteriasoft.Comum'])
   $scope.format = function(mask, number) {
     return format(mask, number)
   }  
-
-  $scope.Apagar = function() {
-    alert($scope.codigo)
-  }
   
+  $scope.Apagar = function(ev) {
+    $mdDialog.show({
+      controller: LocalizarController,
+      templateUrl: './cliente_imovel/dlg/localizar',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true
+    })
+    .success(function(answer) {
+      if (answer>0){
+        $scope.codigo=answer
+        $scope.BuscarCodigo()
+      }      
+    }, function() {
+      console.dir('You cancelled the dialog.')
+    })
+  }
+
   $scope.Limpar = function() {
     $scope.codigo = 0
     $scope.pessoa = null

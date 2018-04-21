@@ -26,7 +26,7 @@ block content
                       md-option(value=1) Comprar
                       md-option(value=2) Vender
 
-                div(layout="row", layout-sm="column", flex="80")
+                div(layout="row", flex="80")
                   md-autocomplete(id='pessoa_', flex='', md-selected-item-change='BuscarCliente()', 
                     md-selected-item='pessoa',
                     md-min-length='3', 
@@ -41,8 +41,8 @@ block content
                       span
                         |, Email: {{item.email}}
 
-                  md-button.md-icon-button.launch(href="pessoa?codigo={{pessoa.codigo}}", style='margin-top: 20px',
-                  title="Abrir cadastro de pessoas", target="_blank")
+                  md-button.md-icon-button.launch(href="pessoa?codigo={{pessoa.codigo}}", 
+                  style='margin-top: 20px', title="Abrir cadastro de pessoas", target="_blank")
                     md-icon(md-svg-icon="img/people.svg")
                   
                   md-button.md-icon-button.launch(ng-click='addPessoa()', 
@@ -83,7 +83,7 @@ block content
                       md-option(value=3) E-mail
                       md-option(value=4) Portal
 
-                div(layout="row", layout-sm="column", flex="80")
+                div(layout="row", flex="80")
                   md-autocomplete(flex='',
                     md-selected-item='responsavel',
                     md-min-length='1', 
@@ -132,11 +132,11 @@ block content
                   md-item-template
                     span(md-highlight-text='SearchBai') {{item.nome}}
 
-                md-button.md-icon-button.launch(ng-click='addLocal()', style='margin-top: 15px', 
+                md-button.md-icon-button.launch(ng-click='addLocal()', 
                 title="Adicionar Localização de imóvel", target="_blank")
                   md-icon(md-svg-icon="img/seta-direita.svg")
                     
-              div(layout-gt-sm='row', style='margin-top: -30px')
+              div(layout-gt-sm='row')
                 md-chips.custom-chips(ng-model="localizacoes", readonly="true", 
                 md-transform-chip="newChip($chip)", md-removable="true")
                   md-chip-template
