@@ -22,3 +22,13 @@ exports.httpMsgsFormat = "HTML"
 
 // 533 987 151
 ////
+
+// vendas / proposta / pagamentos / comissao 
+// logs
+// conjuntos/ tipos /
+// platao
+// mensagens
+// visitas
+// avaliaçoes
+// agenda
+// imovel / anuncios / proximidade
