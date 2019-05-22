@@ -38,7 +38,7 @@ function add_local(cliente, local, cb){
   connection.query('CALL sp_cliente_imovel_loca_add(?, ?, ?, ?)', 
   [cliente, local.estado, local.cidade, local.bairro], function(err, rows) {
     if (err){
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
     }
     cb()
   })
@@ -59,7 +59,7 @@ function cliente(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

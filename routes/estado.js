@@ -15,7 +15,7 @@ function estado_todos(req, res) {
     if (!err)
       res.json({estado_todos: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -30,7 +30,7 @@ function estado_nome(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -45,7 +45,7 @@ function estado_sigla(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

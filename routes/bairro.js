@@ -19,7 +19,7 @@ function bairro_cidade(req, res) {
     if (!err)
       res.json({RecordsOfCity: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -34,7 +34,7 @@ function bairro_nome(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -53,7 +53,7 @@ function bairro_cidade_nome(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

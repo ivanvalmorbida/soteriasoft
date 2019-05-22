@@ -27,7 +27,7 @@ function palavra_chave(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -104,7 +104,7 @@ function palavra_chave(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   });
   connection.end()
 }

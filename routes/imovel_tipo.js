@@ -13,7 +13,7 @@ function tipo_todos(req, res) {
     if (!err)
       res.json({tipo_todos: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

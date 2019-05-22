@@ -37,7 +37,7 @@ function add_email(pessoa, email, cb){
   connection.query('CALL sp_pessoa_email_add(?, ?)', 
   [pessoa, email], function(err, rows) {
     if (err){
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
     }
     cb()
   })
@@ -54,7 +54,7 @@ function apagar(req, res) {
       res.json({dados: rows})       
     }
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -68,7 +68,7 @@ function pessoa(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -84,7 +84,7 @@ function email(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

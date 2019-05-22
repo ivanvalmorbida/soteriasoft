@@ -14,7 +14,7 @@ function cbo_todos(req, res) {
     if (!err)
       res.json({cbo_todos: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -29,7 +29,7 @@ function cbo_descricao(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

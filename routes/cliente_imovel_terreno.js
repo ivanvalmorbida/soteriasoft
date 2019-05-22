@@ -23,7 +23,7 @@ function gravar(req, res) {
           if (!err)
             res.json({dados: rows})      
           else
-            console.log('Error while performing Query: '+err)
+            console.log('Error mensage: '+err)
         })
       }else {
         connection.query('update tb_cliente_imovel_terreno set area_terreno=?, frente=?,'+ 
@@ -33,7 +33,7 @@ function gravar(req, res) {
           if (!err)
             res.json({dados: rows})      
           else
-            console.log('Error while performing Query: '+err)
+            console.log('Error mensage: '+err)
         })
       }   
     }
@@ -50,7 +50,7 @@ function cliente(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   });
   connection.end()
 }

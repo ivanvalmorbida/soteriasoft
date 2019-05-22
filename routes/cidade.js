@@ -14,7 +14,7 @@ function cidade_todas(req, res) {
     if (!err)
       res.json({cidade_todas: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -31,7 +31,7 @@ function cidade_estado(req, res) {
     if (!err)
       res.json({RecordsOfState: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -46,7 +46,7 @@ function cidade_nome(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -64,7 +64,7 @@ function cidade_estado_nome(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

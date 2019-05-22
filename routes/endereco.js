@@ -14,7 +14,7 @@ function endereco_todos(req, res) {
     if (!err) 
       res.json({endereco_todos: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -31,7 +31,7 @@ function endereco_cidade(req, res) {
     if (!err) 
       res.json({endereco_cidade: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -46,7 +46,7 @@ function endereco_nome(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -65,7 +65,7 @@ function endereco_cidade_nome(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

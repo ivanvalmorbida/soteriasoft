@@ -13,7 +13,7 @@ function nacionalidade_todas(req, res) {
     if (!err)
       res.json({nacionalidade_todas: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -28,7 +28,7 @@ function nacionalidade_pais(req, res) {
     if (!err)
       return res.json(rows)
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

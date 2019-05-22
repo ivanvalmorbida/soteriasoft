@@ -3,14 +3,10 @@ var
   bodyParser      = require('body-parser'),
   cookieParser    = require('cookie-parser'),
   path            = require('path'),
-  favicon         = require('serve-favicon'),
   logger          = require('morgan'),
-  methodOverride  = require('method-override'),
-  errorHandler    = require('error-handler'),
-	http            = require('http'),
+ 	http            = require('http'),
   session         = require('express-session'),
-  settings        = require("./settings"),
-  fs              = require('fs')
+  settings        = require("./settings")
   
 var server = http.createServer(app),
 	io = require('socket.io').listen(server)

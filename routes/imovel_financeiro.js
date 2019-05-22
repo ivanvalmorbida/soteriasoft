@@ -23,7 +23,7 @@ function gravar(req, res) {
           if (!err)
             res.json({dados: rows})      
           else
-            console.log('Error while performing Query: '+err)
+            console.log('Error mensage: '+err)
 
           connection.end()
         })
@@ -37,14 +37,14 @@ function gravar(req, res) {
           if (!err)
             res.json({dados: rows})
           else
-            console.log('Error while performing Query.')
+            console.log('Error mensage: '+err)
           
           connection.end()
         })
       }     
     }
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })          
 }
 
@@ -59,7 +59,7 @@ function imovel(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

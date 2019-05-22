@@ -37,7 +37,7 @@ function add_tipo(cliente, tipo, cb){
   connection.query('CALL sp_cliente_imovel_tipo_add(?, ?)', 
   [cliente, tipo], function(err, rows) {
     if (err){
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
     }
     cb()
   })
@@ -55,7 +55,7 @@ function cliente(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   });
   connection.end()
 }

@@ -40,7 +40,7 @@ function gravar(req, res) {
       if (!err)
         res.json({codigo: rows.insertId})      
       else
-        console.log('Error while performing Query: '+err)
+        console.log('Error mensage: '+err)
     })
   }   
   else {
@@ -51,7 +51,7 @@ function gravar(req, res) {
       if (!err)
         res.json({codigo: data.codigo})
       else
-        console.log('Error while performing Query.')
+        console.log('Error mensage: '+err)
     })
   }     
   connection.end()
@@ -68,7 +68,7 @@ function codigo(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }
@@ -95,7 +95,7 @@ function localizar(req, res) {
     if (!err)
       res.json({dados: rows})
     else
-      console.log('Error while performing Query.')
+      console.log('Error mensage: '+err)
   })
   connection.end()
 }

@@ -13,7 +13,7 @@ function atividade_economica_todas(req, res) {
         if (!err)
             res.json({atividade_economica_todas: rows})
         else
-            console.log('Error while performing Query.')
+            console.log('Error mensage: '+err)
     })
     connection.end()
 }
@@ -28,7 +28,7 @@ function ativ_econ_descricao(req, res) {
         if (!err)
             return res.json(rows)
         else
-            console.log('Error while performing Query.')
+            console.log('Error mensage: '+err)
     })
     connection.end()
 }
