@@ -47,10 +47,10 @@ head
         teste:[]},
        
       created: function() {
-        this.$http.get("/atividade_economica/atividade_economica_todas")
+        this.$http.get("/bairro/bairro_tudo")
         .then((response)=>{
-          console.dir(response.body.atividade_economica_todas)
-          //this.$http.post("/exportar", {ati: response.body.atividade_economica_todas}).then((response)=>{})
+          console.dir(response.body.bairro_tudo)
+          this.$http.post("/exportar", {ati: []}).then((response)=>{})
         })
       }
     })

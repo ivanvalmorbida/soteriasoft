@@ -2,6 +2,7 @@ var express = require('express');
 var router  = express.Router();
 var auth = require('../authetication');
 var settings = require("../settings");
+var mysql   = require('mysql')
 
 const mongoose = require('mongoose');
 
@@ -22,51 +23,45 @@ function render_index(req, res) {
 }
 
 function exportar(req, res) {
-  var ati = req.body.ati
+  //var ati = bb.bairro_tudo()
+  //var ati = req.body.ati
 
-  mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log('MongoDB Connected…')
+  var connection = mysql.createConnection(settings.dbConect)
 
-    var atividadeeconomicaSchema = new mongoose.Schema({
-      id: {type: Number},
-      setor_id: {type: Number},
-      subsetor_id: {type: Number},
-      atividade: {type: String},
-      descricao: {type: String}
-    })
-    var AtividadeEconomica = mongoose.model('AtividadeEconomica', atividadeeconomicaSchema)
+  connection.connect()
+  connection.query("select codigo,nome from tb_bairro order by Nome;", function(err, rows) {
+    if (!err){
+      //var ati=rows
 
-    for (i = 0; i < ati.length; i++) {
-      console.dir(ati[i].codigo)
-      a = new AtividadeEconomica({
-        id: ati[i].codigo,
-        setor_id: ati[i].setor,
-        subsetor_id: ati[i].subsetor,
-        atividade: ati[i].atividade,
-        descricao: ati[i].descricao
+      mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
       })
-
-      a.save()
-    }
-/*    var thor = new Movie({
-      title: 'Spider Man',
-      rating: 'PG-13',
-      releaseYear: '2012',  // Note o uso de String ao inves de Number
-      hasCreditCookie: true
-    });
+      .then(() => {
+        console.log('MongoDB Connected…')
     
-    thor.save(function(err, thor) {
-      if (err) return console.error(err);
-      console.dir(thor);
-    });
-*/
+        var Schema = new mongoose.Schema({
+          id: {type: Number},
+          nome: {type: String}
+        })
+        var Bairro = mongoose.model('Bairro', Schema)
+    
+        for (i = 0; i < rows.length; i++) {
+          console.dir(rows[i].codigo)
+          a = new Bairro({
+            id: rows[i].codigo,
+            nome: rows[i].nome
+          })
+    
+          a.save()
+        }
+      })
+      .catch(err => console.log(err))
+    }
+    else
+      console.log('Error mensage: '+err)
   })
-  .catch(err => console.log(err))
-
+  connection.end()
 }
 
 function teste(req, res) { 

@@ -3,6 +3,7 @@ var router  = express.Router()
 var settings = require("../settings")
 var mysql   = require('mysql')
 
+//router.get('/bairro/bairro_tudo', bairro_tudo)
 router.get('/bairro/bairro_nome', bairro_nome)
 router.get('/bairro/bairro_cidade', bairro_cidade)
 router.get('/bairro/bairro_cidade_nome', bairro_cidade_nome)

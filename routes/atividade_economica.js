@@ -10,7 +10,7 @@ function atividade_economica_todas(req, res) {
     var connection = mysql.createConnection(settings.dbConect)
 
     connection.connect()
-    connection.query('SELECT * from tb_atividade_economica order by descricao', function(err, rows, fields) {
+    connection.query('SELECT * from tb_atividade_economica_setor order by setor', function(err, rows, fields) {
         if (!err)
             res.json({atividade_economica_todas: rows})
         else
@@ -37,12 +37,19 @@ function ativ_econ_descricao(req, res) {
 module.exports = router
 
 /*
-  var atividadeeconomicaSchema = new mongoose.Schema({
+  var Schema = new mongoose.Schema({
     id: {type: Number},
     setor_id: {type: Number},
     subsetor_id: {type: Number},
     atividade: {type: String},
     descricao: {type: String}
   })
-  var AtividadeEconomica = mongoose.model('AtividadeEconomica', atividadeeconomicaSchema)
+  var AtividadeEconomica = mongoose.model('Atividade_Economica', Schema)
+
+  var Schema = new mongoose.Schema({
+    id: {type: Number},
+    setor: {type: String}
+  })
+  var AtividadeEconomicaSetor = mongoose.model('Atividade_Economica_Setor', Schema)
+
 */
