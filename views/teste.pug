@@ -47,14 +47,10 @@ head
         teste:[]},
        
       created: function() {
-        this.$http.get("/dados/cis_ativos")
+        this.$http.get("/atividade_economica/atividade_economica_todas")
         .then((response)=>{
-          this.issues=response.body.cis
-        })
-
-        axios.get('/dados/cis_ativos')
-        .then(function (response) {
-          vue_app.teste = response.data.cis
+          console.dir(response.body.atividade_economica_todas)
+          //this.$http.post("/exportar", {ati: response.body.atividade_economica_todas}).then((response)=>{})
         })
       }
     })

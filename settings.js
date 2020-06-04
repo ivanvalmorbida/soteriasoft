@@ -2,7 +2,7 @@ exports.dbConect = {
     host     : 'localhost',
     database : 'soteriasoft',
     user     : 'ivan',
-    password : 'Ivanluis1#'
+    password : 'ivanluis'
 }
 
 var url = "http://localhost"

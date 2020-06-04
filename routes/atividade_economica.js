@@ -4,6 +4,7 @@ var settings = require("../settings")
 var mysql   = require('mysql')
 
 router.get('/atividade_economica/atividade_economica_descricao', ativ_econ_descricao)
+router.get('/atividade_economica/atividade_economica_todas', atividade_economica_todas)
 
 function atividade_economica_todas(req, res) {
     var connection = mysql.createConnection(settings.dbConect)
@@ -34,3 +35,14 @@ function ativ_econ_descricao(req, res) {
 }
 
 module.exports = router
+
+/*
+  var atividadeeconomicaSchema = new mongoose.Schema({
+    id: {type: Number},
+    setor_id: {type: Number},
+    subsetor_id: {type: Number},
+    atividade: {type: String},
+    descricao: {type: String}
+  })
+  var AtividadeEconomica = mongoose.model('AtividadeEconomica', atividadeeconomicaSchema)
+*/
