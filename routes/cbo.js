@@ -35,3 +35,41 @@ function cbo_descricao(req, res) {
 }
 
 module.exports = router
+
+/*
+function exportar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+
+  connection.connect()
+  connection.query("select * from tb_cbo order by Descricao;", function(err, rows) {
+    if (!err){
+      mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      })
+      .then(() => {
+        console.log('MongoDB Connected…')
+    
+        var Schema = new mongoose.Schema({
+          cbo: {type: String},
+          descricao: {type: String}
+        })
+        var CBO = mongoose.model('CBO', Schema)
+
+        for (i = 0; i < rows.length; i++) {
+          console.dir(rows[i].CBO)
+          a = new CBO({
+            cbo: rows[i].CBO,
+            descricao: rows[i].Descricao
+          })    
+          a.save()
+        }
+      })
+      .catch(err => console.log(err))
+    }
+    else
+      console.log('Error mensage: '+err)
+  })
+  connection.end()
+}
+*/

@@ -6,8 +6,8 @@ var mysql   = require('mysql')
 
 const mongoose = require('mongoose');
 
-const uri = "mongodb+srv://ivan:ivanluis@cluster0-rqbkq.mongodb.net/ivan?retryWrites=true&w=majority";
-//mongodb+srv://ivan:*****@cluster0-rqbkq.mongodb.net/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true
+//const uri = "mongodb+srv://ivan:ivanluis@cluster0-rqbkq.mongodb.net/ivan?retryWrites=true&w=majority";
+const uri = "mongodb://localhost:27017/ivan"
 
 router.get('/teste', teste)
 router.post('/exportar', exportar)
@@ -23,16 +23,11 @@ function render_index(req, res) {
 }
 
 function exportar(req, res) {
-  //var ati = bb.bairro_tudo()
-  //var ati = req.body.ati
-
   var connection = mysql.createConnection(settings.dbConect)
 
   connection.connect()
-  connection.query("select codigo,nome from tb_bairro order by Nome;", function(err, rows) {
+  connection.query("select * from tb_cep order by cep limit 800000, 100000;", function(err, rows) {
     if (!err){
-      //var ati=rows
-
       mongoose.connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -41,18 +36,25 @@ function exportar(req, res) {
         console.log('MongoDB Connected…')
     
         var Schema = new mongoose.Schema({
-          id: {type: Number},
-          nome: {type: String}
+          cep: {type: String},
+          complemento: {type: String},
+          endereco: {type: Number},
+          bairro: {type: Number},
+          cidade: {type: Number},
+          estado: {type: Number}
         })
-        var Bairro = mongoose.model('Bairro', Schema)
-    
+        var CEP = mongoose.model('CEP', Schema)
+
         for (i = 0; i < rows.length; i++) {
-          console.dir(rows[i].codigo)
-          a = new Bairro({
-            id: rows[i].codigo,
-            nome: rows[i].nome
-          })
-    
+          console.dir(rows[i].cep)
+          a = new CEP({
+            cep: rows[i].cep,
+            complemento: rows[i].complemento,
+            endereco: rows[i].endereco,
+            bairro: rows[i].bairro,
+            cidade: rows[i].cidade,
+            estado: rows[i].estado,
+          })    
           a.save()
         }
       })

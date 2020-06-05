@@ -58,5 +58,42 @@ function bairro_cidade_nome(req, res) {
   })
   connection.end()
 }
+/*
+function exportar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
 
+  connection.connect()
+  connection.query("select codigo,nome from tb_bairro order by Nome;", function(err, rows) {
+    if (!err){
+      mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      })
+      .then(() => {
+        console.log('MongoDB Connected…')
+    
+        var Schema = new mongoose.Schema({
+          id: {type: Number},
+          nome: {type: String}
+        })
+        var Bairro = mongoose.model('Bairro', Schema)
+    
+        for (i = 0; i < rows.length; i++) {
+          console.dir(rows[i].codigo)
+          a = new Bairro({
+            id: rows[i].codigo,
+            nome: rows[i].nome
+          })
+    
+          a.save()
+        }
+      })
+      .catch(err => console.log(err))
+    }
+    else
+      console.log('Error mensage: '+err)
+  })
+  connection.end()
+}
+*/
 module.exports = router
