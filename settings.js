@@ -1,5 +1,5 @@
 //exports.dbConect = "mysql://ivan:ivanluis@localhost/soteriasoft?charset=utf8_general_ci&timezone=-0700"
-exports.dbConect = {host: 'localhost', database: 'soteriasoft', user: 'ivan', password: 'Ivanluis1#'}
+exports.dbConect = {host: 'localhost', database: 'soteriasoft', user: 'ivan', password: 'ivanluis'}
 //ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MyNewPass';
 
 var url = "http://localhost"

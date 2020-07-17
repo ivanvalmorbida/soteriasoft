@@ -6,8 +6,8 @@ var mysql   = require('mysql')
 
 const mongoose = require('mongoose');
 
-//const uri = "mongodb+srv://ivan:ivanluis@cluster0-rqbkq.mongodb.net/ivan?retryWrites=true&w=majority";
-const uri = "mongodb://localhost:27017/ivan"
+const uri = "mongodb+srv://ivan:ivanluis@cluster0-rqbkq.mongodb.net/ivan?retryWrites=true&w=majority";
+//const uri = "mongodb://localhost:27017/ivan"
 
 router.get('/teste', teste)
 router.post('/exportar', exportar)
@@ -26,7 +26,7 @@ function exportar(req, res) {
   var connection = mysql.createConnection(settings.dbConect)
 
   connection.connect()
-  connection.query("select * from tb_cep order by cep limit 800000, 100000;", function(err, rows) {
+  connection.query("select * from tb_cidade order by nome", function(err, rows) {
     if (!err){
       mongoose.connect(uri, {
         useNewUrlParser: true,
@@ -36,24 +36,16 @@ function exportar(req, res) {
         console.log('MongoDB Connected…')
     
         var Schema = new mongoose.Schema({
-          cep: {type: String},
-          complemento: {type: String},
-          endereco: {type: Number},
-          bairro: {type: Number},
-          cidade: {type: Number},
-          estado: {type: Number}
+          id: {type: Number},
+          nome: {type: String},
         })
-        var CEP = mongoose.model('CEP', Schema)
+        var Cidade = mongoose.model('Cidade', Schema)
 
         for (i = 0; i < rows.length; i++) {
-          console.dir(rows[i].cep)
-          a = new CEP({
-            cep: rows[i].cep,
-            complemento: rows[i].complemento,
-            endereco: rows[i].endereco,
-            bairro: rows[i].bairro,
-            cidade: rows[i].cidade,
-            estado: rows[i].estado,
+          console.dir(rows[i].Codigo)
+          a = new Cidade({
+            id: rows[i].Codigo,
+            nome: rows[i].Nome
           })    
           a.save()
         }
