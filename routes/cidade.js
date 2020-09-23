@@ -70,3 +70,40 @@ function cidade_estado_nome(req, res) {
 }
 
 module.exports = router
+
+/*
+function exportar(req, res) {
+  var connection = mysql.createConnection(settings.dbConect)
+
+  connection.connect()
+  connection.query("select * from tb_cidade order by nome;", function(err, rows) {
+    if (!err){
+      mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      })
+      .then(() => {
+        console.log('MongoDB Connected…')
+    
+        var Schema = new mongoose.Schema({
+          id: {type: Number},
+          nome: {type: String}
+        })
+        var Cidade = mongoose.model('Cidade', Schema)
+
+        for (i = 0; i < rows.length; i++) {
+          console.dir(rows[i].Codigo)
+          a = new Cidade({
+            id: rows[i].Codigo,
+            nome: rows[i].Nome
+          })    
+          a.save()
+        }
+      })
+      .catch(err => console.log(err))
+    }
+    else
+      console.log('Error mensage: '+err)
+  })
+  connection.end()
+}*/

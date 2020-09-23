@@ -34,3 +34,13 @@ function nacionalidade_pais(req, res) {
 }
 
 module.exports = router
+
+/*
+        var Schema = new mongoose.Schema({
+          id: {type: Number},
+          pais: {type: String},
+          capital: {type: String},
+          moeda: {type: String},
+          idioma: {type: String}
+        })
+        */
