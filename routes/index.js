@@ -6,8 +6,8 @@ var mysql   = require('mysql')
 
 const mongoose = require('mongoose');
 
-//const uri = "mongodb+srv://ivan:ivanluis@cluster0-rqbkq.mongodb.net/ivan?retryWrites=true&w=majority";
-const uri = "mongodb://localhost:27017/ivan"
+const uri = "mongodb+srv://ivan:ivanluis@cluster0-rqbkq.mongodb.net/ivan?retryWrites=true&w=majority";
+//const uri = "mongodb://localhost:27017/ivan"
 
 router.get('/teste', teste)
 router.post('/exportar', exportar)
@@ -26,7 +26,11 @@ function exportar(req, res) {
   var connection = mysql.createConnection(settings.dbConect)
 
   connection.connect()
+<<<<<<< HEAD
   connection.query("select * from tb_pessoa order by nome;", function(err, rows) {
+=======
+  connection.query("select * from tb_cidade order by nome", function(err, rows) {
+>>>>>>> aa223c9819d347b345a5cd6bf37ce13d2d70b739
     if (!err){
       mongoose.connect(uri, {
         useNewUrlParser: true,
@@ -37,6 +41,7 @@ function exportar(req, res) {
     
         var Schema = new mongoose.Schema({
           id: {type: Number},
+<<<<<<< HEAD
           tipo: {type: String},
           nome: {type: String},
           cep: {type: String},
@@ -66,6 +71,17 @@ function exportar(req, res) {
             complemento: rows[i].complemento,
             obs: rows[i].obs,
             cadastro: rows[i].cadastro
+=======
+          nome: {type: String},
+        })
+        var Cidade = mongoose.model('Cidade', Schema)
+
+        for (i = 0; i < rows.length; i++) {
+          console.dir(rows[i].Codigo)
+          a = new Cidade({
+            id: rows[i].Codigo,
+            nome: rows[i].Nome
+>>>>>>> aa223c9819d347b345a5cd6bf37ce13d2d70b739
           })    
           a.save()
         }

@@ -76,7 +76,11 @@ function exportar(req, res) {
   var connection = mysql.createConnection(settings.dbConect)
 
   connection.connect()
+<<<<<<< HEAD
   connection.query("select * from tb_cidade order by nome;", function(err, rows) {
+=======
+  connection.query("select * from tb_cidade order by nome", function(err, rows) {
+>>>>>>> aa223c9819d347b345a5cd6bf37ce13d2d70b739
     if (!err){
       mongoose.connect(uri, {
         useNewUrlParser: true,
@@ -87,7 +91,11 @@ function exportar(req, res) {
     
         var Schema = new mongoose.Schema({
           id: {type: Number},
+<<<<<<< HEAD
           nome: {type: String}
+=======
+          nome: {type: String},
+>>>>>>> aa223c9819d347b345a5cd6bf37ce13d2d70b739
         })
         var Cidade = mongoose.model('Cidade', Schema)
 
@@ -106,4 +114,9 @@ function exportar(req, res) {
       console.log('Error mensage: '+err)
   })
   connection.end()
+<<<<<<< HEAD
 }*/
+=======
+}
+*/
+>>>>>>> aa223c9819d347b345a5cd6bf37ce13d2d70b739
